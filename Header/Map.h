@@ -5,7 +5,7 @@
 
 /**
  * \class Map
- * \author HAYAT Rahim
+ * \author HAYAT Rahim  / MTARFI Souhail
  */
 class Map
 {

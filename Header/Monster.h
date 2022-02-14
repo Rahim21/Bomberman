@@ -6,7 +6,7 @@
 
 /**
  * \class Monster
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Monster : public Mob
 {

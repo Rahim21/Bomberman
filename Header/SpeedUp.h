@@ -2,16 +2,16 @@
 #define SPEEDUP_H
 
 #include "Item.h"
-
+#include "Player.h"
 /**
  * \class SpeedUp
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class SpeedUp : public Item
 {
 protected:
 public:
-    void addSpeed();
+    void addSpeed(Player p);
 };
 
 #endif

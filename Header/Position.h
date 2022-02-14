@@ -3,7 +3,7 @@
 
 /**
  * \struct Position
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 struct Position
 {

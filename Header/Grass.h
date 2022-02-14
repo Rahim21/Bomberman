@@ -5,7 +5,7 @@
 
 /**
  * \class Grass
- * \author HAYAT Rahim
+ * \author HAYAT Rahim  / MTARFI Souhail
  */
 class Grass : public Tile
 {

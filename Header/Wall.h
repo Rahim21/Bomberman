@@ -5,7 +5,7 @@
 
 /**
  * \class Wall
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Wall : public Tile
 {

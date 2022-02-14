@@ -5,7 +5,7 @@
 
 /**
  * \class Ghost
- * \author HAYAT Rahim
+ * \author HAYAT Rahim  / MTARFI Souhail
  */
 class Ghost : public Mob
 {

@@ -7,10 +7,9 @@
  */
 class Bomb
 {
-protected:
+public:
     int puissance;
     int portee;
-    int test;
 public:
     void infligerDegat();
     void afficherExplosion();

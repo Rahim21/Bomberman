@@ -5,7 +5,7 @@
 
 /**
  * \class Tile
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Tile
 {

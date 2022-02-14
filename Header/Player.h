@@ -7,16 +7,16 @@
 /**
  * \class Player
  * \brief Notre Bomberman
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  *
  * explication...
  */
 class Player
 {
-protected:
+public:
     std::string pseudo;
-    int hp;
-    int bombLimit;
+    int coeur;
+    int nbrBomb;
     float speed;
     Position playerPosition;
 

@@ -5,7 +5,7 @@
 
 /**
  * \class Mob
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Mob
 {

@@ -5,13 +5,13 @@
 
 /**
  * \class MoreBomb
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class MoreBomb : public Item
 {
 protected:
 public:
-    void addBomb();
+    void addBomb(Player p);
 };
 
 #endif
