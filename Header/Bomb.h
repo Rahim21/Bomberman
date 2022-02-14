@@ -10,7 +10,7 @@ class Bomb
 protected:
     int puissance;
     int portee;
-
+    int test;
 public:
     void infligerDegat();
     void afficherExplosion();
