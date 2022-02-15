@@ -9,7 +9,7 @@ class Item
 {
 protected:
 public:
-    virtual void afficherItem();
+    // virtual void afficherItem();
 };
 
 #endif

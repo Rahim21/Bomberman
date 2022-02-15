@@ -13,7 +13,7 @@ class MoreBomb : public Item
 protected:
 public:
     void addBomb(Player &p);
-    void afficherItem();
+    friend std::ostream& operator<<(std::ostream& os,const MoreBomb& MB);
 };
 
 #endif

@@ -15,11 +15,11 @@ void Player::poserBombe()
 {
 }
 
-void Player::afficherPlayer()
-{
-    std::cout << "P" << std::endl;
+std::ostream& operator<<(std::ostream& os,const Player& p){
+    os<<"P"<<std::endl;
+    return os;
 }
-
+//la fonction info player ça sert à rien il affiche juste toString on peut faire les deux dans une seul fonction !!
 void Player::infoPlayer()
 {
     std::cout << this->toString() << std::endl;

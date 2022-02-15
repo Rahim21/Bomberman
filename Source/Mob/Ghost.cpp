@@ -2,7 +2,7 @@
 #include "Ghost.h" // linked with makefile
 
 // Méthodes de notre classe Ghost
-void Ghost::afficherMob()
-{
-    std::cout << "G" << std::endl;
+std::ostream& operator<<(std::ostream& os,const Ghost& g){
+    os<<"G"<<std::endl;
+    return os;
 }

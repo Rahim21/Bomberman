@@ -2,7 +2,7 @@
 #include "Grass.h" // linked with makefile
 
 // Méthodes de notre classe Grass
-void Grass::afficherTile()
-{
-    std::cout << "" << std::endl;
+std::ostream& operator<<(std::ostream& os,const Grass& g){
+    os<<""<<std::endl;
+    return os;
 }

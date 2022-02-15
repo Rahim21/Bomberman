@@ -14,7 +14,7 @@ public:
 public:
     void infligerDegat();
     void afficherExplosion();
-    void afficherBombe();
+    friend std::ostream& operator<<(std::ostream& os,const Bomb& b);
 };
 
 #endif

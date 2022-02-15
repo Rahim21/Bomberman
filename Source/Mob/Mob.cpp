@@ -7,7 +7,7 @@ Mob::Mob()
     hp = 100;
 }
 
-void Mob::afficherMob()
-{
-    std::cout << "" << std::endl;
-}
+// void Mob::afficherMob()
+// {
+//     std::cout << "" << std::endl;
+// }

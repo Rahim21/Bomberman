@@ -12,7 +12,7 @@ void Bomb::afficherExplosion()
     std::cout << "@" << std::endl;
 }
 
-void Bomb::afficherBombe()
-{
-    std::cout << "O" << std::endl;
+std::ostream& operator<<(std::ostream& os,const Bomb& b){
+    os<<"O"<<std::endl;
+    return os;
 }

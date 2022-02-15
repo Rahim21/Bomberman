@@ -15,7 +15,7 @@ public:
     Position positionTile{0.f, 0.f};
 
 public:
-    virtual void afficherTile();
+    //virtual void afficherTile()=0;
 };
 
 #endif

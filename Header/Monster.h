@@ -12,7 +12,7 @@ class Monster : public Mob
 {
 protected:
 public:
-    void afficherMob();
+    friend std::ostream& operator<<(std::ostream& os,const Monster& m);
 };
 
 #endif

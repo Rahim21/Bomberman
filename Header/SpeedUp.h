@@ -13,7 +13,7 @@ class SpeedUp : public Item
 protected:
 public:
     void addSpeed(Player &p);
-    void afficherItem();
+    friend std::ostream& operator<<(std::ostream& os,const SpeedUp& SP);
 };
 
 #endif

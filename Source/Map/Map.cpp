@@ -2,20 +2,20 @@
 #include "Map.h" // linked with makefile
 
 // Méthodes de notre classe Map
-void Map::afficherMap()
-{
-    /* Mauvaise méthode d'affichage : pas optimal pour la suite */
-    std::cout << "+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+" << std::endl;
-    for (int i = 0; i < mapLigne; i++)
+std::ostream& operator<<(std::ostream& os,const Map& m){
+        /* Mauvaise méthode d'affichage : pas optimal pour la suite */
+    os << "+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+" << std::endl;
+    for (int i = 0; i < m.mapLigne; i++)
     {
         for (int tailleJ = 0; tailleJ < 3; tailleJ++)
         {
-            for (int j = 0; j < mapColonne; j++)
+            for (int j = 0; j < m.mapColonne; j++)
             {
-                std::cout << "|     ";
+               os << "|     ";
             }
-            std::cout << "|" << std::endl;
+            os << "|" << std::endl;
         }
-        std::cout << "+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+" << std::endl;
+        os << "+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+" << std::endl;
     }
+    return os;
 }

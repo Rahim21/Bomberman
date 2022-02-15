@@ -9,8 +9,7 @@ void SpeedUp::addSpeed(Player &p)
         p.speed += 1;
     }
 }
-
-void SpeedUp::afficherItem()
-{
-    std::cout << "SP" << std::endl;
+std::ostream& operator<<(std::ostream& os,const SpeedUp& SP){
+    os<<"SP"<<std::endl;
+    return os;
 }

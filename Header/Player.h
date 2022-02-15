@@ -26,7 +26,7 @@ public:
 
     void deplacement();
     void poserBombe();
-    void afficherPlayer();
+    friend std::ostream& operator<<(std::ostream& os,const Player& p);
     void infoPlayer();
     std::string toString();
 };

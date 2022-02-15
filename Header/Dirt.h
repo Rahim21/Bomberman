@@ -10,8 +10,8 @@
 class Dirt : public Tile
 {
 public:
-public:
-    void afficherTile();
+    friend std::ostream& operator<<(std::ostream& os,const Dirt& d);
+
 };
 
 #endif

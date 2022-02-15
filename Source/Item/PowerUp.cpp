@@ -10,7 +10,7 @@ void PowerUp::addPower(Bomb &b)
     }
 }
 
-void PowerUp::afficherItem()
-{
-    std::cout << "PU" << std::endl;
+std::ostream& operator<<(std::ostream& os,const PowerUp& PU){
+    os<<"PU"<<std::endl;
+    return os;
 }

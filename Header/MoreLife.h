@@ -13,7 +13,7 @@ class MoreLife : public Item
 protected:
 public:
     void addLife(Player &p);
-    void afficherItem();
+    friend std::ostream& operator<<(std::ostream& os,const MoreLife& ML);
 };
 
 #endif

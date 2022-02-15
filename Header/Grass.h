@@ -11,7 +11,7 @@ class Grass : public Tile
 {
 protected:
 public:
-    void afficherTile();
+    friend std::ostream& operator<<(std::ostream& os,const Grass& g);
 };
 
 #endif

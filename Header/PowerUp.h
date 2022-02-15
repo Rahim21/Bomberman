@@ -13,7 +13,7 @@ class PowerUp : public Item
 protected:
 public:
     void addPower(Bomb &b);
-    void afficherItem();
+    friend std::ostream& operator<<(std::ostream& os,const PowerUp& PU);
 };
 
 #endif

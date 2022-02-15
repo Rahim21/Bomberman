@@ -20,7 +20,8 @@ int main()
     potion.addLife(p1);
     p1.infoPlayer();
     Map m;
-    m.afficherMap();
+    std::cout<<m;
+    // m.afficherMap();
 
     // char c;
     // int compteur{0};

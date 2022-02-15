@@ -16,7 +16,7 @@ protected:
     Tile map[mapLigne][mapColonne];
 
 public:
-    void afficherMap();
+    friend std::ostream& operator<<(std::ostream& os,const Map& m);
 };
 
 #endif

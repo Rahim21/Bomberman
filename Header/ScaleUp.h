@@ -13,7 +13,7 @@ class ScaleUp : public Item
 protected:
 public:
     void addScale(Bomb &b);
-    void afficherItem();
+    friend std::ostream& operator<<(std::ostream& os,const ScaleUp& SC);
 };
 
 #endif

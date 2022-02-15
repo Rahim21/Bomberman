@@ -10,7 +10,7 @@ void MoreBomb::addBomb(Player &p)
     }
 }
 
-void MoreBomb::afficherItem()
-{
-    std::cout << "MB" << std::endl;
+std::ostream& operator<<(std::ostream& os,const MoreBomb& MB){
+    os<<"MB"<<std::endl;
+    return os;
 }
