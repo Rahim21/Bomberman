@@ -2,6 +2,7 @@
 #define MOREBOMB_H
 
 #include "Item.h"
+#include "Player.h"
 
 /**
  * \class MoreBomb
@@ -11,7 +12,8 @@ class MoreBomb : public Item
 {
 protected:
 public:
-    void addBomb(Player p);
+    void addBomb(Player &p);
+    void afficherItem();
 };
 
 #endif

@@ -12,6 +12,7 @@ class Monster : public Mob
 {
 protected:
 public:
+    void afficherMob();
 };
 
 #endif

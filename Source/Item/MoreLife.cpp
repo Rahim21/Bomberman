@@ -1,12 +1,16 @@
 #include <iostream>
-#include "MoreLife.h"
-#include "Player.h" // linked with makefile
+#include "MoreLife.h" // linked with makefile
 
-// Méthodes de notre classe MoreLife [augmente le nombre de points de vie de notre Bomberman] 
-void MoreLife::addLife(Player p)
-{   
-    if (p.coeur <5)
+// Méthodes de notre classe MoreLife [augmente le nombre de points de vie de notre Bomberman]
+void MoreLife::addLife(Player &p)
+{
+    if (p.heart < 5)
     {
-        p.coeur+=1;
+        p.heart += 1;
     }
+}
+
+void MoreLife::afficherItem()
+{
+    std::cout << "ML" << std::endl;
 }

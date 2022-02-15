@@ -3,12 +3,13 @@
 
 /**
  * \class Item
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Item
 {
 protected:
 public:
+    virtual void afficherItem();
 };
 
 #endif

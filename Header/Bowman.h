@@ -5,12 +5,13 @@
 
 /**
  * \class Bowman
- * \author HAYAT Rahim
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Bowman : public Mob
 {
 protected:
 public:
+    void afficherMob();
 };
 
 #endif

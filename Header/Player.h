@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "Position.h"
+#include "Item.h"
 #include <string>
 
 /**
@@ -15,9 +16,9 @@ class Player
 {
 public:
     std::string pseudo;
-    int coeur;
-    int nbrBomb;
-    float speed;
+    int heart{3};
+    int nbrBomb{1};
+    int speed{1};
     Position playerPosition;
 
 public:
@@ -26,6 +27,7 @@ public:
     void deplacement();
     void poserBombe();
     void afficherPlayer();
+    void infoPlayer();
     std::string toString();
 };
 

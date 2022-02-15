@@ -18,7 +18,7 @@ protected:
 public:
     Mob();
     void deplacement();
-    void afficherMob();
+    virtual void afficherMob();
 };
 
 #endif

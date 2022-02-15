@@ -9,11 +9,13 @@
  */
 class Tile
 {
-protected:
+public:
+    int tileHP{2};
+    bool murPresent{true};
     Position positionTile{0.f, 0.f};
 
 public:
-    void afficherTile();
+    virtual void afficherTile();
 };
 
 #endif

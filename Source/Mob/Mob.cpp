@@ -9,5 +9,5 @@ Mob::Mob()
 
 void Mob::afficherMob()
 {
-    std::cout << "Afficher Mob" << std::endl;
+    std::cout << "" << std::endl;
 }

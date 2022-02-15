@@ -2,11 +2,15 @@
 #include "PowerUp.h" // linked with makefile
 
 // Méthodes de notre classe PowerUp [augmente la puissance des bombes]
-void addPower(Bomb b)
+void PowerUp::addPower(Bomb &b)
 {
-    if (b.puissance<3)
+    if (b.puissance < 3)
     {
-        b.puissance+=1;
+        b.puissance += 1;
     }
-    
+}
+
+void PowerUp::afficherItem()
+{
+    std::cout << "PU" << std::endl;
 }

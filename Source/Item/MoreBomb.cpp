@@ -2,10 +2,15 @@
 #include "MoreBomb.h" // linked with makefile
 
 // Méthodes de notre classe MoreBomb [augmente le nombre de bombes]
-void addBomb(Player p)
+void MoreBomb::addBomb(Player &p)
 {
-    if (p.nbrBomb<3)
+    if (p.nbrBomb < 3)
     {
-        p.nbrBomb+=1;
+        p.nbrBomb += 1;
     }
+}
+
+void MoreBomb::afficherItem()
+{
+    std::cout << "MB" << std::endl;
 }

@@ -5,12 +5,13 @@
 
 /**
  * \class Grass
- * \author HAYAT Rahim  / MTARFI Souhail
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Grass : public Tile
 {
 protected:
 public:
+    void afficherTile();
 };
 
 #endif

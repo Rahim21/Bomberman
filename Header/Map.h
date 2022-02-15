@@ -5,7 +5,7 @@
 
 /**
  * \class Map
- * \author HAYAT Rahim  / MTARFI Souhail
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Map
 {
@@ -13,7 +13,7 @@ protected:
     static constexpr int mapColonne{14};
     static constexpr int mapLigne{6};
     // objectif ?
-    Tile map[mapColonne * mapLigne];
+    Tile map[mapLigne][mapColonne];
 
 public:
     void afficherMap();

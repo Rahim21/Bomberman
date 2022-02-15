@@ -5,12 +5,13 @@
 
 /**
  * \class Ghost
- * \author HAYAT Rahim  / MTARFI Souhail
+ * \author HAYAT Rahim / MTARFI Souhail
  */
 class Ghost : public Mob
 {
 protected:
 public:
+    void afficherMob();
 };
 
 #endif

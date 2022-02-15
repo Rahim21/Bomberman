@@ -12,7 +12,8 @@ class MoreLife : public Item
 {
 protected:
 public:
-    void addLife(Player p);
+    void addLife(Player &p);
+    void afficherItem();
 };
 
 #endif
