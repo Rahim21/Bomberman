@@ -4,10 +4,11 @@
 #include "Monster.h"  // linked with makefile
 #include "MoreLife.h" // linked with makefile
 #include "Map.h"
+#include "affichage.h"
 #include <conio.h>
 
 int main()
-{
+{   menu();
     // std::cout << "Saisir un pseudo pour votre Bomberman : \n";
     // std::string name;
     // std::cin >> name;
@@ -15,14 +16,14 @@ int main()
     // std::cout << p1.toString() << std::endl;
     // Mob m1 = Mob();
     // m1.afficherMob();
-    Player p1{"Rahim"};
-    MoreLife potion;
-    p1.infoPlayer();
-    potion.addLife(p1);
-    p1.infoPlayer();
-    Map m;
-    m.createMap(m);
-    std::cout << m;
+    // Player p1{"Rahim"};
+    // MoreLife potion;
+    // p1.infoPlayer();
+    // potion.addLife(p1);
+    // p1.infoPlayer();
+    // Map m;
+    // m.createMap(m);
+    // std::cout << m;
 
     // char c;
     // int compteur{0};
