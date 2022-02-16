@@ -9,14 +9,18 @@
  */
 class Map
 {
-protected:
+public:
     static constexpr int mapColonne{14};
     static constexpr int mapLigne{6};
     // objectif ?
-    Tile map[mapLigne][mapColonne];
+    char map[mapLigne][mapColonne];
 
 public:
-    friend std::ostream& operator<<(std::ostream& os,const Map& m);
+    friend std::ostream &operator<<(std::ostream &os, const Map &m);
+    void createMap(Map &m);
+    char verificationID(const char id);
+    void convertObjectByID(const char id);
+    // void Map::deleteObject(Map &m);
 };
 
 #endif

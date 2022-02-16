@@ -2,7 +2,6 @@
 #define SCALEUP_H
 
 #include "Item.h"
-#include "Bomb.h"
 
 /**
  * \class ScaleUp
@@ -13,7 +12,7 @@ class ScaleUp : public Item
 protected:
 public:
     void addScale(Bomb &b);
-    friend std::ostream& operator<<(std::ostream& os,const ScaleUp& SC);
+    friend std::ostream &operator<<(std::ostream &os, const ScaleUp &SC);
 };
 
 #endif

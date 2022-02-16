@@ -2,7 +2,6 @@
 #define MORELIFE_H
 
 #include "Item.h"
-#include "Player.h"
 
 /**
  * \class MoreLife
@@ -13,7 +12,7 @@ class MoreLife : public Item
 protected:
 public:
     void addLife(Player &p);
-    friend std::ostream& operator<<(std::ostream& os,const MoreLife& ML);
+    friend std::ostream &operator<<(std::ostream &os, const MoreLife &ML);
 };
 
 #endif

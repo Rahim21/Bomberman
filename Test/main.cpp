@@ -5,6 +5,7 @@
 #include "MoreLife.h" // linked with makefile
 #include "Map.h"
 #include <conio.h>
+
 int main()
 {
     // std::cout << "Saisir un pseudo pour votre Bomberman : \n";
@@ -20,8 +21,8 @@ int main()
     potion.addLife(p1);
     p1.infoPlayer();
     Map m;
-    std::cout<<m;
-    // m.afficherMap();
+    m.createMap(m);
+    std::cout << m;
 
     // char c;
     // int compteur{0};

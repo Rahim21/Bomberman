@@ -2,7 +2,6 @@
 #define SPEEDUP_H
 
 #include "Item.h"
-#include "Player.h"
 
 /**
  * \class SpeedUp
@@ -13,7 +12,7 @@ class SpeedUp : public Item
 protected:
 public:
     void addSpeed(Player &p);
-    friend std::ostream& operator<<(std::ostream& os,const SpeedUp& SP);
+    friend std::ostream &operator<<(std::ostream &os, const SpeedUp &SP);
 };
 
 #endif

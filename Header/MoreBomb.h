@@ -2,7 +2,6 @@
 #define MOREBOMB_H
 
 #include "Item.h"
-#include "Player.h"
 
 /**
  * \class MoreBomb
@@ -13,7 +12,7 @@ class MoreBomb : public Item
 protected:
 public:
     void addBomb(Player &p);
-    friend std::ostream& operator<<(std::ostream& os,const MoreBomb& MB);
+    friend std::ostream &operator<<(std::ostream &os, const MoreBomb &MB);
 };
 
 #endif

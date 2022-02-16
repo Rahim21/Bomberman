@@ -1,0 +1,6 @@
+W,W,W,!,W,W,,W
+IP,,,,I,,,,I,,
+W,W,W,,,W,W,,W
+I,LI#,,,,IM,,,
+,W,w,,W,,WXIW,
+,Z,,,I,,G,,,L,

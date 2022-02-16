@@ -2,7 +2,6 @@
 #define POWERUP_H
 
 #include "Item.h"
-#include "Bomb.h"
 
 /**
  * \class PowerUp
@@ -13,7 +12,7 @@ class PowerUp : public Item
 protected:
 public:
     void addPower(Bomb &b);
-    friend std::ostream& operator<<(std::ostream& os,const PowerUp& PU);
+    friend std::ostream &operator<<(std::ostream &os, const PowerUp &PU);
 };
 
 #endif

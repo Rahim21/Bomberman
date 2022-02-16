@@ -1,6 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include "Player.h"
+#include "Bomb.h"
+
 /**
  * \class Item
  * \author HAYAT Rahim / MTARFI Souhail

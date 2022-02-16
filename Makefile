@@ -6,7 +6,10 @@ EXEC = launcher
 SOURCES = $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard */*/*.cpp)
 OBJ = $(SOURCES:.cpp=.o)
 
-all : $(EXEC)
+all : $(EXEC) #doc
+
+run : $(EXEC)
+	./$(EXEC)
 
 $(EXEC): $(OBJ)
 	$(CXX) -o $@ $^ -I Header/
