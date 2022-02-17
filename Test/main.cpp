@@ -1,14 +1,11 @@
 #include <iostream>
 #include <cstring>
-#include "Player.h"   // linked with makefile
-#include "Monster.h"  // linked with makefile
-#include "MoreLife.h" // linked with makefile
-#include "Map.h"
 #include "affichage.h"
 #include <conio.h>
 
 int main()
-{   menu();
+{
+    menu();
     // std::cout << "Saisir un pseudo pour votre Bomberman : \n";
     // std::string name;
     // std::cin >> name;

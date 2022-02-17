@@ -1,26 +1,26 @@
-'P':99: P : Le joueur.
-'X':100: X : L’objectif.
-',':0:   : Grass
-'W':1: W : Dirt, un mur intact.
-'w':2: w : Dirt, un mur fissuré.
-'I':3: I : Wall, un mur invincible.
-'0':4: 0 : Une bombe active.
-'@':5: @ : Un bombe qui explose avec les différentes cases touchées.
-'M':6: M : Un monstre de base.
-'G':7: G : Un monstre de type Ghost.
-'B':8: B : Un monstre de type Bowman.
+'P': P : Le joueur.
+'X': X : L’objectif.
+',':   : Grass
+'W': W : Dirt, un mur intact.
+'w': w : Dirt, un mur fissuré.
+'I': I : Wall, un mur invincible.
+'0': 0 : Une bombe active.
+'@': @ : Un bombe qui explose avec les différentes cases touchées.
+'M': M : Un monstre de base.
+'G': G : Un monstre de type Ghost.
+'B': B : Un monstre de type Bowman.
 
-'L':9: ML : Un Item MoreLife.
-'U':10: PU : Un Item PowerUp.
-'!':11: MB : Un Item MoreBomb.
-'Z':12: SP : Un Item SpeedUp.
-'#':13: SC : Un Item ScaleUp.
+'L': ML : Un Item MoreLife.
+'U': PU : Un Item PowerUp.
+'!': MB : Un Item MoreBomb.
+'Z': SP : Un Item SpeedUp.
+'#': SC : Un Item ScaleUp.
 
 
-'<':20: <-- : Une flèche du Bowman
-'>':21: -->
-'^':22: ^
-        |
-'|':23: |
-        |
-'v':24  v
+'<': <-- : Une flèche du Bowman
+'>': -->
+'^': ^
+     |
+'|': |
+     |
+'v': v

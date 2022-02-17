@@ -2,6 +2,9 @@
 #define MAP_H
 
 #include "Tile.h"
+#include "Player.h"
+#include "Monster.h"
+#include "MoreLife.h"
 
 /**
  * \class Map

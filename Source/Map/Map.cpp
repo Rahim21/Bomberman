@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Map.h" // linked with makefile
-#include "Player.h"
 #include <fstream>
 #include <vector>
 #include <algorithm>
