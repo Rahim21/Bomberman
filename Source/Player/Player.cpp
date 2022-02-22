@@ -2,7 +2,7 @@
 #include "Player.h" // linked with makefile
 
 // Méthodes de notre classe Player
-Player::Player(std::string pseudo)
+Player::Player(std::string pseudo) : Position{0, 0}
 {
     this->pseudo = pseudo;
 }

@@ -89,7 +89,7 @@ void Map::convertObjectByID(const char id)
     switch (id)
     {
     case 'P':
-        p = new Player("Player");
+        p = new Player();
         p->infoPlayer();
         delete p;
         break;

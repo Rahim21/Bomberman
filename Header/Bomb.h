@@ -1,11 +1,13 @@
 #ifndef BOMB_H
 #define BOMB_H
 
+#include "Position.h"
+
 /**
  * \class Bomb
  * \author HAYAT Rahim / MTARFI Souhail
  */
-class Bomb
+class Bomb : public Position
 {
 public:
     int puissance;
@@ -14,7 +16,7 @@ public:
 public:
     void infligerDegat();
     void afficherExplosion();
-    friend std::ostream& operator<<(std::ostream& os,const Bomb& b);
+    friend std::ostream &operator<<(std::ostream &os, const Bomb &b);
 };
 
 #endif

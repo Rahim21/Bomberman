@@ -12,21 +12,19 @@
  *
  * explication...
  */
-class Player
+class Player : public Position
 {
 public:
     std::string pseudo;
     int heart{3};
     int nbrBomb{1};
     int speed{1};
-    Position playerPosition;
 
 public:
-    Player(std::string pseudo);
-
+    Player(std::string pseudo = (std::string) "");
     void deplacement();
     void poserBombe();
-    friend std::ostream& operator<<(std::ostream& os,const Player& p);
+    friend std::ostream &operator<<(std::ostream &os, const Player &p);
     void infoPlayer();
     std::string toString();
 };

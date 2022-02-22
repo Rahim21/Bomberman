@@ -7,13 +7,12 @@
  * \class Mob
  * \author HAYAT Rahim / MTARFI Souhail
  */
-class Mob
+class Mob : public Position
 {
 protected:
     int hp;
     int damage;
     float speed;
-    Position mobPosition;
 
 public:
     Mob();
