@@ -22,6 +22,13 @@ void Map::createMap(Map &m)
                     fichier.get(caractere);
                 }
                 map[i][j] = m.verificationID(caractere, i, j);
+
+                // exemple : vérification d'objet + utilisation de sa methode
+                // l'opérande d'un dynamic_cast d'exécution doit avoir un type classe polymorphe : Position à donc un virtual
+                if (dynamic_cast<Player *>(positionObject[i][j]) != nullptr)
+                {
+                    static_cast<Player *>(positionObject[i][j])->infoPlayer();
+                }
             }
         }
         fichier.close();
@@ -89,22 +96,10 @@ void Map::convertObjectByID(const char id, const int i, const int j)
     {
     case 'P':
         positionObject[i][j] = new Player(i, j);
-        // positionObject[i][j]->infoPlayer();
-
-        // downcast en static_cast
-        // if (positionObject[i][j]->isPlayer())
-        // {
-        //     Player *p = static_cast<Player *>(positionObject[i][j]);
-        //     p->infoPlayer();
-        // }
-
-        // downcast en dynamic_cast FONCTIONNE
-        // dynamic_cast<Player &>(*positionObject[i][j]).infoPlayer();
-
         break;
-    case 'X':
-        // positionObject[i][j] = new
-        break;
+    // case 'X':
+    //     // positionObject[i][j] = new
+    //     break;
     case ',':
         positionObject[i][j] = new Grass(i, j);
         break;
@@ -118,9 +113,6 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new Wall(i, j);
         break;
     case '0':
-        positionObject[i][j] = new Bomb(i, j);
-        break;
-    case '@':
         positionObject[i][j] = new Bomb(i, j);
         break;
     case 'M':
@@ -147,21 +139,8 @@ void Map::convertObjectByID(const char id, const int i, const int j)
     case '#':
         positionObject[i][j] = new ScaleUp(i, j);
         break;
-    case '<':
-        // positionObject[i][j] = new
-        break;
-    case '>':
-        // positionObject[i][j] = new
-        break;
-    case '^':
-        // positionObject[i][j] = new
-        break;
-    case '|':
-        // positionObject[i][j] = new
-        break;
-    case 'v':
-        // positionObject[i][j] = new
-        break;
+    default:
+        positionObject[i][j] = nullptr;
     }
 }
 

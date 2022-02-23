@@ -1,5 +1,8 @@
 #include "Affichage.h"
 #include "Map.h"
+#include "Position.h"
+
+#include <algorithm>
 
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
@@ -59,19 +62,19 @@ void menu()
 		std::cout << "3. Quit";
 		gotoxy(10, 13);
 		std::cout << "Selectionnez une option: ";
-		char op = getche();
+		char clavier = getche();
 
-		if (op == '1')
+		if (clavier == '1')
 		{
 			system("cls");
 			play();
 		}
-		else if (op == '2')
+		else if (clavier == '2')
 		{
 			system("cls");
 			instructions();
 		}
-		else if (op == '3')
+		else if (clavier == '3')
 		{
 			system("cls");
 			exit(0);
@@ -87,23 +90,9 @@ void play()
 	refreshGame(carte);
 	do
 	{
-		char op = getche();
+		char clavier = getche();
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
-		if (op == 'a')
-		{
-			carte.map[2][2] = 'P';
-			refreshGame(carte);
-		}
-		else if (op == 'z')
-		{
-			carte.map[2][2] = 'W';
-			refreshGame(carte);
-		}
-		else if (op == 'q')
-		{
-			system("cls");
-			exit(0);
-		}
+		nextKeyPressed(clavier, carte);
 	} while (1);
 }
 
@@ -142,4 +131,33 @@ void refreshGame(Map &m)
 	titre();
 	std::cout << m;
 	afficheCommande();
+}
+
+void nextKeyPressed(const char &clavier, Map &carte)
+{
+	std::string keyList = "zZqQsSdD";
+	if (std::find(std::begin(keyList), std::end(keyList), clavier) != std::end(keyList))
+	{
+		if (verificationMouvement(clavier, carte))
+		{
+			// mouvement();
+			/*
+			dans mouvement : echange de place le joueur et la case où il souhaite aller
+			carte[get...][get...] = ... echange de valeur
+			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer(); : echange d'objet
+			récupérer les coordonnées actuelle du joueur pour ça
+			*/
+		}
+		refreshGame(carte);
+	}
+	else if (clavier == '3')
+	{
+		system("cls");
+		exit(0);
+	}
+}
+
+bool verificationMouvement(const char &clavier, Map &carte)
+{
+	return false;
 }

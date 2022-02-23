@@ -15,4 +15,7 @@ void menu();
 void play();
 void afficheCommande();
 void refreshGame(Map &m);
+void nextKeyPressed(const char &clavier, Map &carte);
+bool verificationMouvement(const char &clavier, Map &carte);
+
 #endif

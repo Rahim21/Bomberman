@@ -9,7 +9,11 @@ Player::Player(int i, int j, std::string pseudo) : Position{i, j}
     this->pseudo = pseudo;
 }
 
-void Player::deplacement()
+void playerAction()
+{
+}
+
+void Player::deplacement(const char &keyPressed)
 {
 }
 

@@ -18,7 +18,8 @@ public:
     void operator+=(Position const &autre);
     void operator-=(Position const &autre);
 
-    virtual bool isPlayer() noexcept { return false; }
+    // nécessaire pour utiliser un opérande avec un dynamic_cast
+    virtual bool isPolymorphic() noexcept { return false; }
 };
 
 #endif
