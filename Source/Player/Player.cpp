@@ -2,8 +2,10 @@
 #include "Player.h" // linked with makefile
 
 // Méthodes de notre classe Player
-Player::Player(std::string pseudo) : Position{0, 0}
+Player::Player(int i, int j, std::string pseudo) : Position{i, j}
 {
+    this->i = i;
+    this->j = j;
     this->pseudo = pseudo;
 }
 
@@ -28,5 +30,5 @@ void Player::infoPlayer()
 
 std::string Player::toString()
 {
-    return "Bomberman : " + pseudo + " | " + std::to_string(heart) + " Heart.";
+    return "Bomberman : " + pseudo + " | " + std::to_string(heart) + " Heart.\n (" + std::to_string(i) + ";" + std::to_string(j) + ")";
 }

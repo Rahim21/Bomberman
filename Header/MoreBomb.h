@@ -11,6 +11,7 @@ class MoreBomb : public Item
 {
 protected:
 public:
+    MoreBomb(const int i, const int j);
     void addBomb(Player &p);
     friend std::ostream &operator<<(std::ostream &os, const MoreBomb &MB);
 };

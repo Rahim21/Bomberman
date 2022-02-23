@@ -11,7 +11,8 @@ class Grass : public Tile
 {
 protected:
 public:
-    friend std::ostream& operator<<(std::ostream& os,const Grass& g);
+    Grass(const int i, const int j);
+    friend std::ostream &operator<<(std::ostream &os, const Grass &g);
 };
 
 #endif

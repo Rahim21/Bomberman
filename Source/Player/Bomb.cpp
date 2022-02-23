@@ -2,6 +2,12 @@
 #include "Bomb.h" // linked with makefile
 
 // Méthodes de notre classe Bomb
+Bomb::Bomb(const int i, const int j) : Position{i, j}
+{
+    this->i = i;
+    this->j = j;
+}
+
 void Bomb::infligerDegat()
 {
     /* Inflige des dégâts aux Players, Mobs, Dirt, Bomb? qui explose à son tour*/

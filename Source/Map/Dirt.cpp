@@ -2,7 +2,14 @@
 #include "Dirt.h" // linked with makefile
 
 // Méthodes de notre classe Dirt
-std::ostream& operator<<(std::ostream& os,const Dirt& d){
+Dirt::Dirt(const int i, const int j) : Tile{}
+{
+    this->i = i;
+    this->j = j;
+}
+
+std::ostream &operator<<(std::ostream &os, const Dirt &d)
+{
     if (d.murPresent)
     {
         if (d.tileHP >= 2)

@@ -3,6 +3,23 @@
 
 #include "Position.h"
 
+#include "Item.h"
+#include "MoreLife.h"
+#include "MoreBomb.h"
+#include "PowerUp.h"
+#include "SpeedUp.h"
+#include "ScaleUp.h"
+
+#include "Tile.h"
+#include "Grass.h"
+#include "Wall.h"
+#include "Dirt.h"
+
+#include "Mob.h"
+#include "Monster.h"
+#include "Ghost.h"
+#include "Bowman.h"
+
 /**
  * \class Map
  * \author HAYAT Rahim / MTARFI Souhail
@@ -14,13 +31,15 @@ public:
     static constexpr int mapLigne{6};
     // objectif ?
     char map[mapLigne][mapColonne];
+    Position *positionObject[mapLigne][mapColonne];
 
 public:
     friend std::ostream &operator<<(std::ostream &os, const Map &m);
     void createMap(Map &m);
-    char verificationID(const char id);
-    void convertObjectByID(const char id);
-    // void Map::deleteObject(Map &m);
+    char verificationID(const char id, const int i, const int j);
+    void convertObjectByID(const char id, const int i, const int j);
+    void deleteObject(const int i, const int j);
+    void deleteObject();
 };
 
 #endif

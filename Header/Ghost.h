@@ -11,7 +11,8 @@ class Ghost : public Mob
 {
 protected:
 public:
-    friend std::ostream& operator<<(std::ostream& os,const Ghost& g);
+    Ghost(const int i, const int j);
+    friend std::ostream &operator<<(std::ostream &os, const Ghost &g);
 };
 
 #endif

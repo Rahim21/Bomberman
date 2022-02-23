@@ -11,6 +11,7 @@ class PowerUp : public Item
 {
 protected:
 public:
+    PowerUp(const int i, const int j);
     void addPower(Bomb &b);
     friend std::ostream &operator<<(std::ostream &os, const PowerUp &PU);
 };

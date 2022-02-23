@@ -17,6 +17,8 @@ public:
     int getJ() const;
     void operator+=(Position const &autre);
     void operator-=(Position const &autre);
+
+    virtual bool isPlayer() noexcept { return false; }
 };
 
 #endif

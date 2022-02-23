@@ -11,6 +11,7 @@ class Bowman : public Mob
 {
 protected:
 public:
+    Bowman(const int i, const int j);
     friend std::ostream &operator<<(std::ostream &os, const Bowman &b);
 };
 

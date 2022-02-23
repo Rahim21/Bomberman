@@ -2,7 +2,7 @@
 #include "Mob.h" // linked with makefile
 
 // Méthodes de notre classe Mob
-Mob::Mob()
+Mob::Mob() : Position(i, j)
 {
     hp = 100;
 }

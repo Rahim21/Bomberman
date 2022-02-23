@@ -13,6 +13,7 @@ class Item : public Position
 {
 protected:
 public:
+    Item();
     // virtual void afficherItem();
 };
 

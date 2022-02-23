@@ -21,7 +21,7 @@ void Map::createMap(Map &m)
                 {
                     fichier.get(caractere);
                 }
-                map[i][j] = m.verificationID(caractere);
+                map[i][j] = m.verificationID(caractere, i, j);
             }
         }
         fichier.close();
@@ -66,7 +66,7 @@ std::ostream &operator<<(std::ostream &os, const Map &m)
     return os;
 }
 
-char Map::verificationID(const char id)
+char Map::verificationID(const char id, const int i, const int j)
 {
     std::string charList = "PX,WwI0@MGBLU!Z#<>^|v";
     if (!(std::find(std::begin(charList), std::end(charList), id) != std::end(charList)))
@@ -75,7 +75,7 @@ char Map::verificationID(const char id)
         exit(1);
     }
     // méthode pour la création d'objet dynamique
-    convertObjectByID(id);
+    convertObjectByID(id, i, j);
     if (id == ',')
     {
         return ' ';
@@ -83,80 +83,104 @@ char Map::verificationID(const char id)
     return id;
 }
 
-void Map::convertObjectByID(const char id)
+void Map::convertObjectByID(const char id, const int i, const int j)
 {
-    Player *p;
     switch (id)
     {
     case 'P':
-        p = new Player();
-        p->infoPlayer();
-        delete p;
+        positionObject[i][j] = new Player(i, j);
+        // positionObject[i][j]->infoPlayer();
+
+        // downcast en static_cast
+        // if (positionObject[i][j]->isPlayer())
+        // {
+        //     Player *p = static_cast<Player *>(positionObject[i][j]);
+        //     p->infoPlayer();
+        // }
+
+        // downcast en dynamic_cast FONCTIONNE
+        // dynamic_cast<Player &>(*positionObject[i][j]).infoPlayer();
+
         break;
     case 'X':
-        // p = new Player("Player");
+        // positionObject[i][j] = new
         break;
     case ',':
-        // p = new Player("Player");
+        positionObject[i][j] = new Grass(i, j);
         break;
     case 'W':
-        // p = new Player("Player");
+        positionObject[i][j] = new Dirt(i, j);
         break;
     case 'w':
-        // p = new Player("Player");
+        positionObject[i][j] = new Dirt(i, j);
         break;
     case 'I':
-        // p = new Player("Player");
+        positionObject[i][j] = new Wall(i, j);
         break;
     case '0':
-        // p = new Player("Player");
+        positionObject[i][j] = new Bomb(i, j);
         break;
     case '@':
-        // p = new Player("Player");
+        positionObject[i][j] = new Bomb(i, j);
         break;
     case 'M':
-        // p = new Player("Player");
+        positionObject[i][j] = new Monster(i, j);
         break;
     case 'G':
-        // p = new Player("Player");
+        positionObject[i][j] = new Ghost(i, j);
         break;
     case 'B':
-        // p = new Player("Player");
+        positionObject[i][j] = new Bowman(i, j);
         break;
     case 'L':
-        // p = new Player("Player");
+        positionObject[i][j] = new MoreLife(i, j);
         break;
     case 'U':
-        // p = new Player("Player");
+        positionObject[i][j] = new PowerUp(i, j);
         break;
     case '!':
-        // p = new Player("Player");
+        positionObject[i][j] = new MoreBomb(i, j);
         break;
     case 'Z':
-        // p = new Player("Player");
+        positionObject[i][j] = new SpeedUp(i, j);
         break;
     case '#':
-        // p = new Player("Player");
+        positionObject[i][j] = new ScaleUp(i, j);
         break;
     case '<':
-        // p = new Player("Player");
+        // positionObject[i][j] = new
         break;
     case '>':
-        // p = new Player("Player");
+        // positionObject[i][j] = new
         break;
     case '^':
-        // p = new Player("Player");
+        // positionObject[i][j] = new
         break;
     case '|':
-        // p = new Player("Player");
+        // positionObject[i][j] = new
         break;
     case 'v':
-        // p = new Player("Player");
+        // positionObject[i][j] = new
         break;
     }
 }
 
-// méthode pour supprimer les objets en fin de jeu
-// void Map::deleteObject(Map &m)
+// void Map::charToObject(char charObj)
 // {
 // }
+
+void Map::deleteObject(const int i, const int j)
+{
+    delete positionObject[i][j];
+}
+
+void Map::deleteObject()
+{
+    for (int i = 0; i < mapLigne; i++)
+    {
+        for (int j = 0; j < mapColonne; j++)
+        {
+            delete positionObject[i][j];
+        }
+    }
+}

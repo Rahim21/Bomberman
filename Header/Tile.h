@@ -7,9 +7,10 @@
  * \class Tile
  * \author HAYAT Rahim / MTARFI Souhail
  */
-class Tile
+class Tile : public Position
 {
 public:
+    Tile();
     int tileHP{2};
     bool murPresent{true};
 

@@ -11,7 +11,8 @@ class Wall : public Tile
 {
 protected:
 public:
-    friend std::ostream& operator<<(std::ostream& os,const Wall& w);
+    Wall(const int i, const int j);
+    friend std::ostream &operator<<(std::ostream &os, const Wall &w);
 };
 
 #endif

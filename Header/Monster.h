@@ -12,7 +12,8 @@ class Monster : public Mob
 {
 protected:
 public:
-    friend std::ostream& operator<<(std::ostream& os,const Monster& m);
+    Monster(const int i, const int j);
+    friend std::ostream &operator<<(std::ostream &os, const Monster &m);
 };
 
 #endif
