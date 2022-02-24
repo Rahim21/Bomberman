@@ -23,12 +23,11 @@ public:
 public:
     Player(const int i, const int j, std::string pseudo = "");
     void playerAction();
-    void deplacement(const char &keyPressed);
+    void verficationObstacle(const char &keyPressed);
     void poserBombe();
     friend std::ostream &operator<<(std::ostream &os, const Player &p);
     void infoPlayer();
     std::string toString();
-
     int getPlayerI();
     int getPlayerJ();
 };

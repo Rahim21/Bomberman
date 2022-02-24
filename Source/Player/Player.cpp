@@ -20,9 +20,6 @@ void playerAction()
 {
 }
 
-void Player::deplacement(const char &keyPressed)
-{
-}
 
 void Player::poserBombe()
 {

@@ -35,6 +35,7 @@ public:
     char map[mapLigne][mapColonne];
     Position *positionObject[mapLigne][mapColonne];
     std::vector<Player *> joueur;
+    std::vector<Mob *> mob;
 
 public:
     friend std::ostream &operator<<(std::ostream &os, const Map &m);

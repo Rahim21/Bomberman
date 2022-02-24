@@ -105,8 +105,6 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new Grass(i, j);
         break;
     case 'W':
-        positionObject[i][j] = new Dirt(i, j);
-        break;
     case 'w':
         positionObject[i][j] = new Dirt(i, j);
         break;
@@ -118,12 +116,15 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         break;
     case 'M':
         positionObject[i][j] = new Monster(i, j);
+        mob.push_back(static_cast<Mob *>(positionObject[i][j]));
         break;
     case 'G':
         positionObject[i][j] = new Ghost(i, j);
+        mob.push_back(static_cast<Mob *>(positionObject[i][j]));
         break;
     case 'B':
         positionObject[i][j] = new Bowman(i, j);
+        mob.push_back(static_cast<Mob *>(positionObject[i][j]));
         break;
     case 'L':
         positionObject[i][j] = new MoreLife(i, j);
