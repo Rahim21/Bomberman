@@ -179,16 +179,20 @@ void nextKeyPressed(const char &clavier, Map &carte)
 
 void echanger(Map &carte, int *i2, int *j2)
 {
+	// Update tableau d'affichage de type char
 	char tmp;
-	int PlayerI = carte.joueur[selectPlayer]->getPlayerI();
-	int PlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
 	tmp = carte.map[*i2][*j2];
-	carte.map[*i2][*j2] = carte.map[PlayerI][PlayerJ];
-	carte.map[PlayerI][PlayerJ] = tmp;
+	carte.map[*i2][*j2] = carte.map[getPlayerI][getPlayerJ];
+	carte.map[getPlayerI][getPlayerJ] = tmp;
 
-	// auto tmp1=carte.positionObject[*i2][*j2];
-	// carte.positionObject[*i2][*j2]=carte.positionObject[PlayerI][PlayerJ];
-	// carte.positionObject[*i2][*j2]=tmp1;
+	// Update du tableau d'objet de type Position
+	auto tmp1 = carte.positionObject[*i2][*j2];
+	carte.positionObject[*i2][*j2] = carte.positionObject[getPlayerI][getPlayerJ];
+	carte.positionObject[getPlayerI][getPlayerJ] = tmp1;
+
+	// Update du Tableau de player de type Player
+	carte.joueur[selectPlayer]->setPlayerI(*i2);
+	carte.joueur[selectPlayer]->setPlayerJ(*j2);
 }
 
 bool verification_Obstacle(Map &carte, int i2, int j2)

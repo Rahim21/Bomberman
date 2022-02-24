@@ -30,6 +30,8 @@ public:
     std::string toString();
     int getPlayerI();
     int getPlayerJ();
+    void setPlayerI(int _i);
+    void setPlayerJ(int _j);
 };
 
 #endif

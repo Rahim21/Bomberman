@@ -20,7 +20,6 @@ void playerAction()
 {
 }
 
-
 void Player::poserBombe()
 {
 }
@@ -45,7 +44,18 @@ int Player::getPlayerI()
 {
     return i;
 }
+
 int Player::getPlayerJ()
 {
     return j;
+}
+
+void Player::setPlayerI(int _i)
+{
+    this->i = _i;
+}
+
+void Player::setPlayerJ(int _j)
+{
+    this->j = _j;
 }
