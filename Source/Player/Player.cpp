@@ -6,7 +6,14 @@ Player::Player(int i, int j, std::string pseudo) : Position{i, j}
 {
     this->i = i;
     this->j = j;
-    this->pseudo = pseudo;
+    if (pseudo.length() > 0)
+    {
+        this->pseudo = pseudo;
+    }
+    else
+    {
+        this->pseudo = "Joueur1";
+    }
 }
 
 void playerAction()
@@ -34,5 +41,14 @@ void Player::infoPlayer()
 
 std::string Player::toString()
 {
-    return "Bomberman : " + pseudo + " | " + std::to_string(heart) + " Heart.\n (" + std::to_string(i) + ";" + std::to_string(j) + ")";
+    return pseudo + " | " + std::to_string(heart) + " Heart | Position (" + std::to_string(j) + ";" + std::to_string(i) + ")";
+}
+
+int Player::getPlayerI()
+{
+    return i;
+}
+int Player::getPlayerJ()
+{
+    return j;
 }

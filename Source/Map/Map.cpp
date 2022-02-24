@@ -25,10 +25,10 @@ void Map::createMap(Map &m)
 
                 // exemple : vérification d'objet + utilisation de sa methode
                 // l'opérande d'un dynamic_cast d'exécution doit avoir un type classe polymorphe : Position à donc un virtual
-                if (dynamic_cast<Player *>(positionObject[i][j]) != nullptr)
-                {
-                    static_cast<Player *>(positionObject[i][j])->infoPlayer();
-                }
+                // if (dynamic_cast<Player *>(positionObject[i][j]) != nullptr)
+                // {
+                //     static_cast<Player *>(positionObject[i][j])->infoPlayer();
+                // }
             }
         }
         fichier.close();
@@ -96,6 +96,7 @@ void Map::convertObjectByID(const char id, const int i, const int j)
     {
     case 'P':
         positionObject[i][j] = new Player(i, j);
+        joueur.push_back(static_cast<Player *>(positionObject[i][j]));
         break;
     // case 'X':
     //     // positionObject[i][j] = new

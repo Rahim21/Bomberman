@@ -20,6 +20,8 @@
 #include "Ghost.h"
 #include "Bowman.h"
 
+#include <vector>
+
 /**
  * \class Map
  * \author HAYAT Rahim / MTARFI Souhail
@@ -32,6 +34,7 @@ public:
     // objectif ?
     char map[mapLigne][mapColonne];
     Position *positionObject[mapLigne][mapColonne];
+    std::vector<Player *> joueur;
 
 public:
     friend std::ostream &operator<<(std::ostream &os, const Map &m);

@@ -6,18 +6,18 @@
 int main()
 {
     menu();
-    // std::cout << "Saisir un pseudo pour votre Bomberman : \n";
-    // std::string name;
-    // std::cin >> name;
-    // Player p1 = Player{name};
-    // std::cout << p1.toString() << std::endl;
-    // Mob m1 = Mob();
-    // m1.afficherMob();
-    // Player p1{"Rahim"};
-    // MoreLife potion;
-    // p1.infoPlayer();
-    // potion.addLife(p1);
-    // p1.infoPlayer();
+    //  std::cout << "Saisir un pseudo pour votre Bomberman : \n";
+    //  std::string name;
+    //  std::cin >> name;
+    //  Player p1 = Player{name};
+    //  std::cout << p1.toString() << std::endl;
+    //  Mob m1 = Mob();
+    //  m1.afficherMob();
+    //  Player p1{"Rahim"};
+    //  MoreLife potion;
+    //  p1.infoPlayer();
+    //  potion.addLife(p1);
+    //  p1.infoPlayer();
     // Map m;
     // m.createMap(m);
     // std::cout << m;
