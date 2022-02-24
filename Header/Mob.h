@@ -17,10 +17,11 @@ protected:
 public:
     Mob();
     int Alea_sens();
-    int getMobI();
-    int getMobJ();
-    void setMobI(int _i);
-    void setMobJ(int _j);
+
+    virtual int getMobI();
+    virtual int getMobJ();
+    virtual void setMobI(int _i);
+    virtual void setMobJ(int _j);
     // void echanger(Map &carte, int *i2, int *j2);
     // bool verificationMouvement( Map &carte);
     // bool verification_Obstacle(Map &carte, int i2, int j2);

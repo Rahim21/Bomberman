@@ -13,6 +13,10 @@ protected:
 public:
     Bowman(const int i, const int j);
     friend std::ostream &operator<<(std::ostream &os, const Bowman &b);
+    int getMobI();
+    int getMobJ();
+    void setMobI(int _i);
+    void setMobJ(int _j);
 };
 
 #endif

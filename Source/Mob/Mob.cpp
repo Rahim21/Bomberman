@@ -6,6 +6,15 @@ Mob::Mob() : Position(i, j)
 {
     hp = 100;
 }
+
+int Mob::Alea_sens()
+{
+    auto generateurAlea = std::random_device{};
+    auto generateur = std::mt19937{generateurAlea()};
+    auto distrubution = std::uniform_int_distribution{0, 3};
+    return distrubution(generateur);
+}
+
 int Mob::getMobI()
 {
     return i;
@@ -25,4 +34,3 @@ void Mob::setMobJ(int _j)
 {
     this->j = _j;
 }
-

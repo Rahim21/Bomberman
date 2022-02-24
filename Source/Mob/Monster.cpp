@@ -13,22 +13,23 @@ std::ostream &operator<<(std::ostream &os, const Monster &m)
     os << "M" << std::endl;
     return os;
 }
-int Monster::getMonsterI()
+
+int Monster::getMobI()
 {
     return i;
 }
 
-int Monster::getMonsterJ()
+int Monster::getMobJ()
 {
     return j;
 }
 
-void Monster::setMonsterI(int _i)
+void Monster::setMobI(int _i)
 {
     this->i = _i;
 }
 
-void Monster::setMonsterJ(int _j)
+void Monster::setMobJ(int _j)
 {
     this->j = _j;
 }

@@ -1,11 +1,15 @@
 #ifndef AFFICHAGE_H
 #define AFFICHAGE_H
+#include "Map.h"
+#include "Position.h"
+
+#include <random>
+#include <algorithm>
 #include <iostream>
 #include <conio.h>
 #include <dos.h>
 #include <windows.h>
 #include <time.h>
-#include "Map.h"
 
 void gotoxy(int x, int y);
 void setcursor(bool visible, DWORD size);
@@ -16,9 +20,13 @@ void menu();
 void play();
 void afficheCommande();
 void refreshGame(Map &m);
+/* ---------- PLAYER ---------- */
 void nextKeyPressed(const char &clavier, Map &carte);
 bool verificationMouvement(const char &clavier, Map &carte);
-void echanger(Map &carte, int *i2, int *j2);
 bool verification_Obstacle(Map &carte, int i2, int j2);
-
+void echanger(Map &carte, int *i2, int *j2);
+/* ---------- MOB ---------- */
+bool verificationMouvementMob(Map &carte);
+bool verification_ObstacleMob(Map &carte, int i2, int j2);
+void echangerMob(Map &carte, int *i2, int *j2);
 #endif

@@ -13,3 +13,23 @@ std::ostream &operator<<(std::ostream &os, const Ghost &g)
     os << "G" << std::endl;
     return os;
 }
+
+int Ghost::getMobI()
+{
+    return i;
+}
+
+int Ghost::getMobJ()
+{
+    return j;
+}
+
+void Ghost::setMobI(int _i)
+{
+    this->i = _i;
+}
+
+void Ghost::setMobJ(int _j)
+{
+    this->j = _j;
+}

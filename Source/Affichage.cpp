@@ -1,21 +1,18 @@
 #include "Affichage.h"
 #include "Map.h"
-#include "Position.h"
-#include <random>
-#include <algorithm>
+
+static Map carte;
 
 static bool multijoueur = false;
 static int tour{0};
-static int modulo;
-static Map carte;
 static int selectPlayer = (multijoueur) ? tour % 2 : 0;
 static int getPlayerI;
 static int getPlayerJ;
-static int getMobI;
-static int getMobJ;
-static int getMonsterI;
-static int getMonsterJ;
-static int i=0;
+
+static int selectMob;
+static int getMobPosI;
+static int getMobPosJ;
+
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
 void setcursor(bool visible, DWORD size)
@@ -126,11 +123,18 @@ void play()
 	{
 		getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
 		getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
-		i++;
 		refreshGame(carte);
 		char clavier = getche();
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
 		nextKeyPressed(clavier, carte);
+		// les mobs jouent après le tour des joueurs
+		for (selectMob = 0; selectMob < carte.mob.size(); selectMob += 1)
+		{
+			if (verificationMouvementMob(carte))
+			{
+				// std::cout << "Mob : Grrr !" << std::endl;
+			}
+		}
 	} while (1);
 }
 
@@ -156,6 +160,8 @@ void refreshGame(Map &m)
 	afficherTour(m);
 }
 
+/* ---------- PLAYER ---------- */
+
 void nextKeyPressed(const char &clavier, Map &carte)
 {
 	std::string keyList = "zZqQsSdD3";
@@ -165,12 +171,8 @@ void nextKeyPressed(const char &clavier, Map &carte)
 		{
 			tour += 1;
 			selectPlayer = (multijoueur) ? tour % 2 : 0;
-			// mouvement();
 			/*
-			dans mouvement : echange de place le joueur et la case où il souhaite aller
-			carte[get...][get...] = ... echange de valeur
-			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer(); : echange d'objet
-			récupérer les coordonnées actuelle du joueur pour ça
+			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer();
 			*/
 		}
 		refreshGame(carte);
@@ -261,7 +263,7 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		break;
 	case 'S':
 	case 's':
-		if (carte.joueur[selectPlayer]->getPlayerI() + 1 > carte.mapLigne)
+		if (carte.joueur[selectPlayer]->getPlayerI() + 1 > carte.mapLigne - 1)
 		{
 			return false;
 		}
@@ -273,7 +275,7 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		break;
 	case 'D':
 	case 'd':
-		if (carte.joueur[selectPlayer]->getPlayerJ() + 1 > carte.mapColonne)
+		if (carte.joueur[selectPlayer]->getPlayerJ() + 1 > carte.mapColonne - 1)
 		{
 			return false;
 		}
@@ -293,190 +295,91 @@ bool verificationMouvement(const char &clavier, Map &carte)
 	return true;
 }
 
-/*----------------------------------------MOB deplacement ------------------------------------------------*/
-void echangerMob(Map &carte, int *i2, int *j2)
+/* ---------- MOB ---------- */
+
+bool verificationMouvementMob(Map &carte)
 {
-    
-        getMobI = carte.mob[i]->getMobI();
-        getMobJ = carte.mob[i]->getMobJ();
-        // Update tableau d'affichage de type char
-        char tmp;
-        tmp = carte.map[*i2][*j2];
-        carte.map[*i2][*j2] = carte.map[getMobI][getMobJ];
-        carte.map[getMobI][getMobJ] = tmp;
+	/*
+	0 : haut
+	1 : gauche
+	2 : bas
+	3 : droite
+	*/
+	switch (carte.mob[selectMob]->Alea_sens())
+	{
+	case 0:
+		if (carte.mob[selectMob]->getMobI() - 1 < 0)
+		{
+			return false;
+		}
+		else
+		{
+			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI() + 1, carte.mob[selectMob]->getMobJ());
+		}
+		break;
+	case 1:
+		if (carte.mob[selectMob]->getMobJ() - 1 < 0)
+		{
+			return false;
+		}
+		else
+		{
+			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI(), carte.mob[selectMob]->getMobJ() - 1);
+		}
+		break;
+	case 2:
+		if (carte.mob[selectMob]->getMobI() + 1 > carte.mapLigne - 1)
+		{
+			return false;
+		}
+		else
+		{
+			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI() + 1, carte.mob[selectMob]->getMobJ());
+		}
+		break;
+	case 3:
+		if (carte.mob[selectMob]->getMobJ() + 1 > carte.mapColonne - 1)
+		{
+			return false;
+		}
+		else
+		{
+			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI(), carte.mob[selectMob]->getMobJ() + 1);
+		}
+		break;
+	default:
+		return false;
+	}
 
-        // Update du tableau d'objet de type Position
-        auto tmp1 = carte.positionObject[*i2][*j2];
-        carte.positionObject[*i2][*j2] = carte.positionObject[getMobI][getMobJ];
-        carte.positionObject[getMobI][getMobJ] = tmp1;
-
-        // Update du Tableau de mob de type mob
-        carte.mob[i]->setMobI(*i2);
-        carte.mob[i]->setMobJ(*j2);
-    
-     
+	return true;
 }
 
 bool verification_ObstacleMob(Map &carte, int i2, int j2)
 {
-    if (carte.map[i2][j2]==' ' || carte.map[i2][j2]==',')
-    {
-        echangerMob(carte, &i2, &j2);
+	if (carte.map[i2][j2] == ' ' || carte.map[i2][j2] == ',')
+	{
+		echangerMob(carte, &i2, &j2);
 		return true;
-    }
+	}
 	return false;
 }
 
-int Alea_sens(){
-	auto generateurAlea=std::random_device{};
-	auto generateur = std::mt19937{generateurAlea()};
-	auto distrubution = std::uniform_int_distribution{0,3};
-	return distrubution(generateur);
-}
-
-bool verificationMouvementMob( Map &carte)
-{   /*  0 : haut
-        1 : gauche
-        2 : bas
-        3 : droite
-    */
-       switch (Alea_sens())
-	{
-	case 0:
-        if (carte.mob[i]->getMobI() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMob(carte, carte.mob[i]->getMobI()+1, carte.mob[i]->getMobJ());
-            }
-        break;
-	case 1:
-        if (carte.mob[i]->getMobJ() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMob(carte, carte.mob[i]->getMobI(), carte.mob[i]->getMobJ() - 1);
-            }
-        break;
-	case 2:
-        if (carte.mob[i]->getMobJ() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMob(carte, carte.mob[i]->getMobI()+1, carte.mob[i]->getMobJ() );
-            }
-        break;
-	case 3:
-        if (carte.mob[i]->getMobI() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMob(carte, carte.mob[i]->getMobI(), carte.mob[i]->getMobJ()+1);
-            }
-		break;
-	default:
-		return false;
-	}
-   
-   
-	
-	return true;
-}
-/*---------------------Monster-----------------------------------------------*/
-void echangerMonster(Map &carte, int *i2, int *j2)
+void echangerMob(Map &carte, int *i2, int *j2)
 {
-    
-        getMonsterI = carte.monster[i]->getMonsterI();
-        getMonsterJ = carte.monster[i]->getMonsterJ();
-        // Update tableau d'affichage de type char
-        char tmp;
-        tmp = carte.map[*i2][*j2];
-        carte.map[*i2][*j2] = carte.map[getMonsterI][getMonsterJ];
-        carte.map[getMonsterI][getMonsterJ] = tmp;
+	getMobPosI = carte.mob[selectMob]->getMobI();
+	getMobPosJ = carte.mob[selectMob]->getMobJ();
+	// Update tableau d'affichage de type char
+	char tmp;
+	tmp = carte.map[*i2][*j2];
+	carte.map[*i2][*j2] = carte.map[getMobPosI][getMobPosJ];
+	carte.map[getMobPosI][getMobPosJ] = tmp;
 
-        // Update du tableau d'objet de type Position
-        auto tmp1 = carte.positionObject[*i2][*j2];
-        carte.positionObject[*i2][*j2] = carte.positionObject[getMonsterI][getMonsterJ];
-        carte.positionObject[getMonsterI][getMonsterJ] = tmp1;
+	// Update du tableau d'objet de type Position
+	auto tmp1 = carte.positionObject[*i2][*j2];
+	carte.positionObject[*i2][*j2] = carte.positionObject[getMobPosI][getMobPosJ];
+	carte.positionObject[getMobPosI][getMobPosJ] = tmp1;
 
-        // Update du Tableau de mob de type mob
-        carte.monster[i]->setMonsterI(*i2);
-        carte.monster[i]->setMonsterJ(*j2);
-    
-     
-}
-
-bool verification_ObstacleMonster(Map &carte, int i2, int j2)
-{
-    if (carte.map[i2][j2]==' ' || carte.map[i2][j2]==',')
-    {
-        echangerMonster(carte, &i2, &j2);
-		return true;
-    }
-	return false;
-}
-
-bool verificationMouvementMonster( Map &carte)
-{   /*  0 : haut
-        1 : gauche
-        2 : bas
-        3 : droite
-    */
-       switch (Alea_sens())
-	{
-	case 0:
-        if (carte.monster[i]->getMonsterI() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMonster(carte, carte.monster[i]->getMonsterI()+1, carte.monster[i]->getMonsterJ());
-            }
-        break;
-	case 1:
-        if (carte.monster[i]->getMonsterJ() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMonster(carte, carte.monster[i]->getMonsterI(), carte.monster[i]->getMonsterJ() - 1);
-            }
-        break;
-	case 2:
-        if (carte.monster[i]->getMonsterJ() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMonster(carte, carte.monster[i]->getMonsterI()+1, carte.monster[i]->getMonsterJ() );
-            }
-        break;
-	case 3:
-        if (carte.monster[i]->getMonsterI() - 1 < 0)
-            {
-                return false;
-            }
-            else
-            {
-                return verification_ObstacleMonster(carte, carte.monster[i]->getMonsterI(), carte.monster[i]->getMonsterJ()+1);
-            }
-		break;
-	default:
-		return false;
-	}
-   
-   
-	
-	return true;
+	// Update du Tableau de mob de type mob
+	carte.mob[selectMob]->setMobI(*i2);
+	carte.mob[selectMob]->setMobJ(*j2);
 }

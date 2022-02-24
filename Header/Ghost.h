@@ -13,6 +13,10 @@ protected:
 public:
     Ghost(const int i, const int j);
     friend std::ostream &operator<<(std::ostream &os, const Ghost &g);
+    int getMobI();
+    int getMobJ();
+    void setMobI(int _i);
+    void setMobJ(int _j);
 };
 
 #endif

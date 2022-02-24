@@ -14,10 +14,10 @@ protected:
 public:
     Monster(const int i, const int j);
     friend std::ostream &operator<<(std::ostream &os, const Monster &m);
-     int getMonsterI();
-    int getMonsterJ();
-    void setMonsterI(int _i);
-    void setMonsterJ(int _j);
+    int getMobI();
+    int getMobJ();
+    void setMobI(int _i);
+    void setMobJ(int _j);
 };
 
 #endif
