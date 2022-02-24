@@ -7,6 +7,10 @@
 static bool multijoueur = false;
 static int tour{0};
 static int modulo;
+static Map carte;
+static int selectPlayer = (multijoueur) ? tour % 2 : 0;
+static int getPlayerI;
+static int getPlayerJ;
 
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
@@ -54,7 +58,7 @@ void titre()
 
 void afficherTour(const Map &carte)
 {
-	((multijoueur) ? tour % 2 : 0 == 0) ? gotoxy(38, 5) : gotoxy(38, 3);
+	(selectPlayer == 0) ? gotoxy(38, 3) : gotoxy(38, 5);
 	std::cout << " Tour [" << tour + 1 << "] : ";
 	gotoxy(50, 3);
 	carte.joueur[0]->infoPlayer();
@@ -102,9 +106,8 @@ void menu()
 
 void play()
 {
-	Map carte;
 	carte.createMap(carte);
-	int i=0;
+
 	if (carte.joueur.size() == 2)
 	{
 		multijoueur = true;
@@ -117,6 +120,8 @@ void play()
 
 	do
 	{
+		getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
+		getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
 		refreshGame(carte);
 		char clavier = getche();
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
@@ -154,6 +159,7 @@ void nextKeyPressed(const char &clavier, Map &carte)
 		if (verificationMouvement(clavier, carte))
 		{
 			tour += 1;
+			selectPlayer = (multijoueur) ? tour % 2 : 0;
 			// mouvement();
 			/*
 			dans mouvement : echange de place le joueur et la case où il souhaite aller
@@ -171,47 +177,49 @@ void nextKeyPressed(const char &clavier, Map &carte)
 	}
 }
 
-void echanger(Map &carte,int *i2,int *j2){
+void echanger(Map &carte, int *i2, int *j2)
+{
 	char tmp;
-	int PlayerI=carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI();
-	int PlayerJ=carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ();
-	tmp=carte.map[*i2][*j2];
-	carte.map[*i2][*j2]=carte.map[PlayerI][PlayerJ];
-	carte.map[PlayerI][PlayerJ]=tmp;
+	int PlayerI = carte.joueur[selectPlayer]->getPlayerI();
+	int PlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
+	tmp = carte.map[*i2][*j2];
+	carte.map[*i2][*j2] = carte.map[PlayerI][PlayerJ];
+	carte.map[PlayerI][PlayerJ] = tmp;
 
 	// auto tmp1=carte.positionObject[*i2][*j2];
 	// carte.positionObject[*i2][*j2]=carte.positionObject[PlayerI][PlayerJ];
 	// carte.positionObject[*i2][*j2]=tmp1;
 }
 
-void verification_Obstacle( Map &carte,int i2,int j2){
+bool verification_Obstacle(Map &carte, int i2, int j2)
+{
 	switch (carte.map[i2][j2])
 	{
 	case ' ':
 	case ',':
-	std::cout<<"testttttt";
-	echanger(carte,&i2,&j2);
-	break;
+		std::cout << "testttttt";
+		echanger(carte, &i2, &j2);
+		return true;
 	/*
-		Fonction Upgrade_Player : player prend l'item , l'ancienne case de player deviens grass 
+		Fonction Upgrade_Player : player prend l'item , l'ancienne case de player deviens grass
 	*/
 	case 'L':
-	//Upgrade_Player();
+		// Upgrade_Player();
 		break;
 	case 'U':
-	//Upgrade_Player();
+		// Upgrade_Player();
 		break;
 	case '!':
-	//Upgrade_Player();
+		// Upgrade_Player();
 		break;
 	case 'Z':
-	//Upgrade_Player();
+		// Upgrade_Player();
 		break;
 	case '#':
-	//Upgrade_Player();
+		// Upgrade_Player();
 		break;
 	}
-	
+	return false;
 }
 
 // Créer un tableau de Joueur et Mob, pour récupérer les coordonnées et pouvoir les déplacer et structure pour i et j
@@ -222,45 +230,50 @@ bool verificationMouvement(const char &clavier, Map &carte)
 	{
 	case 'Z':
 	case 'z':
-		if (carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI() - 1 < 0)
+		if (carte.joueur[selectPlayer]->getPlayerI() - 1 < 0)
 		{
 			return false;
-		}else{
-			verification_Obstacle( carte,carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI()-1,carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ());
+		}
+		else
+		{
+			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI() - 1, carte.joueur[selectPlayer]->getPlayerJ());
 		}
 		break;
 	case 'Q':
 	case 'q':
-		if (carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ() - 1 < 0)
+		if (carte.joueur[selectPlayer]->getPlayerJ() - 1 < 0)
 		{
 			return false;
-		}else
-		{
-			verification_Obstacle( carte,carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI(),carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ()-1);
 		}
-		
+		else
+		{
+			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI(), carte.joueur[selectPlayer]->getPlayerJ() - 1);
+		}
+
 		break;
 	case 'S':
 	case 's':
-		if (carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI() + 1 > carte.mapLigne)
+		if (carte.joueur[selectPlayer]->getPlayerI() + 1 > carte.mapLigne)
 		{
 			return false;
-		}else
-		{
-			verification_Obstacle( carte,carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI()+1,carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ());
 		}
-		
+		else
+		{
+			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI() + 1, carte.joueur[selectPlayer]->getPlayerJ());
+		}
+
 		break;
 	case 'D':
 	case 'd':
-		if (carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ() + 1 > carte.mapColonne)
+		if (carte.joueur[selectPlayer]->getPlayerJ() + 1 > carte.mapColonne)
 		{
 			return false;
-		}else
-		{
-			verification_Obstacle( carte,carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerI(),carte.joueur[(multijoueur) ? tour % 2 : 0]->getPlayerJ()+1);
 		}
-		
+		else
+		{
+			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI(), carte.joueur[selectPlayer]->getPlayerJ() + 1);
+		}
+
 		break;
 	case '3':
 		system("cls");

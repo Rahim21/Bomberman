@@ -18,6 +18,7 @@ void afficheCommande();
 void refreshGame(Map &m);
 void nextKeyPressed(const char &clavier, Map &carte);
 bool verificationMouvement(const char &clavier, Map &carte);
-void echanger(Map &carte,int *i2,int *j2);
+void echanger(Map &carte, int *i2, int *j2);
+bool verification_Obstacle(Map &carte, int i2, int j2);
 
 #endif
