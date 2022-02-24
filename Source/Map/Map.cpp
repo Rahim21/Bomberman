@@ -116,7 +116,7 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         break;
     case 'M':
         positionObject[i][j] = new Monster(i, j);
-        mob.push_back(static_cast<Mob *>(positionObject[i][j]));
+        monster.push_back(static_cast<Monster *>(positionObject[i][j]));
         break;
     case 'G':
         positionObject[i][j] = new Ghost(i, j);

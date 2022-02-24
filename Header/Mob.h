@@ -1,6 +1,6 @@
 #ifndef MOB_H
 #define MOB_H
-
+#include <random>
 #include "Position.h"
 
 /**
@@ -16,7 +16,14 @@ protected:
 
 public:
     Mob();
-    void deplacement();
+    int Alea_sens();
+    int getMobI();
+    int getMobJ();
+    void setMobI(int _i);
+    void setMobJ(int _j);
+    // void echanger(Map &carte, int *i2, int *j2);
+    // bool verificationMouvement( Map &carte);
+    // bool verification_Obstacle(Map &carte, int i2, int j2);
     // virtual void afficherMob();
 };
 

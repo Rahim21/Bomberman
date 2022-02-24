@@ -6,8 +6,23 @@ Mob::Mob() : Position(i, j)
 {
     hp = 100;
 }
+int Mob::getMobI()
+{
+    return i;
+}
 
-// void Mob::afficherMob()
-// {
-//     std::cout << "" << std::endl;
-// }
+int Mob::getMobJ()
+{
+    return j;
+}
+
+void Mob::setMobI(int _i)
+{
+    this->i = _i;
+}
+
+void Mob::setMobJ(int _j)
+{
+    this->j = _j;
+}
+
