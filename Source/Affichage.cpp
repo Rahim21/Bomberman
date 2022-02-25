@@ -184,7 +184,7 @@ void nextKeyPressed(const char &clavier, Map &carte)
 	}
 }
 
-void echanger(Map &carte, int *i2, int *j2)
+void echanger(Map &carte, int *i2, int *j2, bool destroy)
 {
 	// Update tableau d'affichage de type char
 	char tmp;
@@ -197,6 +197,13 @@ void echanger(Map &carte, int *i2, int *j2)
 	carte.positionObject[*i2][*j2] = carte.positionObject[getPlayerI][getPlayerJ];
 	carte.positionObject[getPlayerI][getPlayerJ] = tmp1;
 
+	if (destroy)
+	{
+		carte.map[getPlayerI][getPlayerJ] = ' ';
+		carte.positionObject[getPlayerI][getPlayerJ] = nullptr;
+		carte.positionObject[getPlayerI][getPlayerJ] = new Grass(getPlayerI, getPlayerJ);
+	}
+
 	// Update du Tableau de player de type Player
 	carte.joueur[selectPlayer]->setPlayerI(*i2);
 	carte.joueur[selectPlayer]->setPlayerJ(*j2);
@@ -208,25 +215,18 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 	{
 	case ' ':
 	case ',':
-		echanger(carte, &i2, &j2);
+		echanger(carte, &i2, &j2, false);
 		return true;
 	/*
 		Fonction Upgrade_Player : player prend l'item , l'ancienne case de player deviens grass
 	*/
 	case 'L':
-		// Upgrade_Player();
-		break;
 	case 'U':
-		// Upgrade_Player();
-		break;
 	case '!':
-		// Upgrade_Player();
-		break;
 	case 'Z':
-		// Upgrade_Player();
-		break;
 	case '#':
-		// Upgrade_Player();
+		upgradePlayer(carte, &i2, &j2);
+		echanger(carte, &i2, &j2, true);
 		break;
 	}
 	return false;
@@ -382,4 +382,34 @@ void echangerMob(Map &carte, int *i2, int *j2)
 	// Update du Tableau de mob de type mob
 	carte.mob[selectMob]->setMobI(*i2);
 	carte.mob[selectMob]->setMobJ(*j2);
+}
+
+void upgradePlayer(Map carte, int *i2, int *j2)
+{
+	if (dynamic_cast<MoreLife *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
+		static_cast<MoreLife *>(carte.positionObject[*i2][*j2])->addLife(*carte.joueur[selectPlayer]);
+	}
+	else if (dynamic_cast<MoreBomb *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
+		static_cast<MoreBomb *>(carte.positionObject[*i2][*j2])->addBomb(*carte.joueur[selectPlayer]);
+	}
+	else if (dynamic_cast<PowerUp *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
+		// ajouter la puissance à la bombe du player
+		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(*carte.joueur[selectPlayer]);
+	}
+	else if (dynamic_cast<ScaleUp *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
+		// ajouter l'effet à la bombe du player
+		// static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->ScaleUp(*carte.joueur[selectPlayer]);
+	}
+	else if (dynamic_cast<SpeedUp *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
+		static_cast<SpeedUp *>(carte.positionObject[*i2][*j2])->addSpeed(*carte.joueur[selectPlayer]);
+	}
+	else
+	{
+		std::cout << "Erreur Item !" << std::endl;
+	}
 }

@@ -29,4 +29,6 @@ void echanger(Map &carte, int *i2, int *j2);
 bool verificationMouvementMob(Map &carte);
 bool verification_ObstacleMob(Map &carte, int i2, int j2);
 void echangerMob(Map &carte, int *i2, int *j2);
+/* ---------- ITEM ---------- */
+void upgradePlayer(Map carte, int *i2, int *j2);
 #endif
