@@ -305,6 +305,7 @@ bool verificationMouvementMob(Map &carte)
 	2 : bas
 	3 : droite
 	*/
+	//on appelle la fonction Alea_sens qui génere des nombre alearatoirement entre 0 et 3 ce qui donne le mouvement alératoire des mobs
 	switch (carte.mob[selectMob]->Alea_sens())
 	{
 	case 0:
@@ -314,7 +315,7 @@ bool verificationMouvementMob(Map &carte)
 		}
 		else
 		{
-			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI() + 1, carte.mob[selectMob]->getMobJ());
+			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI() - 1, carte.mob[selectMob]->getMobJ());
 		}
 		break;
 	case 1:
