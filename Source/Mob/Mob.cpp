@@ -11,7 +11,7 @@ int Mob::Alea_sens()
 {
     auto generateurAlea = std::random_device{};
     auto generateur = std::mt19937{generateurAlea()};
-    auto distrubution = std::uniform_int_distribution{0, 4};
+    auto distrubution = std::uniform_int_distribution{0, 3};
     return distrubution(generateur);
 }
 

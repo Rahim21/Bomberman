@@ -8,6 +8,7 @@ static int tour{0};
 static int selectPlayer = (multijoueur) ? tour % 2 : 0;
 static int getPlayerI;
 static int getPlayerJ;
+static int selectBomb{1};
 
 static int selectMob;
 static int getMobPosI;
@@ -164,7 +165,7 @@ void refreshGame(Map &m)
 
 void nextKeyPressed(const char &clavier, Map &carte)
 {
-	std::string keyList = "zZqQsSdD3";
+	std::string keyList = "zZqQsSdD"; // ajouter un charactere ou code ascci pour la barre d'espace : poser bombe (si char sinon dans un else if)
 	if (std::find(std::begin(keyList), std::end(keyList), clavier) != std::end(keyList))
 	{
 		if (verificationMouvement(clavier, carte))
@@ -180,6 +181,7 @@ void nextKeyPressed(const char &clavier, Map &carte)
 	else if (clavier == '3')
 	{
 		system("cls");
+		std::cout << "Au revoir !" << std::endl;
 		exit(0);
 	}
 }
@@ -248,7 +250,6 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		{
 			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI() - 1, carte.joueur[selectPlayer]->getPlayerJ());
 		}
-		break;
 	case 'Q':
 	case 'q':
 		if (carte.joueur[selectPlayer]->getPlayerJ() - 1 < 0)
@@ -259,8 +260,6 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		{
 			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI(), carte.joueur[selectPlayer]->getPlayerJ() - 1);
 		}
-
-		break;
 	case 'S':
 	case 's':
 		if (carte.joueur[selectPlayer]->getPlayerI() + 1 > carte.mapLigne - 1)
@@ -271,8 +270,6 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		{
 			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI() + 1, carte.joueur[selectPlayer]->getPlayerJ());
 		}
-
-		break;
 	case 'D':
 	case 'd':
 		if (carte.joueur[selectPlayer]->getPlayerJ() + 1 > carte.mapColonne - 1)
@@ -283,16 +280,10 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		{
 			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI(), carte.joueur[selectPlayer]->getPlayerJ() + 1);
 		}
-
-		break;
-	case '3':
-		system("cls");
-		std::cout << "Au revoir !" << std::endl;
-		exit(0);
+	// case 'space': touche espace pour poser la bombe
 	default:
 		return false;
 	}
-	return true;
 }
 
 /* ---------- MOB ---------- */
@@ -305,7 +296,7 @@ bool verificationMouvementMob(Map &carte)
 	2 : bas
 	3 : droite
 	*/
-	//on appelle la fonction Alea_sens qui génere des nombre alearatoirement entre 0 et 3 ce qui donne le mouvement alératoire des mobs
+	// on appelle la fonction Alea_sens qui génere des nombre alearatoirement entre 0 et 3 ce qui donne le mouvement alératoire des mobs
 	switch (carte.mob[selectMob]->Alea_sens())
 	{
 	case 0:
@@ -398,12 +389,14 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	else if (dynamic_cast<PowerUp *>(carte.positionObject[*i2][*j2]) != nullptr)
 	{
 		// ajouter la puissance à la bombe du player
-		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(*carte.joueur[selectPlayer]);
+		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(carte.joueur[selectPlayer]->playerBomb[selectBomb]); // si initialisation de playerBomb non dynamic
+		static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(*carte.joueur[selectPlayer]->playerBomb[selectBomb]);
 	}
 	else if (dynamic_cast<ScaleUp *>(carte.positionObject[*i2][*j2]) != nullptr)
 	{
 		// ajouter l'effet à la bombe du player
-		// static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->ScaleUp(*carte.joueur[selectPlayer]);
+		// static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(carte.joueur[selectPlayer]->playerBomb[selectBomb]); // si initialisation de playerBomb non dynamic
+		static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(*carte.joueur[selectPlayer]->playerBomb[selectBomb]);
 	}
 	else if (dynamic_cast<SpeedUp *>(carte.positionObject[*i2][*j2]) != nullptr)
 	{

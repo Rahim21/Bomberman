@@ -2,6 +2,8 @@
 #include "Bomb.h" // linked with makefile
 
 // Méthodes de notre classe Bomb
+// Bomb::Bomb() : Position{i, j} {}
+
 Bomb::Bomb(const int i, const int j) : Position{i, j}
 {
     this->i = i;

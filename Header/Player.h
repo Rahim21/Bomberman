@@ -3,6 +3,7 @@
 
 #include "Position.h"
 #include "Item.h"
+#include "Bomb.h"
 #include <string>
 
 /**
@@ -19,6 +20,7 @@ public:
     int heart{3};
     int nbrBomb{1};
     int speed{1};
+    Bomb *playerBomb[3] = {new Bomb(0, 0), new Bomb(0, 0), new Bomb(0, 0)};
 
 public:
     Player(const int i, const int j, std::string pseudo = "");

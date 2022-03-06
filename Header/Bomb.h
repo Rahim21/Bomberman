@@ -2,6 +2,7 @@
 #define BOMB_H
 
 #include "Position.h"
+#include <ostream>
 
 /**
  * \class Bomb
@@ -14,6 +15,7 @@ public:
     int portee;
 
 public:
+    // Bomb();
     Bomb(const int i, const int j);
     void infligerDegat();
     void afficherExplosion();

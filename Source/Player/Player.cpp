@@ -16,7 +16,7 @@ Player::Player(int i, int j, std::string pseudo) : Position{i, j}
     }
 }
 
-void playerAction()
+void Player::playerAction()
 {
 }
 
@@ -37,7 +37,7 @@ void Player::infoPlayer()
 
 std::string Player::toString()
 {
-    return pseudo + " | " + std::to_string(heart) + " Heart | Position (" + std::to_string(j) + ";" + std::to_string(i) + ")";
+    return pseudo + " | " + std::to_string(heart) + " Heart | " + std::to_string(nbrBomb) + " Bomb | Position (" + std::to_string(j) + ";" + std::to_string(i) + ")";
 }
 
 int Player::getPlayerI()
