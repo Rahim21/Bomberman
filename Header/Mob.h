@@ -2,7 +2,7 @@
 #define MOB_H
 #include <random>
 #include "Position.h"
-
+#include "Player.h"
 /**
  * \class Mob
  * \author HAYAT Rahim / MTARFI Souhail
@@ -18,6 +18,7 @@ public:
     Mob();
     int Alea_sens();
 
+    virtual void damager(Player &p)=0;
     virtual int getMobI();
     virtual int getMobJ();
     virtual void setMobI(int _i);

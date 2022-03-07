@@ -18,6 +18,7 @@ public:
     int getMobJ();
     void setMobI(int _i);
     void setMobJ(int _j);
+    void damager(Player &p);
 };
 
 #endif

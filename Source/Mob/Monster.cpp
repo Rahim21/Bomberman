@@ -33,3 +33,9 @@ void Monster::setMobJ(int _j)
 {
     this->j = _j;
 }
+void Monster::damager(Player &p){
+        if (p.heart < 5 && p.heart > 0)
+    {
+        p.heart -= 2;
+    }
+}

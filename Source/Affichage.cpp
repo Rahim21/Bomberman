@@ -230,6 +230,10 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 		upgradePlayer(carte, &i2, &j2);
 		echanger(carte, &i2, &j2, true);
 		break;
+	case 'M':
+	case 'G':
+	case 'B':
+		getdamaged(carte,&i2,&j2);
 	}
 	return false;
 }
@@ -352,7 +356,11 @@ bool verification_ObstacleMob(Map &carte, int i2, int j2)
 	{
 		echangerMob(carte, &i2, &j2);
 		return true;
+	}else if (carte.map[i2][j2] == 'P')
+	{
+		Mob_damaged_Player(carte,&i2,&j2);
 	}
+	
 	return false;
 }
 
@@ -405,5 +413,17 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	else
 	{
 		std::cout << "Erreur Item !" << std::endl;
+	}
+}
+
+void Mob_damaged_Player(Map &carte, int *i2, int *j2){
+	if(dynamic_cast<Player *>(carte.positionObject[*i2][*j2]) != nullptr){
+		static_cast<Mob *>(carte.mob[selectMob])->damager(*static_cast<Player *>(carte.positionObject[*i2][*j2]));
+	}
+}
+
+void getdamaged(Map &carte, int *i2, int *j2){
+	if(dynamic_cast<Mob *>(carte.positionObject[*i2][*j2]) != nullptr){
+		static_cast<Mob *>(carte.positionObject[*i2][*j2])->damager(*carte.joueur[selectPlayer]);
 	}
 }

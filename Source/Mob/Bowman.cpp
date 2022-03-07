@@ -33,3 +33,9 @@ void Bowman::setMobJ(int _j)
 {
     this->j = _j;
 }
+void Bowman::damager(Player &p){
+        if (p.heart < 5 && p.heart > 0)
+    {
+        p.heart -= 1;
+    }
+}
