@@ -234,6 +234,7 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 	case 'G':
 	case 'B':
 		getdamaged(carte,&i2,&j2);
+		endGame(carte,getPlayerI,getPlayerJ);
 	}
 	return false;
 }
@@ -359,6 +360,7 @@ bool verification_ObstacleMob(Map &carte, int i2, int j2)
 	}else if (carte.map[i2][j2] == 'P')
 	{
 		Mob_damaged_Player(carte,&i2,&j2);
+		endGame(carte,i2,j2);
 	}
 	
 	return false;
@@ -426,4 +428,38 @@ void getdamaged(Map &carte, int *i2, int *j2){
 	if(dynamic_cast<Mob *>(carte.positionObject[*i2][*j2]) != nullptr){
 		static_cast<Mob *>(carte.positionObject[*i2][*j2])->damager(*carte.joueur[selectPlayer]);
 	}
+}
+void gameover(){
+	system("cls");
+	std::cout<<std::endl;
+	std::cout<<"\t\t--------------------------"<<std::endl;
+	std::cout<<"\t\t-------- Game Over -------"<<std::endl;
+	std::cout<<"\t\t--------------------------"<<std::endl<<std::endl;
+	std::cout<<"\t\tPress any key to go back to menu.";
+	getch();
+}
+void replay(Map &carte){
+	carte.joueur.clear();
+	carte.mob.clear();
+	carte.deleteObject();
+	gameover();
+	menu();
+}
+void endGame(Map &carte,int &i2,int &j2){
+	if(dynamic_cast<Player *>(carte.positionObject[i2][j2])->heart <= 0){
+			carte.positionObject[i2][j2]=nullptr;
+			carte.positionObject[i2][j2]=new Grass(i2,j2);
+			carte.map[i2][j2]=' ';
+			carte.joueur[selectPlayer]=nullptr;
+			if (multijoueur)
+			{
+				if (carte.joueur[0]==nullptr && carte.joueur[1]==nullptr)
+				{	
+					replay(carte);
+				}
+			}else if (carte.joueur[0]==nullptr)
+			{
+					replay(carte);
+			}
+		}
 }
