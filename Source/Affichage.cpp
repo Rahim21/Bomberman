@@ -439,9 +439,9 @@ void gameover(){
 	getch();
 }
 void replay(Map &carte){
+	tour=0;
 	carte.joueur.clear();
 	carte.mob.clear();
-	carte.deleteObject();
 	gameover();
 	menu();
 }
@@ -458,8 +458,8 @@ void endGame(Map &carte,int &i2,int &j2){
 					replay(carte);
 				}
 			}else if (carte.joueur[0]==nullptr)
-			{
+				{
 					replay(carte);
-			}
+				}
 		}
 }

@@ -45,6 +45,7 @@ public:
     void convertObjectByID(const char id, const int i, const int j);
     void deleteObject(const int i, const int j);
     void deleteObject();
+    void deleteMap(Map &m);
 };
 
 #endif

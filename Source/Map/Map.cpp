@@ -40,6 +40,10 @@ void Map::createMap(Map &m)
     }
 }
 
+void Map::deleteMap(Map &m){
+    delete &m;
+}
+
 std::ostream &operator<<(std::ostream &os, const Map &m)
 {
     /* Mauvaise méthode d'affichage : pas optimal pour la suite */
