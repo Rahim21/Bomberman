@@ -13,7 +13,7 @@ class Monster : public Mob
 protected:
 public:
     Monster(const int i, const int j);
-    friend std::ostream &operator<<(std::ostream &os, const Monster &m);
+    void displayObject();
     int getMobI();
     int getMobJ();
     void setMobI(int _i);

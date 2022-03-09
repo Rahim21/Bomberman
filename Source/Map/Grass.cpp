@@ -8,10 +8,7 @@ Grass::Grass(const int i, const int j) : Tile{}
     this->j = j;
 }
 
-std::ostream
-    &
-    operator<<(std::ostream &os, const Grass &g)
+void Grass::displayObject()
 {
-    os << "" << std::endl;
-    return os;
+    std::cout << "     ";
 }

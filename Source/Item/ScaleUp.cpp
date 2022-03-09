@@ -13,8 +13,7 @@ void ScaleUp::addScale(Bomb &b)
     b.portee += 1;
 }
 
-std::ostream &operator<<(std::ostream &os, const ScaleUp &SC)
+void ScaleUp::displayObject()
 {
-    os << "SC" << std::endl;
-    return os;
+    std::cout << "  #  ";
 }

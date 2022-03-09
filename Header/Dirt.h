@@ -11,7 +11,7 @@ class Dirt : public Tile
 {
 public:
     Dirt(const int i, const int j);
-    friend std::ostream &operator<<(std::ostream &os, const Dirt &d);
+    void displayObject();
 };
 
 #endif

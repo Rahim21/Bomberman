@@ -15,8 +15,8 @@ void MoreLife::addLife(Player &p)
         p.heart += 1;
     }
 }
-std::ostream &operator<<(std::ostream &os, const MoreLife &ML)
+
+void MoreLife::displayObject()
 {
-    os << "ML" << std::endl;
-    return os;
+    std::cout << "  L  ";
 }

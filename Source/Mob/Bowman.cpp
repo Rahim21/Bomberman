@@ -8,10 +8,9 @@ Bowman::Bowman(const int i, const int j) : Mob{}
     this->j = j;
 }
 
-std::ostream &operator<<(std::ostream &os, const Bowman &b)
+void Bowman::displayObject()
 {
-    os << "B" << std::endl;
-    return os;
+    std::cout << "  B  ";
 }
 
 int Bowman::getMobI()
@@ -33,8 +32,9 @@ void Bowman::setMobJ(int _j)
 {
     this->j = _j;
 }
-void Bowman::damager(Player &p){
-        if (p.heart < 5 && p.heart > 0)
+void Bowman::damager(Player &p)
+{
+    if (p.heart < 5 && p.heart > 0)
     {
         p.heart -= 1;
     }

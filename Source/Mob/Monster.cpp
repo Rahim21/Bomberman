@@ -8,10 +8,9 @@ Monster::Monster(const int i, const int j) : Mob{}
     this->j = j;
 }
 
-std::ostream &operator<<(std::ostream &os, const Monster &m)
+void Monster::displayObject()
 {
-    os << "M" << std::endl;
-    return os;
+    std::cout << "  M  ";
 }
 
 int Monster::getMobI()
@@ -33,8 +32,9 @@ void Monster::setMobJ(int _j)
 {
     this->j = _j;
 }
-void Monster::damager(Player &p){
-        if (p.heart < 5 && p.heart > 0)
+void Monster::damager(Player &p)
+{
+    if (p.heart < 5 && p.heart > 0)
     {
         p.heart -= 2;
     }

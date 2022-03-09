@@ -8,7 +8,7 @@ static int tour{0};
 static int selectPlayer = (multijoueur) ? tour % 2 : 0;
 static int getPlayerI;
 static int getPlayerJ;
-static int selectBomb{1};
+static int selectBomb{0};
 
 static int selectMob;
 static int getMobPosI;
@@ -165,7 +165,7 @@ void refreshGame(Map &m)
 
 void nextKeyPressed(const char &clavier, Map &carte)
 {
-	std::string keyList = "zZqQsSdD"; // ajouter un charactere ou code ascci pour la barre d'espace : poser bombe (si char sinon dans un else if)
+	std::string keyList = "zZqQsSdDxX"; // ajouter un charactere ou code ascci pour la barre d'espace : poser bombe (si char sinon dans un else if)
 	if (std::find(std::begin(keyList), std::end(keyList), clavier) != std::end(keyList))
 	{
 		if (verificationMouvement(clavier, carte))
@@ -233,8 +233,8 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 	case 'M':
 	case 'G':
 	case 'B':
-		getdamaged(carte,&i2,&j2);
-		endGame(carte,getPlayerI,getPlayerJ);
+		getdamaged(carte, &i2, &j2);
+		endGame(carte, getPlayerI, getPlayerJ);
 	}
 	return false;
 }
@@ -285,7 +285,23 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		{
 			return verification_Obstacle(carte, carte.joueur[selectPlayer]->getPlayerI(), carte.joueur[selectPlayer]->getPlayerJ() + 1);
 		}
-	// case 'space': touche espace pour poser la bombe
+	case 'X':
+	case 'x':
+		// placer bombes
+		// trouver une solution pour initialiser la bombe avec des coordonnées puis gérer son affichage et ses méthodes
+		// code provisoire pour faire des tests
+		if (carte.joueur[selectPlayer]->bombPlaced)
+		{
+			carte.joueur[selectPlayer]->bombPlaced = false;
+		}
+		else
+		{
+			carte.joueur[selectPlayer]->bombPlaced = true;
+			carte.joueur[selectPlayer]->playerBomb[selectBomb]->setBombIJ(getPlayerI, getPlayerJ);
+			int getBombI = carte.joueur[selectPlayer]->playerBomb[selectBomb]->getI();
+			int getBombJ = carte.joueur[selectPlayer]->playerBomb[selectBomb]->getJ();
+			// carte.positionObject[getBombI][getBombJ]->detectBomb = true;
+		}
 	default:
 		return false;
 	}
@@ -357,12 +373,13 @@ bool verification_ObstacleMob(Map &carte, int i2, int j2)
 	{
 		echangerMob(carte, &i2, &j2);
 		return true;
-	}else if (carte.map[i2][j2] == 'P')
-	{
-		Mob_damaged_Player(carte,&i2,&j2);
-		endGame(carte,i2,j2);
 	}
-	
+	else if (carte.map[i2][j2] == 'P')
+	{
+		Mob_damaged_Player(carte, &i2, &j2);
+		endGame(carte, i2, j2);
+	}
+
 	return false;
 }
 
@@ -418,48 +435,58 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	}
 }
 
-void Mob_damaged_Player(Map &carte, int *i2, int *j2){
-	if(dynamic_cast<Player *>(carte.positionObject[*i2][*j2]) != nullptr){
+void Mob_damaged_Player(Map &carte, int *i2, int *j2)
+{
+	if (dynamic_cast<Player *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
 		static_cast<Mob *>(carte.mob[selectMob])->damager(*static_cast<Player *>(carte.positionObject[*i2][*j2]));
 	}
 }
 
-void getdamaged(Map &carte, int *i2, int *j2){
-	if(dynamic_cast<Mob *>(carte.positionObject[*i2][*j2]) != nullptr){
+void getdamaged(Map &carte, int *i2, int *j2)
+{
+	if (dynamic_cast<Mob *>(carte.positionObject[*i2][*j2]) != nullptr)
+	{
 		static_cast<Mob *>(carte.positionObject[*i2][*j2])->damager(*carte.joueur[selectPlayer]);
 	}
 }
-void gameover(){
+void gameover()
+{
 	system("cls");
-	std::cout<<std::endl;
-	std::cout<<"\t\t--------------------------"<<std::endl;
-	std::cout<<"\t\t-------- Game Over -------"<<std::endl;
-	std::cout<<"\t\t--------------------------"<<std::endl<<std::endl;
-	std::cout<<"\t\tPress any key to go back to menu.";
+	std::cout << std::endl;
+	std::cout << "\t\t--------------------------" << std::endl;
+	std::cout << "\t\t-------- Game Over -------" << std::endl;
+	std::cout << "\t\t--------------------------" << std::endl
+			  << std::endl;
+	std::cout << "\t\tPress any key to go back to menu.";
 	getch();
 }
-void replay(Map &carte){
-	tour=0;
+void clearGame(Map &carte)
+{
+	tour = 0;
 	carte.joueur.clear();
 	carte.mob.clear();
 	gameover();
 	menu();
 }
-void endGame(Map &carte,int &i2,int &j2){
-	if(dynamic_cast<Player *>(carte.positionObject[i2][j2])->heart <= 0){
-			carte.positionObject[i2][j2]=nullptr;
-			carte.positionObject[i2][j2]=new Grass(i2,j2);
-			carte.map[i2][j2]=' ';
-			carte.joueur[selectPlayer]=nullptr;
-			if (multijoueur)
+void endGame(Map &carte, int &i2, int &j2)
+{
+	if (dynamic_cast<Player *>(carte.positionObject[i2][j2])->heart <= 0)
+	{
+		carte.positionObject[i2][j2] = nullptr;
+		carte.positionObject[i2][j2] = new Grass(i2, j2);
+		carte.map[i2][j2] = ' ';
+		carte.joueur[selectPlayer] = nullptr;
+		if (multijoueur)
+		{
+			if (carte.joueur[0] == nullptr && carte.joueur[1] == nullptr)
 			{
-				if (carte.joueur[0]==nullptr && carte.joueur[1]==nullptr)
-				{	
-					replay(carte);
-				}
-			}else if (carte.joueur[0]==nullptr)
-				{
-					replay(carte);
-				}
+				clearGame(carte);
+			}
 		}
+		else if (carte.joueur[0] == nullptr)
+		{
+			clearGame(carte);
+		}
+	}
 }

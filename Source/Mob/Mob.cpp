@@ -15,6 +15,11 @@ int Mob::Alea_sens()
     return distrubution(generateur);
 }
 
+void Mob::displayObject()
+{
+    std::cout << "     ";
+}
+
 int Mob::getMobI()
 {
     return i;

@@ -16,8 +16,7 @@ void MoreBomb::addBomb(Player &p)
     }
 }
 
-std::ostream &operator<<(std::ostream &os, const MoreBomb &MB)
+void MoreBomb::displayObject()
 {
-    os << "MB" << std::endl;
-    return os;
+    std::cout << "  !  ";
 }

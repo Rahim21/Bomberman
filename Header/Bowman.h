@@ -12,7 +12,7 @@ class Bowman : public Mob
 protected:
 public:
     Bowman(const int i, const int j);
-    friend std::ostream &operator<<(std::ostream &os, const Bowman &b);
+    void displayObject();
     int getMobI();
     int getMobJ();
     void setMobI(int _i);

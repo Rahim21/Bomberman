@@ -40,7 +40,8 @@ void Map::createMap(Map &m)
     }
 }
 
-void Map::deleteMap(Map &m){
+void Map::deleteMap(Map &m)
+{
     delete &m;
 }
 
@@ -56,14 +57,15 @@ std::ostream &operator<<(std::ostream &os, const Map &m)
             {
                 if (tailleJ == 1)
                 {
-                    os << "|  ";
+                    os << "|";
 
-                    // m.convertObjectByID(m.map[i][j]);
-                    os << m.map[i][j];
-                    // faire une surcharge d'opérateur pour afficher l'objet
+                    // os << m.map[i][j]; // affichage des caractere de la map : mauvaise méthode d'affichage
+                    m.positionObject[i][j]->displayObject();
+                    /* ----- faire une surcharge d'opérateur pour afficher l'objet ----- */
+                    // os << *(dynamic_cast<Position *>(m.positionObject[i][j])); // fonctionne presque : faudrait convertir à l'objet correspondant
 
-                    os
-                        << "  ";
+                    // os << *m.positionObject[i][j]; // ne fonctionne pas
+                    // os << *m.joueur[1]; // fonctionne pour utiliser l'affichage de l'objet
                 }
                 else
                 {

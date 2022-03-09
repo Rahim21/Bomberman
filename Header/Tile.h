@@ -15,6 +15,7 @@ public:
     bool murPresent{true};
 
 public:
+    void displayObject();
     // virtual void afficherTile()=0;
 };
 

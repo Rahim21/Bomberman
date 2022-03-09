@@ -4,7 +4,7 @@
 // Méthodes de notre classe Item [classe abstraite]
 Item::Item() : Position(i, j) {}
 
-// void afficherItem()
-// {
-//     std::cout << "" << std::endl;
-// }
+void Item::displayObject()
+{
+    std::cout << "     ";
+}

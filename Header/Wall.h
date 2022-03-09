@@ -12,7 +12,7 @@ class Wall : public Tile
 protected:
 public:
     Wall(const int i, const int j);
-    friend std::ostream &operator<<(std::ostream &os, const Wall &w);
+    void displayObject();
 };
 
 #endif

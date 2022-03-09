@@ -17,8 +17,8 @@ protected:
 public:
     Mob();
     int Alea_sens();
-
-    virtual void damager(Player &p)=0;
+    void displayObject();
+    virtual void damager(Player &p) = 0;
     virtual int getMobI();
     virtual int getMobJ();
     virtual void setMobI(int _i);

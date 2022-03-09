@@ -14,6 +14,7 @@ class Item : public Position
 protected:
 public:
     Item();
+    void displayObject();
     // virtual void afficherItem();
 };
 

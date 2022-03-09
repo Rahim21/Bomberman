@@ -3,3 +3,8 @@
 
 // Méthodes de notre classe Tile [= une case de notre map]
 Tile::Tile() : Position(i, j) {}
+
+void Tile::displayObject()
+{
+    std::cout << "     ";
+}

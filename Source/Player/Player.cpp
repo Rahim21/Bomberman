@@ -24,11 +24,18 @@ void Player::poserBombe()
 {
 }
 
-std::ostream &operator<<(std::ostream &os, const Player &p)
+void Player::displayObject()
 {
-    os << "P" << std::endl;
-    return os;
+    if (bombPlaced)
+    {
+        std::cout << " P O ";
+    }
+    else
+    {
+        std::cout << "  P  ";
+    }
 }
+
 // la fonction info player ça sert à rien il affiche juste toString on peut faire les deux dans une seul fonction !!
 void Player::infoPlayer()
 {

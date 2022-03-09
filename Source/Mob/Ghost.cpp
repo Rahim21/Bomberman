@@ -8,10 +8,9 @@ Ghost::Ghost(const int i, const int j) : Mob{}
     this->j = j;
 }
 
-std::ostream &operator<<(std::ostream &os, const Ghost &g)
+void Ghost::displayObject()
 {
-    os << "G" << std::endl;
-    return os;
+    std::cout << "  G  ";
 }
 
 int Ghost::getMobI()
@@ -33,8 +32,9 @@ void Ghost::setMobJ(int _j)
 {
     this->j = _j;
 }
-void Ghost::damager(Player &p){
-        if (p.heart < 5 && p.heart > 0)
+void Ghost::damager(Player &p)
+{
+    if (p.heart < 5 && p.heart > 0)
     {
         p.heart -= 1;
     }

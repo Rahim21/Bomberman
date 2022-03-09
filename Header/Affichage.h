@@ -21,8 +21,8 @@ void play();
 void afficheCommande();
 void refreshGame(Map &m);
 void gameover();
-void replay(Map& carte);
-void endGame(Map &carte,int &i2,int &j2);
+void clearGame(Map &carte);
+void endGame(Map &carte, int &i2, int &j2);
 /* ---------- PLAYER ---------- */
 void nextKeyPressed(const char &clavier, Map &carte);
 bool verificationMouvement(const char &clavier, Map &carte);

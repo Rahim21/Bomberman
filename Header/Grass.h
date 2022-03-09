@@ -12,7 +12,7 @@ class Grass : public Tile
 protected:
 public:
     Grass(const int i, const int j);
-    friend std::ostream &operator<<(std::ostream &os, const Grass &g);
+    void displayObject();
 };
 
 #endif

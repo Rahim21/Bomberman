@@ -13,7 +13,7 @@ protected:
 public:
     SpeedUp(const int i, const int j);
     void addSpeed(Player &p);
-    friend std::ostream &operator<<(std::ostream &os, const SpeedUp &SP);
+    void displayObject();
 };
 
 #endif

@@ -19,7 +19,8 @@ public:
     Bomb(const int i, const int j);
     void infligerDegat();
     void afficherExplosion();
-    friend std::ostream &operator<<(std::ostream &os, const Bomb &b);
+    void displayObject();
+    void setBombIJ(int i, int j);
 };
 
 #endif

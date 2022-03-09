@@ -8,8 +8,7 @@ Wall::Wall(const int i, const int j) : Tile{}
     this->j = j;
 }
 
-std::ostream &operator<<(std::ostream &os, const Wall &w)
+void Wall::displayObject()
 {
-    os << "I" << std::endl;
-    return os;
+    std::cout << "  I  ";
 }

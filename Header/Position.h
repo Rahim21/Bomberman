@@ -17,9 +17,12 @@ public:
     int getJ() const;
     void operator+=(Position const &autre);
     void operator-=(Position const &autre);
-
+    virtual void displayObject();
     // nécessaire pour utiliser un opérande avec un dynamic_cast
-    virtual bool isPolymorphic() noexcept { return false; }
+    virtual bool isPolymorphic() noexcept
+    {
+        return false;
+    }
 };
 
 #endif

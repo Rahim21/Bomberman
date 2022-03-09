@@ -16,8 +16,7 @@ void PowerUp::addPower(Bomb &b)
     }
 }
 
-std::ostream &operator<<(std::ostream &os, const PowerUp &PU)
+void PowerUp::displayObject()
 {
-    os << "PU" << std::endl;
-    return os;
+    std::cout << "  U  ";
 }

@@ -15,13 +15,13 @@ void Bomb::infligerDegat()
     /* Inflige des dégâts aux Players, Mobs, Dirt, Bomb? qui explose à son tour*/
 }
 
-void Bomb::afficherExplosion()
+void Bomb::displayObject()
 {
-    std::cout << "@" << std::endl;
+    std::cout << "  O  ";
 }
 
-std::ostream &operator<<(std::ostream &os, const Bomb &b)
+void Bomb::setBombIJ(int i, int j)
 {
-    os << "O" << std::endl;
-    return os;
+    this->i = i;
+    this->j = j;
 }

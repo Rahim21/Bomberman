@@ -15,8 +15,8 @@ void SpeedUp::addSpeed(Player &p)
         p.speed += 1;
     }
 }
-std::ostream &operator<<(std::ostream &os, const SpeedUp &SP)
+
+void SpeedUp::displayObject()
 {
-    os << "SP" << std::endl;
-    return os;
+    std::cout << "  Z  ";
 }
