@@ -12,8 +12,8 @@ class Monster : public Mob
 {
 protected:
 public:
-    Monster(const int i, const int j);
-    void displayObject();
+    Monster(const int i, const int j, const std::string symbole = "M");
+    // void displayObject();
     int getMobI();
     int getMobJ();
     void setMobI(int _i);

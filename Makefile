@@ -2,6 +2,7 @@
 # Launcher.exe
 
 CXX = g++
+CXXFLAGS := -Wall -Wextra -pedantic-errors -std=c++17
 EXEC = launcher
 SOURCES = $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard */*/*.cpp)
 OBJ = $(SOURCES:.cpp=.o)
@@ -12,10 +13,10 @@ run : $(EXEC)
 	./$(EXEC)
 
 $(EXEC): $(OBJ)
-	$(CXX) -o $@ $^ -I Header/
+	$(CXX) $(CXXFLAGS) -o $@ $^ -I Header/
 
 %.o : %.cpp
-	$(CXX) -o $@ -c $< -I Header/
+	$(CXX) $(CXXFLAGS) -o $@ -c $< -I Header/
 
 clean :
 	rm -rf $(OBJ)

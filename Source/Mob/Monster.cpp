@@ -2,16 +2,17 @@
 #include "Monster.h" // linked with makefile
 
 // Méthodes de notre classe Monster
-Monster::Monster(const int i, const int j) : Mob{}
+Monster::Monster(const int i, const int j, std::string symbole) : Mob{}
 {
     this->i = i;
     this->j = j;
+    this->symbole = symbole;
 }
 
-void Monster::displayObject()
-{
-    std::cout << "  M  ";
-}
+// void Monster::displayObject()
+// {
+//     std::cout << "  M  ";
+// }
 
 int Monster::getMobI()
 {

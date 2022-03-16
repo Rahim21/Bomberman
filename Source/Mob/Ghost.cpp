@@ -2,16 +2,17 @@
 #include "Ghost.h" // linked with makefile
 
 // Méthodes de notre classe Ghost
-Ghost::Ghost(const int i, const int j) : Mob{}
+Ghost::Ghost(const int i, const int j, std::string symbole) : Mob{}
 {
     this->i = i;
     this->j = j;
+    this->symbole = symbole;
 }
 
-void Ghost::displayObject()
-{
-    std::cout << "  G  ";
-}
+// void Ghost::displayObject()
+// {
+//     std::cout << "  G  ";
+// }
 
 int Ghost::getMobI()
 {

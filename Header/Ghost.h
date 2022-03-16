@@ -11,8 +11,8 @@ class Ghost : public Mob
 {
 protected:
 public:
-    Ghost(const int i, const int j);
-    void displayObject();
+    Ghost(const int i, const int j, const std::string symbole = "G");
+    // void displayObject();
     int getMobI();
     int getMobJ();
     void setMobI(int _i);

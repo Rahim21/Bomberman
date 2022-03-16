@@ -10,6 +10,7 @@
 #include <dos.h>
 #include <windows.h>
 #include <time.h>
+#include <cstring>
 
 void gotoxy(int x, int y);
 void setcursor(bool visible, DWORD size);

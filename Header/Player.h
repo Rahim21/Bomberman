@@ -4,7 +4,7 @@
 #include "Position.h"
 #include "Item.h"
 #include "Bomb.h"
-#include <string>
+//#include <string>
 
 /**
  * \class Player
@@ -24,10 +24,10 @@ public:
     bool bombPlaced{false};
 
 public:
-    Player(const int i, const int j, std::string pseudo = "");
+    Player(const int i, const int j, std::string pseudo = "", const std::string symbole = "P");
     void playerAction();
     void verficationObstacle(const char &keyPressed);
-    void poserBombe();
+    // void poserBombe(Map &carte, int &getPlayerI, int &getPlayerJ, int &i2, int &j2);
     void displayObject();
     void infoPlayer();
     std::string toString();

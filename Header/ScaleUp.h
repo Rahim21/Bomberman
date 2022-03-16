@@ -11,9 +11,8 @@ class ScaleUp : public Item
 {
 protected:
 public:
-    ScaleUp(const int i, const int j);
+    ScaleUp(const int i, const int j, const std::string symbole = "#");
     void addScale(Bomb &b);
-    void displayObject();
 };
 
 #endif

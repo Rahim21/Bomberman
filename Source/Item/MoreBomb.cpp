@@ -2,10 +2,11 @@
 #include "MoreBomb.h" // linked with makefile
 
 // Méthodes de notre classe MoreBomb [augmente le nombre de bombes]
-MoreBomb::MoreBomb(const int i, const int j) : Item{}
+MoreBomb::MoreBomb(const int i, const int j, std::string symbole) : Item{}
 {
     this->i = i;
     this->j = j;
+    this->symbole = symbole;
 }
 
 void MoreBomb::addBomb(Player &p)
@@ -14,9 +15,4 @@ void MoreBomb::addBomb(Player &p)
     {
         p.nbrBomb += 1;
     }
-}
-
-void MoreBomb::displayObject()
-{
-    std::cout << "  !  ";
 }

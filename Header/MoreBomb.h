@@ -11,9 +11,8 @@ class MoreBomb : public Item
 {
 protected:
 public:
-    MoreBomb(const int i, const int j);
+    MoreBomb(const int i, const int j, const std::string symbole = "!");
     void addBomb(Player &p);
-    void displayObject();
 };
 
 #endif

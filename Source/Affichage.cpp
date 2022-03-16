@@ -129,7 +129,7 @@ void play()
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
 		nextKeyPressed(clavier, carte);
 		// les mobs jouent après le tour des joueurs
-		for (selectMob = 0; selectMob < carte.mob.size(); selectMob += 1)
+		for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
 		{
 			if (verificationMouvementMob(carte))
 			{
@@ -188,12 +188,6 @@ void nextKeyPressed(const char &clavier, Map &carte)
 
 void echanger(Map &carte, int *i2, int *j2, bool destroy)
 {
-	// Update tableau d'affichage de type char
-	char tmp;
-	tmp = carte.map[*i2][*j2];
-	carte.map[*i2][*j2] = carte.map[getPlayerI][getPlayerJ];
-	carte.map[getPlayerI][getPlayerJ] = tmp;
-
 	// Update du tableau d'objet de type Position
 	auto tmp1 = carte.positionObject[*i2][*j2];
 	carte.positionObject[*i2][*j2] = carte.positionObject[getPlayerI][getPlayerJ];
@@ -201,8 +195,6 @@ void echanger(Map &carte, int *i2, int *j2, bool destroy)
 
 	if (destroy)
 	{
-		carte.map[getPlayerI][getPlayerJ] = ' ';
-		carte.positionObject[getPlayerI][getPlayerJ] = nullptr;
 		carte.positionObject[getPlayerI][getPlayerJ] = new Grass(getPlayerI, getPlayerJ);
 	}
 
@@ -213,30 +205,43 @@ void echanger(Map &carte, int *i2, int *j2, bool destroy)
 
 bool verification_Obstacle(Map &carte, int i2, int j2)
 {
-	switch (carte.map[i2][j2])
+	auto key = carte.positionObject[i2][j2]->symbole;
+	if (key == " ")
 	{
-	case ' ':
-	case ',':
-		echanger(carte, &i2, &j2, false);
+		if ((carte.positionObject[getPlayerI][getPlayerJ])->symbole == "PO")
+		{
+			carte.joueur[selectPlayer]->bombPlaced = false;
+			// carte.joueur[selectPlayer]->poserBombe(carte, getPlayerI, getPlayerJ, i2, j2); // poser la bombe à la case [getPlayerI][getPlayerJ] et deplacer le player à [i2][j2]
+
+			// faire ceci dans la méthode poserBombe | error: 'Map' has not been declared
+			carte.positionObject[i2][j2] = carte.positionObject[getPlayerI][getPlayerJ];
+			carte.positionObject[getPlayerI][getPlayerJ] = new Bomb(getPlayerI, getPlayerJ);
+
+			carte.joueur[selectPlayer]->setPlayerI(i2);
+			carte.joueur[selectPlayer]->setPlayerJ(j2);
+		}
+		else
+		{
+			echanger(carte, &i2, &j2, false);
+		}
 		return true;
-	/*
-		Fonction Upgrade_Player : player prend l'item , l'ancienne case de player deviens grass
-	*/
-	case 'L':
-	case 'U':
-	case '!':
-	case 'Z':
-	case '#':
+	}
+	else if (key == "L" || key == "U" || key == "!" || key == "Z" || key == "#")
+	{
 		upgradePlayer(carte, &i2, &j2);
 		echanger(carte, &i2, &j2, true);
-		break;
-	case 'M':
-	case 'G':
-	case 'B':
+		return true;
+	}
+	else if (key == "M" || key == "G" || key == "B")
+	{
 		getdamaged(carte, &i2, &j2);
 		endGame(carte, getPlayerI, getPlayerJ);
+		return true;
 	}
-	return false;
+	else
+	{
+		return false;
+	}
 }
 
 // Créer un tableau de Joueur et Mob, pour récupérer les coordonnées et pouvoir les déplacer et structure pour i et j
@@ -287,21 +292,8 @@ bool verificationMouvement(const char &clavier, Map &carte)
 		}
 	case 'X':
 	case 'x':
-		// placer bombes
-		// trouver une solution pour initialiser la bombe avec des coordonnées puis gérer son affichage et ses méthodes
-		// code provisoire pour faire des tests
-		if (carte.joueur[selectPlayer]->bombPlaced)
-		{
-			carte.joueur[selectPlayer]->bombPlaced = false;
-		}
-		else
-		{
-			carte.joueur[selectPlayer]->bombPlaced = true;
-			carte.joueur[selectPlayer]->playerBomb[selectBomb]->setBombIJ(getPlayerI, getPlayerJ);
-			int getBombI = carte.joueur[selectPlayer]->playerBomb[selectBomb]->getI();
-			int getBombJ = carte.joueur[selectPlayer]->playerBomb[selectBomb]->getJ();
-			// carte.positionObject[getBombI][getBombJ]->detectBomb = true;
-		}
+		// placer bombe
+		carte.joueur[selectPlayer]->bombPlaced = true;
 	default:
 		return false;
 	}
@@ -369,12 +361,12 @@ bool verificationMouvementMob(Map &carte)
 
 bool verification_ObstacleMob(Map &carte, int i2, int j2)
 {
-	if (carte.map[i2][j2] == ' ' || carte.map[i2][j2] == ',')
+	if (carte.positionObject[i2][j2]->symbole == " ")
 	{
 		echangerMob(carte, &i2, &j2);
 		return true;
 	}
-	else if (carte.map[i2][j2] == 'P')
+	else if (carte.positionObject[i2][j2]->symbole == "P")
 	{
 		Mob_damaged_Player(carte, &i2, &j2);
 		endGame(carte, i2, j2);
@@ -473,7 +465,6 @@ void endGame(Map &carte, int &i2, int &j2)
 {
 	if (dynamic_cast<Player *>(carte.positionObject[i2][j2])->heart <= 0)
 	{
-		carte.positionObject[i2][j2] = nullptr;
 		carte.positionObject[i2][j2] = new Grass(i2, j2);
 		carte.map[i2][j2] = ' ';
 		carte.joueur[selectPlayer] = nullptr;

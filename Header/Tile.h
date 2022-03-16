@@ -13,10 +13,6 @@ public:
     Tile();
     int tileHP{2};
     bool murPresent{true};
-
-public:
-    void displayObject();
-    // virtual void afficherTile()=0;
 };
 
 #endif

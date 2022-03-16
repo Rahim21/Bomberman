@@ -11,9 +11,8 @@ class SpeedUp : public Item
 {
 protected:
 public:
-    SpeedUp(const int i, const int j);
+    SpeedUp(const int i, const int j, const std::string symbole = "Z");
     void addSpeed(Player &p);
-    void displayObject();
 };
 
 #endif

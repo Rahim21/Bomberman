@@ -2,10 +2,11 @@
 #include "SpeedUp.h" // linked with makefile
 
 // Méthodes de notre classe SpeedUp [augmente la vitesse du Bomberman]
-SpeedUp::SpeedUp(const int i, const int j) : Item{}
+SpeedUp::SpeedUp(const int i, const int j, std::string symbole) : Item{}
 {
     this->i = i;
     this->j = j;
+    this->symbole = symbole;
 }
 
 void SpeedUp::addSpeed(Player &p)
@@ -14,9 +15,4 @@ void SpeedUp::addSpeed(Player &p)
     {
         p.speed += 1;
     }
-}
-
-void SpeedUp::displayObject()
-{
-    std::cout << "  Z  ";
 }

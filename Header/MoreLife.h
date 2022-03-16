@@ -11,9 +11,8 @@ class MoreLife : public Item
 {
 protected:
 public:
-    MoreLife(const int i, const int j);
+    MoreLife(const int i, const int j, const std::string symbole = "L");
     void addLife(Player &p);
-    void displayObject();
 };
 
 #endif

@@ -1,17 +1,19 @@
 #ifndef POSITION_H
 #define POSITION_H
-
+#include <string>
 /**
  * \class Position
  * \author HAYAT Rahim / MTARFI Souhail
  */
 class Position
 {
-protected:
+public:
+    std::string symbole{"?"};
     int i{0};
     int j{0};
 
 public:
+    Position(int _i, int _j, std::string symbole = "?");
     Position(int _i, int _j);
     int getI() const;
     int getJ() const;

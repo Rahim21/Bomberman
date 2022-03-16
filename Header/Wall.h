@@ -11,8 +11,7 @@ class Wall : public Tile
 {
 protected:
 public:
-    Wall(const int i, const int j);
-    void displayObject();
+    Wall(const int i, const int j, const std::string symbole = "I");
 };
 
 #endif

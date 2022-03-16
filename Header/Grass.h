@@ -11,8 +11,7 @@ class Grass : public Tile
 {
 protected:
 public:
-    Grass(const int i, const int j);
-    void displayObject();
+    Grass(const int i, const int j, const std::string symbole = " ");
 };
 
 #endif

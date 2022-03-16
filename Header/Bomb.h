@@ -11,12 +11,13 @@
 class Bomb : public Position
 {
 public:
-    int puissance;
-    int portee;
+    int puissance{2};
+    int portee{1};
+    int compteARebours{0}; // si 3 : 0 -> @ (la bombe explose)
 
 public:
     // Bomb();
-    Bomb(const int i, const int j);
+    Bomb(const int i, const int j, const std::string symbole = "O");
     void infligerDegat();
     void afficherExplosion();
     void displayObject();

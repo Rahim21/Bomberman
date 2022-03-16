@@ -2,16 +2,17 @@
 #include "Bowman.h" // linked with makefile
 
 // Méthodes de notre classe Bowman
-Bowman::Bowman(const int i, const int j) : Mob{}
+Bowman::Bowman(const int i, const int j, std::string symbole) : Mob{}
 {
     this->i = i;
     this->j = j;
+    this->symbole = symbole;
 }
 
-void Bowman::displayObject()
-{
-    std::cout << "  B  ";
-}
+// void Bowman::displayObject()
+// {
+//     std::cout << "  B  ";
+// }
 
 int Bowman::getMobI()
 {

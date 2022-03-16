@@ -2,7 +2,7 @@
 #include "Mob.h" // linked with makefile
 
 // Méthodes de notre classe Mob
-Mob::Mob() : Position(i, j)
+Mob::Mob() : Position(i, j, symbole)
 {
     hp = 100;
 }
@@ -13,11 +13,6 @@ int Mob::Alea_sens()
     auto generateur = std::mt19937{generateurAlea()};
     auto distrubution = std::uniform_int_distribution{0, 3};
     return distrubution(generateur);
-}
-
-void Mob::displayObject()
-{
-    std::cout << "     ";
 }
 
 int Mob::getMobI()

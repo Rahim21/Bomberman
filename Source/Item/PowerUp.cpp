@@ -2,10 +2,11 @@
 #include "PowerUp.h" // linked with makefile
 
 // Méthodes de notre classe PowerUp [augmente la puissance des bombes]
-PowerUp::PowerUp(const int i, const int j) : Item{}
+PowerUp::PowerUp(const int i, const int j, std::string symbole) : Item{}
 {
     this->i = i;
     this->j = j;
+    this->symbole = symbole;
 }
 
 void PowerUp::addPower(Bomb &b)
@@ -14,9 +15,4 @@ void PowerUp::addPower(Bomb &b)
     {
         b.puissance += 1;
     }
-}
-
-void PowerUp::displayObject()
-{
-    std::cout << "  U  ";
 }
