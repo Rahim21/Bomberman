@@ -2,7 +2,7 @@
 #include "MoreBomb.h" // linked with makefile
 
 // Méthodes de notre classe MoreBomb [augmente le nombre de bombes]
-MoreBomb::MoreBomb(const int i, const int j, std::string symbole) : Item{}
+MoreBomb::MoreBomb(const int i, const int j, std::string symbole) : Item{i,j,symbole}
 {
     this->i = i;
     this->j = j;

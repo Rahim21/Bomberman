@@ -1,5 +1,4 @@
 #include "Affichage.h"
-#include "Map.h"
 
 static Map carte;
 
@@ -294,6 +293,7 @@ bool verificationMouvement(const char &clavier, Map &carte)
 	case 'x':
 		// placer bombe
 		carte.joueur[selectPlayer]->bombPlaced = true;
+		return true;
 	default:
 		return false;
 	}

@@ -2,9 +2,12 @@
 #include "Mob.h" // linked with makefile
 
 // Méthodes de notre classe Mob
-Mob::Mob() : Position(i, j, symbole)
+Mob::Mob(const int i, const int j, std::string symbole) : Position(i, j, symbole)
 {
     hp = 100;
+    this->i = i;
+    this->j = j;
+    this->symbole = symbole;
 }
 
 int Mob::Alea_sens()

@@ -15,7 +15,7 @@ protected:
     float speed;
 
 public:
-    Mob();
+    Mob(const int i, const int j, std::string symbole);
     int Alea_sens();
     virtual void damager(Player &p) = 0;
     virtual int getMobI();

@@ -12,7 +12,7 @@
 class Item : public Position
 {
 public:
-    Item();
+    Item(const int i, const int j, std::string symbole);
 };
 
 #endif

@@ -2,7 +2,7 @@
 #include "Wall.h" // linked with makefile
 
 // Méthodes de notre classe Wall
-Wall::Wall(const int i, const int j, std::string symbole) : Tile{}
+Wall::Wall(const int i, const int j, std::string symbole) : Tile{i,j,symbole}
 {
     this->i = i;
     this->j = j;

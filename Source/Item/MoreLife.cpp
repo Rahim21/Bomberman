@@ -2,7 +2,7 @@
 #include "MoreLife.h" // linked with makefile
 
 // Méthodes de notre classe MoreLife [augmente le nombre de points de vie de notre Bomberman]
-MoreLife::MoreLife(const int i, const int j, std::string symbole) : Item{}
+MoreLife::MoreLife(const int i, const int j, std::string symbole) : Item{i,j,symbole}
 {
     this->i = i;
     this->j = j;

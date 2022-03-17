@@ -2,7 +2,7 @@
 # Launcher.exe
 
 CXX = g++
-CXXFLAGS := -Wall -Wextra -pedantic-errors -std=c++17
+CXXFLAGS := -Wall -Wextra -pedantic-errors -std=c++17 -g
 EXEC = launcher
 SOURCES = $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard */*/*.cpp)
 OBJ = $(SOURCES:.cpp=.o)

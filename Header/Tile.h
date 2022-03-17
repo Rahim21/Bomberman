@@ -10,7 +10,7 @@
 class Tile : public Position
 {
 public:
-    Tile();
+    Tile(const int i, const int j, std::string symbole);
     int tileHP{2};
     bool murPresent{true};
 };

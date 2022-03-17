@@ -8,6 +8,7 @@
 void Map::createMap(Map &m)
 {
     char caractere;
+    // ICI
     std::string filename("Source/Map/map.txt");
     std::ifstream fichier(filename, std::ios::in);
     if (fichier)
@@ -104,9 +105,9 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new Player(i, j);
         joueur.push_back(static_cast<Player *>(positionObject[i][j]));
         break;
-    // case 'X':
-    //     // positionObject[i][j] = new
-    //     break;
+    case 'X':
+        // positionObject[i][j] = new
+        break;
     case ',':
         positionObject[i][j] = new Grass(i, j);
         break;
@@ -148,7 +149,7 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new ScaleUp(i, j);
         break;
     default:
-        positionObject[i][j] = nullptr;
+        positionObject[i][j] =new Grass(i, j);
     }
 }
 
