@@ -2,7 +2,7 @@
 #include "Monster.h" // linked with makefile
 
 // Méthodes de notre classe Monster
-Monster::Monster(const int i, const int j, std::string symbole) : Mob{i,j,symbole}
+Monster::Monster(const int i, const int j, std::string symbole) : Mob{i, j, symbole}
 {
     this->i = i;
     this->j = j;
@@ -38,5 +38,14 @@ void Monster::damager(Player &p)
     if (p.heart < 5 && p.heart > 0)
     {
         p.heart -= 2;
+    }
+}
+
+void Monster::receiveBombDamage()
+{
+    hp -= 50;
+    if (hp <= 0)
+    {
+        destroyed = true;
     }
 }

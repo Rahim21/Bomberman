@@ -19,6 +19,7 @@ public:
     void setMobI(int _i);
     void setMobJ(int _j);
     void damager(Player &p);
+    void receiveBombDamage();
 };
 
 #endif

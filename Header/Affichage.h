@@ -25,7 +25,7 @@ void gameover();
 void clearGame(Map &carte);
 void endGame(Map &carte, int &i2, int &j2);
 /* ---------- PLAYER ---------- */
-void nextKeyPressed(const char &clavier, Map &carte);
+bool nextKeyPressed(const char &clavier, Map &carte);
 bool verificationMouvement(const char &clavier, Map &carte);
 bool verification_Obstacle(Map &carte, int i2, int j2);
 void echanger(Map &carte, int *i2, int *j2);
@@ -37,4 +37,7 @@ void echangerMob(Map &carte, int *i2, int *j2);
 void Mob_damaged_Player(Map &carte, int *i2, int *j2);
 /* ---------- ITEM ---------- */
 void upgradePlayer(Map carte, int *i2, int *j2);
+/* ---------- BOMB ---------- */
+bool bombExploded(Map &carte, int i, int j);
+void bombExplodedAround(Map &carte, int i, int j);
 #endif

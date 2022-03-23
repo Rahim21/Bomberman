@@ -45,6 +45,7 @@ public:
     void deleteObject(const int i, const int j);
     void deleteObject();
     void deleteMap(Map &m);
+    void detectDestroyedObject();
 };
 
 #endif

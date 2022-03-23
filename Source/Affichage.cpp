@@ -1,13 +1,19 @@
 #include "Affichage.h"
+#include <chrono>
+#include <thread>
 
-static Map carte;
+Map carte;
 
 static bool multijoueur = false;
 static int tour{0};
 static int selectPlayer = (multijoueur) ? tour % 2 : 0;
 static int getPlayerI;
 static int getPlayerJ;
-static int selectBomb{0};
+
+static int nextBomb{0};
+static int selectBomb = nextBomb % 3;
+static int getBombI;
+static int getBombJ;
 
 static int selectMob;
 static int getMobPosI;
@@ -25,20 +31,25 @@ void setcursor(bool visible, DWORD size)
 	lpCursor.dwSize = size;
 	SetConsoleCursorInfo(console, &lpCursor);
 }
+
 void instructions()
 {
-	std::cout << "Instructions";
-	std::cout << "\n----------------";
-	std::cout << "\n deplacement joueur 1 :";
-	std::cout << "\n\n Appuyez sur 'q' : aller vers la gauche";
-	std::cout << "\n Appuyez sur 'd' : aller vers la droite";
-	std::cout << "\n Appuyez sur 's' : aller vers le bas";
-	std::cout << "\n Appuyez sur 'z' : aller vers le haut";
-	std::cout << "\n Appuyez sur 'x' : poser une bombe";
-	std::cout << "\n Appuyez sur 'Echap' : Quitter";
-	std::cout << "\n\nAppuyez sur n'importe quelle touche : Revenir au menu";
+	std::cout << R"(
+	Instructions BOMBERMAN :
+
+	---------- Deplacement JOUEUR ----------
+	Appuyez sur 'Z' : aller vers le haut
+	Appuyez sur 'Q' : aller vers la gauche
+	Appuyez sur 'S' : aller vers le bas
+	Appuyez sur 'D' : aller vers la droite
+	Appuyez sur 'X' : poser une bombe
+	Appuyez sur '3' en pleine partie : Quitter
+		
+	Appuyez sur n'importe quelle touche : Revenir au menu
+	)";
 	getch();
 }
+
 void gotoxy(int x, int y)
 {
 	CursorPosition.X = x;
@@ -49,11 +60,11 @@ void gotoxy(int x, int y)
 void titre()
 {
 	gotoxy(4, 2);
-	std::cout << "-------------------------------- ";
-	gotoxy(4, 3);
-	std::cout << "|  Bomberman | HAYAT & MTARFI  | ";
-	gotoxy(4, 4);
-	std::cout << "--------------------------------";
+	std::cout << R"(
+	--------------------------------
+	|  Bomberman | HAYAT & MTARFI  |
+	--------------------------------
+	)";
 	gotoxy(0, 8);
 }
 
@@ -126,13 +137,25 @@ void play()
 		refreshGame(carte);
 		char clavier = getche();
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
-		nextKeyPressed(clavier, carte);
-		// les mobs jouent après le tour des joueurs
-		for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
+		if (nextKeyPressed(clavier, carte))
 		{
-			if (verificationMouvementMob(carte))
+			// Nouveau tour
+			tour += 1;
+			selectPlayer = (multijoueur) ? tour % 2 : 0;
+
+			// redéfinition de la position exacte du Player après s'être déplacé !
+			getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
+			getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
+			// les mobs jouent après le tour des joueurs
+			for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
 			{
-				// std::cout << "Mob : Grrr !" << std::endl;
+				if (carte.mob[selectMob] != nullptr)
+				{
+					if (verificationMouvementMob(carte))
+					{
+						// std::cout << "Mob : Grrr !" << std::endl;
+					}
+				}
 			}
 		}
 	} while (1);
@@ -156,26 +179,55 @@ void refreshGame(Map &m)
 	system("cls");
 	titre();
 	std::cout << m;
-	afficheCommande();
 	afficherTour(m);
+	afficheCommande();
 }
 
 /* ---------- PLAYER ---------- */
 
-void nextKeyPressed(const char &clavier, Map &carte)
+bool nextKeyPressed(const char &clavier, Map &carte)
 {
+	bool explosionDetected = false;
 	std::string keyList = "zZqQsSdDxX"; // ajouter un charactere ou code ascci pour la barre d'espace : poser bombe (si char sinon dans un else if)
 	if (std::find(std::begin(keyList), std::end(keyList), clavier) != std::end(keyList))
 	{
 		if (verificationMouvement(clavier, carte))
 		{
-			tour += 1;
-			selectPlayer = (multijoueur) ? tour % 2 : 0;
+
+			getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
+			getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
+
+			for (int i = 0; i < carte.joueur[selectPlayer]->nbrBomb; i++)
+			{
+				if (carte.joueur[selectPlayer]->playerBomb[i] != nullptr)
+				{
+					if (carte.joueur[selectPlayer]->playerBomb[i]->symbole == "@")
+					{
+						getBombI = carte.joueur[selectPlayer]->playerBomb[i]->i;
+						getBombJ = carte.joueur[selectPlayer]->playerBomb[i]->j;
+						if (bombExploded(carte, getBombI, getBombJ))
+						{
+							carte.joueur[selectPlayer]->playerBomb[i] = nullptr;
+							carte.positionObject[getBombI][getBombJ] = new Grass(getBombI, getBombJ);
+							explosionDetected = true;
+						}
+					}
+				}
+			}
+
 			/*
 			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer();
 			*/
 		}
+		if (explosionDetected)
+		{
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			explosionDetected = false;
+			endGame(carte, getPlayerI, getPlayerJ);
+			carte.detectDestroyedObject();
+		}
 		refreshGame(carte);
+		return true;
 	}
 	else if (clavier == '3')
 	{
@@ -183,6 +235,7 @@ void nextKeyPressed(const char &clavier, Map &carte)
 		std::cout << "Au revoir !" << std::endl;
 		exit(0);
 	}
+	return false;
 }
 
 void echanger(Map &carte, int *i2, int *j2, bool destroy)
@@ -214,10 +267,12 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 
 			// faire ceci dans la méthode poserBombe | error: 'Map' has not been declared
 			carte.positionObject[i2][j2] = carte.positionObject[getPlayerI][getPlayerJ];
-			carte.positionObject[getPlayerI][getPlayerJ] = new Bomb(getPlayerI, getPlayerJ);
-
+			carte.joueur[selectPlayer]->playerBomb[selectBomb] = new Bomb(getPlayerI, getPlayerJ);
+			carte.joueur[selectPlayer]->playerBomb[selectBomb]->activation = true;
+			carte.positionObject[getPlayerI][getPlayerJ] = carte.joueur[selectPlayer]->playerBomb[selectBomb];
 			carte.joueur[selectPlayer]->setPlayerI(i2);
 			carte.joueur[selectPlayer]->setPlayerJ(j2);
+			nextBomb += 1;
 		}
 		else
 		{
@@ -379,11 +434,6 @@ void echangerMob(Map &carte, int *i2, int *j2)
 {
 	getMobPosI = carte.mob[selectMob]->getMobI();
 	getMobPosJ = carte.mob[selectMob]->getMobJ();
-	// Update tableau d'affichage de type char
-	char tmp;
-	tmp = carte.map[*i2][*j2];
-	carte.map[*i2][*j2] = carte.map[getMobPosI][getMobPosJ];
-	carte.map[getMobPosI][getMobPosJ] = tmp;
 
 	// Update du tableau d'objet de type Position
 	auto tmp1 = carte.positionObject[*i2][*j2];
@@ -442,17 +492,21 @@ void getdamaged(Map &carte, int *i2, int *j2)
 		static_cast<Mob *>(carte.positionObject[*i2][*j2])->damager(*carte.joueur[selectPlayer]);
 	}
 }
+
 void gameover()
 {
 	system("cls");
 	std::cout << std::endl;
-	std::cout << "\t\t--------------------------" << std::endl;
-	std::cout << "\t\t-------- Game Over -------" << std::endl;
-	std::cout << "\t\t--------------------------" << std::endl
-			  << std::endl;
-	std::cout << "\t\tPress any key to go back to menu.";
+	std::cout << R"(
+	--------------------------
+	-------- Game Over -------
+	--------------------------
+
+	Appuyez sur n'importe quelle touche pour revenir au menu.
+	)" << std::endl;
 	getch();
 }
+
 void clearGame(Map &carte)
 {
 	tour = 0;
@@ -461,12 +515,12 @@ void clearGame(Map &carte)
 	gameover();
 	menu();
 }
+
 void endGame(Map &carte, int &i2, int &j2)
 {
 	if (dynamic_cast<Player *>(carte.positionObject[i2][j2])->heart <= 0)
 	{
 		carte.positionObject[i2][j2] = new Grass(i2, j2);
-		carte.map[i2][j2] = ' ';
 		carte.joueur[selectPlayer] = nullptr;
 		if (multijoueur)
 		{
@@ -480,4 +534,37 @@ void endGame(Map &carte, int &i2, int &j2)
 			clearGame(carte);
 		}
 	}
+}
+
+bool bombExploded(Map &carte, int i, int j)
+{
+	// Vérifier la sortie de map i et j
+	if (i - 1 >= 0)
+	{
+		bombExplodedAround(carte, i - 1, j); // haut
+	}
+	if (i + 1 < carte.mapLigne)
+	{
+		bombExplodedAround(carte, i + 1, j); // bas
+	}
+	if (j - 1 >= 0)
+	{
+		bombExplodedAround(carte, i, j - 1); // gauche
+	}
+	if (j + 1 < carte.mapColonne)
+	{
+		bombExplodedAround(carte, i, j + 1); // droite
+	}
+
+	return true;
+}
+
+void bombExplodedAround(Map &carte, int i, int j)
+{
+	carte.positionObject[i][j]->exploded = true;
+	static_cast<Bomb *>(carte.positionObject[getBombI][getBombJ])->infligerDegat(*carte.positionObject[i][j]);
+	/*
+	la bombe peut exploser :
+	W w M G B P PO ' ' O @
+	*/
 }

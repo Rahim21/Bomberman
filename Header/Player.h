@@ -20,7 +20,7 @@ public:
     int heart{3};
     int nbrBomb{1};
     int speed{1};
-    Bomb *playerBomb[3] = {new Bomb(0, 0), new Bomb(0, 0), new Bomb(0, 0)};
+    Bomb *playerBomb[3] = {nullptr, nullptr, nullptr};
     bool bombPlaced{false};
 
 public:
@@ -29,6 +29,7 @@ public:
     void verficationObstacle(const char &keyPressed);
     // void poserBombe(Map &carte, int &getPlayerI, int &getPlayerJ, int &i2, int &j2);
     void displayObject();
+    void receiveBombDamage();
     void infoPlayer();
     std::string toString();
     int getPlayerI();

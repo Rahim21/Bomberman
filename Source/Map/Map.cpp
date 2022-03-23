@@ -149,7 +149,7 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new ScaleUp(i, j);
         break;
     default:
-        positionObject[i][j] =new Grass(i, j);
+        positionObject[i][j] = new Grass(i, j);
     }
 }
 
@@ -169,6 +169,27 @@ void Map::deleteObject()
         for (int j = 0; j < mapColonne; j++)
         {
             delete positionObject[i][j];
+        }
+    }
+}
+
+void Map::detectDestroyedObject()
+{
+    for (int i = 0; i < mapLigne; i++)
+    {
+        for (int j = 0; j < mapColonne; j++)
+        {
+            if (positionObject[i][j]->destroyed)
+            {
+                positionObject[i][j] = new Grass(i, j);
+            }
+        }
+    }
+    for (int mobtab = 0; mobtab < mob.size(); mobtab++)
+    {
+        if (mob[mobtab]->destroyed)
+        {
+            mob[mobtab] = nullptr;
         }
     }
 }

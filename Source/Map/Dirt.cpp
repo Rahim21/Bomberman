@@ -2,7 +2,7 @@
 #include "Dirt.h" // linked with makefile
 
 // Méthodes de notre classe Dirt
-Dirt::Dirt(const int i, const int j, std::string symbole) : Tile{i,j,symbole}
+Dirt::Dirt(const int i, const int j, std::string symbole) : Tile{i, j, symbole}
 {
     this->i = i;
     this->j = j;
@@ -11,13 +11,31 @@ Dirt::Dirt(const int i, const int j, std::string symbole) : Tile{i,j,symbole}
 
 void Dirt::displayObject()
 {
-    if (tileHP >= 2)
+    if (exploded)
     {
-        symbole = "W";
+        symbole = char(176);
+        exploded = false;
+        // std::cout << " " + symbole + "  ";
     }
-    else if (tileHP == 1)
+    else
     {
-        symbole = "w";
+        if (tileHP >= 2)
+        {
+            symbole = "W";
+        }
+        else if (tileHP == 1)
+        {
+            symbole = "w";
+        }
     }
     std::cout << "  " + symbole + "  ";
+}
+
+void Dirt::receiveBombDamage()
+{
+    tileHP -= 1;
+    if (tileHP <= 0)
+    {
+        destroyed = true;
+    }
 }

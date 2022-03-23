@@ -37,3 +37,31 @@ void Mob::setMobJ(int _j)
 {
     this->j = _j;
 }
+
+void Mob::displayObject()
+{
+    std::string tmp_symbole = symbole;
+    if (exploded)
+    {
+        symbole = char(283);
+        exploded = false;
+        std::cout << "  " + symbole + "  ";
+        symbole = tmp_symbole;
+    }
+    else
+    {
+        if (hp > 0)
+        {
+            std::cout << "  " + symbole + "  ";
+        }
+    }
+}
+
+void Mob::receiveBombDamage()
+{
+    hp -= 100;
+    if (hp <= 0)
+    {
+        destroyed = true;
+    }
+}

@@ -14,14 +14,15 @@ public:
     int puissance{2};
     int portee{1};
     int compteARebours{0}; // si 3 : 0 -> @ (la bombe explose)
+    bool activation{false};
 
 public:
     // Bomb();
     Bomb(const int i, const int j, const std::string symbole = "O");
-    void infligerDegat();
+    void infligerDegat(Position &obj);
     void afficherExplosion();
     void displayObject();
-    void setBombIJ(int i, int j);
+    // void setBombIJ(int i, int j);
 };
 
 #endif

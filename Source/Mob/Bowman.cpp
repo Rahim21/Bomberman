@@ -2,7 +2,7 @@
 #include "Bowman.h" // linked with makefile
 
 // Méthodes de notre classe Bowman
-Bowman::Bowman(const int i, const int j, std::string symbole) : Mob{i,j,symbole}
+Bowman::Bowman(const int i, const int j, std::string symbole) : Mob{i, j, symbole}
 {
     this->i = i;
     this->j = j;
@@ -33,6 +33,7 @@ void Bowman::setMobJ(int _j)
 {
     this->j = _j;
 }
+
 void Bowman::damager(Player &p)
 {
     if (p.heart < 5 && p.heart > 0)

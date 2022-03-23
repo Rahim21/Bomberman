@@ -44,6 +44,15 @@ void Player::displayObject()
     }
 }
 
+void Player::receiveBombDamage()
+{
+    heart -= 2;
+    if (heart <= 0)
+    {
+        destroyed = true;
+    }
+}
+
 // la fonction info player ça sert à rien il affiche juste toString on peut faire les deux dans une seul fonction !!
 void Player::infoPlayer()
 {

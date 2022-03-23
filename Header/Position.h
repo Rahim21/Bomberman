@@ -11,6 +11,8 @@ public:
     std::string symbole{"?"};
     int i{0};
     int j{0};
+    bool exploded{false};
+    bool destroyed{false};
 
 public:
     Position(int _i, int _j, std::string symbole = "?");
@@ -20,11 +22,9 @@ public:
     void operator+=(Position const &autre);
     void operator-=(Position const &autre);
     virtual void displayObject();
+    virtual void receiveBombDamage();
     // nécessaire pour utiliser un opérande avec un dynamic_cast
-    virtual bool isPolymorphic() noexcept
-    {
-        return false;
-    }
+    virtual bool isPolymorphic() noexcept { return false; }
 };
 
 #endif
