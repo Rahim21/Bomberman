@@ -14,7 +14,7 @@
 #include "Grass.h"
 #include "Wall.h"
 #include "Dirt.h"
-
+#include "Arrow.h"
 #include "Mob.h"
 #include "Monster.h"
 #include "Ghost.h"
@@ -36,6 +36,7 @@ public:
     Position *positionObject[mapLigne][mapColonne];
     std::vector<Player *> joueur;
     std::vector<Mob *> mob;
+    std::vector<Arrow *> arrow;
 
 public:
     friend std::ostream &operator<<(std::ostream &os, const Map &m);

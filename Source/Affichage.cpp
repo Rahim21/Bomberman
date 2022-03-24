@@ -19,6 +19,14 @@ static int selectMob;
 static int getMobPosI;
 static int getMobPosJ;
 
+static int selectArrow;
+static int getArrowPosI;
+static int getArrowPosJ;
+std::string arrow_down(1,char(281));
+std::string arrow_left(1,char(17));
+std::string arrow_right(1,char(282));
+std::string arrow_up(1, char(280));
+
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
 void setcursor(bool visible, DWORD size)
@@ -149,14 +157,24 @@ void play()
 			// les mobs jouent après le tour des joueurs
 			for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
 			{
-				if (carte.mob[selectMob] != nullptr)
-				{
-					if (verificationMouvementMob(carte))
-					{
-						// std::cout << "Mob : Grrr !" << std::endl;
-					}
+				if (Bowman_detecting_Player(carte))
+				{	
+
+					// if (carte.arrow.empty())
+					// {
+					// 	throw_arrow(carte);
+					// }
+					throw_arrow(carte);
 				}
+			verificationMouvementMob(carte);
 			}
+			if (carte.arrow.size()>0)
+			{
+				getArrowPosI=carte.arrow[0]->getArrowI();
+				getArrowPosJ=carte.arrow[0]->getArrowJ();
+				arrow_mouvment(carte,getArrowPosI,getArrowPosJ);
+			}
+			
 		}
 	} while (1);
 }
@@ -485,6 +503,14 @@ void Mob_damaged_Player(Map &carte, int *i2, int *j2)
 	}
 }
 
+void arrow_damaged_Player(Map &carte, int &i2, int &j2){
+	if (dynamic_cast<Player *>(carte.positionObject[i2][j2]) != nullptr)
+	{
+		carte.arrow[selectMob]->damager(*static_cast<Player *>(carte.positionObject[i2][j2]));
+	}
+}
+
+
 void getdamaged(Map &carte, int *i2, int *j2)
 {
 	if (dynamic_cast<Mob *>(carte.positionObject[*i2][*j2]) != nullptr)
@@ -492,7 +518,136 @@ void getdamaged(Map &carte, int *i2, int *j2)
 		static_cast<Mob *>(carte.positionObject[*i2][*j2])->damager(*carte.joueur[selectPlayer]);
 	}
 }
-
+/*-----------------------------------------------------BOWMAN---------------------------------------------------------------*/
+void arrow_mouvment(Map &carte, int &i2, int &j2){
+	getArrowPosI=carte.arrow[selectArrow]->getArrowI();
+	getArrowPosJ=carte.arrow[selectArrow]->getArrowJ();
+	if (carte.positionObject[i2][j2]->symbole==" ")
+	{
+		auto tmp1 = carte.positionObject[i2][j2];
+		carte.positionObject[i2][j2] = carte.positionObject[getArrowPosI][getArrowPosJ];
+		carte.positionObject[getArrowPosI][getArrowPosJ] = tmp1;
+		carte.arrow[selectArrow]->setArrowI(i2);
+		carte.arrow[selectArrow]->setArrowJ(j2);
+	}else if (carte.positionObject[i2][j2]->symbole=="P" || carte.positionObject[i2][j2]->symbole=="PO")
+	{
+		arrow_damaged_Player(carte,i2,j2);
+		carte.positionObject[getArrowPosI][getArrowPosJ]=new Grass(getArrowPosI,getArrowPosJ);
+		carte.arrow.pop_back();
+		endGame(carte,i2,j2);
+	}
+	
+	
+	
+}
+void throw_arrow(Map &carte){
+	int BowmanI=carte.mob[selectMob]->getMobI();
+	int BowmanJ=carte.mob[selectMob]->getMobJ();
+	int PlayerI=carte.joueur[selectPlayer]->getPlayerI();
+	int PlayerJ=carte.joueur[selectPlayer]->getPlayerJ();
+	if(Bowman_detecting_Player(carte))
+	{	
+	if (BowmanI==PlayerI)
+	{	
+		if (BowmanJ<PlayerJ && carte.positionObject[BowmanI][BowmanJ+1]->symbole==" " )
+		{	
+			carte.positionObject[BowmanI][BowmanJ+1]=new Arrow(BowmanI,BowmanJ+1,arrow_right);
+			carte.arrow.push_back(static_cast<Arrow *>(carte.positionObject[BowmanI][BowmanJ+1]));
+			for (int j = BowmanJ+1; j <= PlayerJ; j++)
+			{
+				arrow_mouvment(carte,BowmanI,j);
+			}
+				
+		}
+		else if(BowmanJ>PlayerJ &&carte.positionObject[BowmanI][BowmanJ-1]->symbole==" " )
+		{	carte.positionObject[BowmanI][BowmanJ-1]=new Arrow(BowmanI,BowmanJ-1,arrow_left);
+			carte.arrow.push_back(static_cast<Arrow *>(carte.positionObject[BowmanI][BowmanJ-1]));
+			for (int j = BowmanJ-1; j >= PlayerJ; j--)
+			{
+					arrow_mouvment(carte,BowmanI,j);
+			}
+		}
+	}
+	else if(BowmanJ==PlayerJ)
+	{
+		if (BowmanI<PlayerI && carte.positionObject[BowmanI+1][BowmanJ]->symbole==" ")
+		{	carte.positionObject[BowmanI+1][BowmanJ]=new Arrow(BowmanI+1,BowmanJ,arrow_down);
+			carte.arrow.push_back(static_cast<Arrow *>(carte.positionObject[BowmanI+1][BowmanJ]));
+			for (int i = BowmanI+1; i <= PlayerI; i++)
+			{
+				arrow_mouvment(carte,i,BowmanJ);
+			}
+				
+		}
+		else if(BowmanI>PlayerI &&carte.positionObject[BowmanI-1][BowmanJ]->symbole==" ")
+		{
+			carte.positionObject[BowmanI-1][BowmanJ]=new Arrow(BowmanI-1,BowmanJ,arrow_up);
+			carte.arrow.push_back(static_cast<Arrow *>(carte.positionObject[BowmanI-1][BowmanJ]));
+			for (int i = BowmanI-1; i >= PlayerI; i--)
+			{
+				arrow_mouvment(carte,i,BowmanJ);
+			}
+		}
+	}
+	}
+}
+bool Bowman_detecting_Player(Map &carte){
+	if(carte.mob[selectMob]->symbole=="B")
+	{
+		int BowmanI=carte.mob[selectMob]->getMobI();
+		int BowmanJ=carte.mob[selectMob]->getMobJ();
+		int PlayerI=carte.joueur[selectPlayer]->getPlayerI();
+		int PlayerJ=carte.joueur[selectPlayer]->getPlayerJ();		
+		if (BowmanI==PlayerI)
+		{	
+			if (BowmanJ<PlayerJ)
+			{
+				for (int j = BowmanJ+1; j < PlayerJ; j++)
+				{
+					if (carte.positionObject[BowmanI][j]->symbole!=" ")
+					{
+						return false;
+					}
+				}
+				return true;
+			}else
+			{
+				for (int j = PlayerJ+1; j < BowmanJ; j++)
+				{
+					if (carte.positionObject[BowmanI][j]->symbole!=" ")
+					{
+						return false;
+					}
+					return true;
+				}
+			}
+		}else if(BowmanJ==PlayerJ)
+		{
+			if (BowmanI<PlayerI)
+			{
+				for (int i = BowmanI+1; i < PlayerI; i++)
+				{
+					if (carte.positionObject[i][BowmanJ]->symbole!=" ")
+					{
+						return false;
+					}
+				}
+				return true;
+			}else
+			{
+				for (int i = PlayerI+1; i < BowmanI; i++)
+				{
+					if (carte.positionObject[i][BowmanJ]->symbole!=" ")
+					{
+						return false;
+					}
+				}
+					return true;
+			}
+		}
+	}
+	return false;
+}
 void gameover()
 {
 	system("cls");
