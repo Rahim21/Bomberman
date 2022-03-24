@@ -189,7 +189,7 @@ void Map::detectDestroyedObject()
     {
         if (mob[mobtab]->destroyed)
         {
-            mob[mobtab] = nullptr;
+            mob.erase(mob.begin() + mobtab);
         }
     }
 }

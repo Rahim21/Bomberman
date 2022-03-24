@@ -36,7 +36,7 @@ bool verification_ObstacleMob(Map &carte, int i2, int j2);
 void echangerMob(Map &carte, int *i2, int *j2);
 void Mob_damaged_Player(Map &carte, int *i2, int *j2);
 bool Bowman_detecting_Player(Map &carte);
-void arrow_mouvment(Map &carte, int &i2, int &j2);
+void arrow_mouvment(Map &carte, int &i2, int &j2, std::string sens);
 void throw_arrow(Map &carte);
 void arrow_damaged_Player(Map &carte, int &i2, int &j2);
 /* ---------- ITEM ---------- */
