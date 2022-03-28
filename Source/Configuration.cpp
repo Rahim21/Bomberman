@@ -234,25 +234,24 @@ bool nextKeyPressed(const char &clavier, Map &carte)
 
 			getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
 			getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
-
-			for (int i = 0; i < carte.joueur[selectPlayer]->nbrBomb; i++)
-			{
-				if (carte.joueur[selectPlayer]->playerBomb[i] != nullptr)
-				{
-					if (carte.joueur[selectPlayer]->playerBomb[i]->symbole == "@")
+		if (carte.joueur[selectPlayer]->playerBomb.size()!=0)
+		{	
+				
+					if (carte.joueur[selectPlayer]->playerBomb[0]->symbole == "@")
 					{
-						getBombI = carte.joueur[selectPlayer]->playerBomb[i]->i;
-						getBombJ = carte.joueur[selectPlayer]->playerBomb[i]->j;
+						getBombI = carte.joueur[selectPlayer]->playerBomb[0]->i;
+						getBombJ = carte.joueur[selectPlayer]->playerBomb[0]->j;
 						if (bombExploded(carte, getBombI, getBombJ))
 						{
-							carte.joueur[selectPlayer]->playerBomb[i] = nullptr;
+							carte.joueur[selectPlayer]->playerBomb.erase(carte.joueur[selectPlayer]->playerBomb.begin());
 							carte.positionObject[getBombI][getBombJ] = new Grass(getBombI, getBombJ);
 							explosionDetected = true;
 						}
 					}
-				}
-			}
 
+		}
+		
+			
 			/*
 			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer();
 			*/
@@ -305,9 +304,9 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 
 			// faire ceci dans la méthode poserBombe | error: 'Map' has not been declared
 			carte.positionObject[i2][j2] = carte.positionObject[getPlayerI][getPlayerJ];
-			carte.joueur[selectPlayer]->playerBomb[selectBomb] = new Bomb(getPlayerI, getPlayerJ);
-			carte.joueur[selectPlayer]->playerBomb[selectBomb]->activation = true;
-			carte.positionObject[getPlayerI][getPlayerJ] = carte.joueur[selectPlayer]->playerBomb[selectBomb];
+			carte.joueur[selectPlayer]->playerBomb.push_back(new Bomb(getPlayerI, getPlayerJ));
+			carte.joueur[selectPlayer]->playerBomb[carte.joueur[selectPlayer]->playerBomb.size()-1]->activation = true;
+			carte.positionObject[getPlayerI][getPlayerJ] = carte.joueur[selectPlayer]->playerBomb[carte.joueur[selectPlayer]->playerBomb.size()-1];
 			carte.joueur[selectPlayer]->setPlayerI(i2);
 			carte.joueur[selectPlayer]->setPlayerJ(j2);
 			nextBomb += 1;
@@ -392,7 +391,10 @@ bool verificationMouvement(const char &clavier, Map &carte)
 	case 'X':
 	case 'x':
 		// placer bombe
-		carte.joueur[selectPlayer]->bombPlaced = true;
+		if (carte.joueur[selectPlayer]->nbrBomb > carte.joueur[selectPlayer]->playerBomb.size())
+		{ 
+			carte.joueur[selectPlayer]->bombPlaced = true;
+		}
 		return true;
 	default:
 		return false;
@@ -518,16 +520,16 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	{
 		// ajouter l'effet à la bombe du player
 		// static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(carte.joueur[selectPlayer]->playerBomb[selectBomb]); // si initialisation de playerBomb non dynamic
-		for (int allBomb = 0; allBomb < 3; allBomb++)
+		for (int allBomb = 0; allBomb < (int)carte.joueur[selectPlayer]->playerBomb.size(); allBomb++)
 		{
-			if (carte.joueur[selectPlayer]->playerBomb[allBomb] != nullptr)
+			if (!carte.joueur[selectPlayer]->playerBomb.empty())
 			{
 				static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(*carte.joueur[selectPlayer]->playerBomb[allBomb]);
 			}
 		}
 		porteeMax += 1;
 	}
-	else if (dynamic_cast<SpeedUp *>(carte.positionObject[*i2][*j2]) != nullptr)
+	else if (!carte.joueur[selectPlayer]->playerBomb.empty())
 	{
 		static_cast<SpeedUp *>(carte.positionObject[*i2][*j2])->addSpeed(*carte.joueur[selectPlayer]);
 	}

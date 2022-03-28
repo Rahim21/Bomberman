@@ -4,7 +4,7 @@
 #include "Position.h"
 #include "Item.h"
 #include "Bomb.h"
-//#include <string>
+#include <vector>
 
 /**
  * \class Player
@@ -20,7 +20,7 @@ public:
     int heart{3};
     int nbrBomb{1};
     int speed{1};
-    Bomb *playerBomb[3] = {nullptr, nullptr, nullptr};
+    std::vector<Bomb *> playerBomb;
     bool bombPlaced{false};
 
 public:
