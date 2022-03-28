@@ -10,12 +10,42 @@ Mob::Mob(const int i, const int j, std::string symbole) : Position(i, j, symbole
     this->symbole = symbole;
 }
 
-int Mob::Alea_sens()
+int Mob::moveOrNote(int number)
 {
     auto generateurAlea = std::random_device{};
     auto generateur = std::mt19937{generateurAlea()};
-    auto distrubution = std::uniform_int_distribution{0, 3};
-    return distrubution(generateur);
+    auto distrubution = std::uniform_int_distribution{0, 1};
+    if (distrubution(generateur) == 0)
+    {
+        return number;
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+int Mob::followPlayer(int pI, int pJ, int mI, int mJ)
+{
+    if (pI < mI)
+    {
+        return 0;
+    }
+    else if (pI > mI)
+    {
+        return 2;
+    }
+    else
+    {
+        if (pJ < mJ)
+        {
+            return moveOrNote(1);
+        }
+        else if (pJ > mJ)
+        {
+            return moveOrNote(3);
+        }
+    }
 }
 
 int Mob::getMobI()

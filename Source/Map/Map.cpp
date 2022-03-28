@@ -59,14 +59,7 @@ std::ostream &operator<<(std::ostream &os, const Map &m)
                 if (tailleJ == 1)
                 {
                     os << "|";
-
-                    // os << m.map[i][j]; // affichage des caractere de la map : mauvaise méthode d'affichage
                     m.positionObject[i][j]->displayObject();
-                    /* ----- faire une surcharge d'opérateur pour afficher l'objet ----- */
-                    // os << *(dynamic_cast<Position *>(m.positionObject[i][j])); // fonctionne presque : faudrait convertir à l'objet correspondant
-
-                    // os << *m.positionObject[i][j]; // ne fonctionne pas
-                    // os << *m.joueur[1]; // fonctionne pour utiliser l'affichage de l'objet
                 }
                 else
                 {
@@ -153,16 +146,8 @@ void Map::convertObjectByID(const char id, const int i, const int j)
     }
 }
 
-// void Map::charToObject(char charObj)
-// {
-// }
-
-void Map::deleteObject(const int i, const int j)
-{
-    delete positionObject[i][j];
-}
-
-void Map::deleteObject()
+// methode pour supprimer tout les objets et vectors de joueur et de mob
+void Map::deleteAllObject()
 {
     for (int i = 0; i < mapLigne; i++)
     {
@@ -171,6 +156,8 @@ void Map::deleteObject()
             delete positionObject[i][j];
         }
     }
+    joueur.clear();
+    mob.clear();
 }
 
 void Map::detectDestroyedObject()

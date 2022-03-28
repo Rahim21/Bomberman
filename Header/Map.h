@@ -43,8 +43,7 @@ public:
     void createMap(Map &m);
     char verificationID(const char id, const int i, const int j);
     void convertObjectByID(const char id, const int i, const int j);
-    void deleteObject(const int i, const int j);
-    void deleteObject();
+    void deleteAllObject();
     void deleteMap(Map &m);
     void detectDestroyedObject();
 };

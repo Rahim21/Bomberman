@@ -43,5 +43,5 @@ void arrow_damaged_Player(Map &carte, int &i2, int &j2);
 void upgradePlayer(Map carte, int *i2, int *j2);
 /* ---------- BOMB ---------- */
 bool bombExploded(Map &carte, int i, int j);
-void bombExplodedAround(Map &carte, int i, int j);
+bool bombExplodedAround(Map &carte, int i, int j);
 #endif

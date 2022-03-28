@@ -27,6 +27,8 @@ std::string arrow_left(1, char(17));
 std::string arrow_right(1, char(282));
 std::string arrow_up(1, char(280));
 
+static int porteeMax = 1;
+
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
 void setcursor(bool visible, DWORD size)
@@ -384,18 +386,22 @@ bool verificationMouvementMob(Map &carte)
 	3 : droite
 	*/
 	// on appelle la fonction Alea_sens qui génere des nombre alearatoirement entre 0 et 3 ce qui donne le mouvement alératoire des mobs
-	switch (carte.mob[selectMob]->Alea_sens())
+	getMobPosI = carte.mob[selectMob]->getMobI();
+	getMobPosJ = carte.mob[selectMob]->getMobJ();
+	switch (carte.mob[selectMob]->followPlayer(getPlayerI, getPlayerJ, getMobPosI, getMobPosJ))
 	{
+	// haut
 	case 0:
-		if (carte.mob[selectMob]->getMobI() - 1 < 0)
+		if (getMobPosI - 1 < 0)
 		{
 			return false;
 		}
 		else
 		{
-			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI() - 1, carte.mob[selectMob]->getMobJ());
+			return verification_ObstacleMob(carte, getMobPosI - 1, getMobPosJ);
 		}
 		break;
+	// gauche
 	case 1:
 		if (carte.mob[selectMob]->getMobJ() - 1 < 0)
 		{
@@ -403,9 +409,10 @@ bool verificationMouvementMob(Map &carte)
 		}
 		else
 		{
-			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI(), carte.mob[selectMob]->getMobJ() - 1);
+			return verification_ObstacleMob(carte, getMobPosI, getMobPosJ - 1);
 		}
 		break;
+	// bas
 	case 2:
 		if (carte.mob[selectMob]->getMobI() + 1 > carte.mapLigne - 1)
 		{
@@ -413,9 +420,10 @@ bool verificationMouvementMob(Map &carte)
 		}
 		else
 		{
-			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI() + 1, carte.mob[selectMob]->getMobJ());
+			return verification_ObstacleMob(carte, getMobPosI + 1, getMobPosJ);
 		}
 		break;
+	// droite
 	case 3:
 		if (carte.mob[selectMob]->getMobJ() + 1 > carte.mapColonne - 1)
 		{
@@ -423,7 +431,7 @@ bool verificationMouvementMob(Map &carte)
 		}
 		else
 		{
-			return verification_ObstacleMob(carte, carte.mob[selectMob]->getMobI(), carte.mob[selectMob]->getMobJ() + 1);
+			return verification_ObstacleMob(carte, getMobPosI, getMobPosJ + 1);
 		}
 		break;
 	default:
@@ -484,7 +492,14 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	{
 		// ajouter l'effet à la bombe du player
 		// static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(carte.joueur[selectPlayer]->playerBomb[selectBomb]); // si initialisation de playerBomb non dynamic
-		static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(*carte.joueur[selectPlayer]->playerBomb[selectBomb]);
+		for (int allBomb = 0; allBomb < 3; allBomb++)
+		{
+			if (carte.joueur[selectPlayer]->playerBomb[allBomb] != nullptr)
+			{
+				static_cast<ScaleUp *>(carte.positionObject[*i2][*j2])->addScale(*carte.joueur[selectPlayer]->playerBomb[allBomb]);
+			}
+		}
+		porteeMax += 1;
 	}
 	else if (dynamic_cast<SpeedUp *>(carte.positionObject[*i2][*j2]) != nullptr)
 	{
@@ -559,7 +574,7 @@ void arrow_mouvment(Map &carte, int &i, int &j, std::string sens)
 			arrow_damaged_Player(carte, nextI, nextJ);
 			carte.positionObject[i][j] = new Grass(i, j);
 			carte.arrow.erase(carte.arrow.begin());
-			endGame(carte, getArrowPosI, nextJ);
+			endGame(carte, nextI, nextJ);
 		}
 		else
 		{
@@ -724,33 +739,60 @@ void endGame(Map &carte, int &i2, int &j2)
 
 bool bombExploded(Map &carte, int i, int j)
 {
-	// Vérifier la sortie de map i et j
-	if (i - 1 >= 0)
+	// int porteeMax = carte.joueur[selectPlayer]->playerBomb[selectBomb]->portee;
+	//   Vérifier la sortie de map i et j
+	for (int portee = 1; portee <= porteeMax; portee++)
 	{
-		bombExplodedAround(carte, i - 1, j); // haut
+		if (i - portee >= 0)
+		{
+			if (bombExplodedAround(carte, i - portee, j) == false)
+			{
+				break;
+			} // haut
+		}
 	}
-	if (i + 1 < carte.mapLigne)
+	for (int portee = 1; portee <= porteeMax; portee++)
 	{
-		bombExplodedAround(carte, i + 1, j); // bas
+		if (i + portee < carte.mapLigne)
+		{
+			if (bombExplodedAround(carte, i + portee, j) == false)
+			{
+				break;
+			} // bas
+		}
 	}
-	if (j - 1 >= 0)
+	for (int portee = 1; portee <= porteeMax; portee++)
 	{
-		bombExplodedAround(carte, i, j - 1); // gauche
+		if (j - portee >= 0)
+		{
+			if (bombExplodedAround(carte, i, j - portee) == false)
+			{
+				break;
+			} // gauche
+		}
 	}
-	if (j + 1 < carte.mapColonne)
+	for (int portee = 1; portee <= porteeMax; portee++)
 	{
-		bombExplodedAround(carte, i, j + 1); // droite
+		if (j + portee < carte.mapColonne)
+		{
+			if (bombExplodedAround(carte, i, j + portee) == false)
+			{
+				break;
+			} // droite
+		}
 	}
-
 	return true;
 }
 
-void bombExplodedAround(Map &carte, int i, int j)
+bool bombExplodedAround(Map &carte, int i, int j)
 {
+	// la portee de l'explosion s'arrête lorsque la case est un mur I
+	std::string key = carte.positionObject[i][j]->symbole;
+	if (key == "I")
+	{
+		return false;
+	}
 	carte.positionObject[i][j]->exploded = true;
 	static_cast<Bomb *>(carte.positionObject[getBombI][getBombJ])->infligerDegat(*carte.positionObject[i][j]);
-	/*
-	la bombe peut exploser :
-	W w M G B P PO ' ' O @
-	*/
+	return true;
 }

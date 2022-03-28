@@ -16,7 +16,8 @@ protected:
 
 public:
     Mob(const int i, const int j, std::string symbole);
-    int Alea_sens();
+    int moveOrNote(int number);
+    int followPlayer(int pI, int pJ, int mI, int mJ);
     virtual void damager(Player &p) = 0;
     virtual int getMobI();
     virtual int getMobJ();
