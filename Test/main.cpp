@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cstring>
-#include "affichage.h"
+#include "Configuration.h"
 #include <conio.h>
 
 int main()

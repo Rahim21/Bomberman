@@ -24,6 +24,8 @@ void refreshGame(Map &m);
 void gameover();
 void clearGame(Map &carte);
 void endGame(Map &carte, int &i2, int &j2);
+void win_level();
+void next_level(Map &carte);
 /* ---------- PLAYER ---------- */
 bool nextKeyPressed(const char &clavier, Map &carte);
 bool verificationMouvement(const char &clavier, Map &carte);

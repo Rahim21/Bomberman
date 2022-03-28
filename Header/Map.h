@@ -19,6 +19,7 @@
 #include "Monster.h"
 #include "Ghost.h"
 #include "Bowman.h"
+#include "Objectif.h"
 
 #include <vector>
 

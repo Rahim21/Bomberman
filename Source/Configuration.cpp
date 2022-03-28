@@ -1,4 +1,4 @@
-#include "Affichage.h"
+#include "Configuration.h"
 #include <chrono>
 #include <thread>
 
@@ -19,7 +19,6 @@ static int selectMob;
 static int getMobPosI;
 static int getMobPosJ;
 
-static int selectArrow;
 static int getArrowPosI;
 static int getArrowPosJ;
 std::string arrow_down(1, char(281));
@@ -130,7 +129,8 @@ void menu()
 void play()
 {
 	carte.createMap(carte);
-
+	porteeMax = 1;
+	degatBomb = 1;
 	if (carte.joueur.size() == 2)
 	{
 		multijoueur = true;
@@ -181,9 +181,10 @@ void play()
 			std::string sens = carte.arrow[0]->symbole;
 			arrow_mouvment(carte, getArrowPosI, getArrowPosJ, sens);
 		}
-
+		gotoxy(5, 44);
+			std::cout<<"Nbr Mob:"<<carte.mob.size();
 		for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
-		{
+		{	
 			if (carte.mob[selectMob]->symbole == "B")
 			{
 				if (Bowman_detecting_Player(carte) && carte.arrow.size() == 0)
@@ -193,6 +194,7 @@ void play()
 			}
 			verificationMouvementMob(carte);
 		}
+		
 
 	} while (1);
 }
@@ -327,8 +329,15 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 		getdamaged(carte, &i2, &j2);
 		endGame(carte, getPlayerI, getPlayerJ);
 		return true;
+	}else if (key=="X")
+	{
+		if(carte.mob.size()==0){
+			next_level(carte);
+			return true;
+		}
+		return false;
 	}
-	else
+	else	
 	{
 		return false;
 	}
@@ -725,6 +734,27 @@ void gameover()
 	getch();
 }
 
+void win_level()
+{
+		system("cls");
+	std::cout << std::endl;
+	std::cout << R"(
+	--------------------------
+	----- Level completed ----
+	--------------------------
+
+	Click any key to pass to next level 
+	)"<< std::endl;
+	getch();
+}
+void next_level(Map &carte){
+	win_level();
+	tour = 0;
+	carte.joueur.clear();
+	carte.mob.clear();
+	//passer au niveau suivant
+	menu();
+}
 void clearGame(Map &carte)
 {
 	tour = 0;

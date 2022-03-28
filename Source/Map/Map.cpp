@@ -98,8 +98,8 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new Player(i, j);
         joueur.push_back(static_cast<Player *>(positionObject[i][j]));
         break;
-    case 'X':
-        // positionObject[i][j] = new
+     case 'X':
+        positionObject[i][j] = new Objectif(i, j);
         break;
     case ',':
         positionObject[i][j] = new Grass(i, j);
