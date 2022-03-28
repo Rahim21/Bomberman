@@ -22,7 +22,7 @@ public:
     void operator+=(Position const &autre);
     void operator-=(Position const &autre);
     virtual void displayObject();
-    virtual void receiveBombDamage();
+    virtual void receiveBombDamage(int degat);
     // nécessaire pour utiliser un opérande avec un dynamic_cast
     virtual bool isPolymorphic() noexcept { return false; }
 };

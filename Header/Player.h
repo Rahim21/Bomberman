@@ -29,7 +29,7 @@ public:
     void verficationObstacle(const char &keyPressed);
     // void poserBombe(Map &carte, int &getPlayerI, int &getPlayerJ, int &i2, int &j2);
     void displayObject();
-    void receiveBombDamage();
+    void receiveBombDamage(int degat);
     void infoPlayer();
     std::string toString();
     int getPlayerI();

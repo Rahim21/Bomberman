@@ -41,9 +41,9 @@ void Monster::damager(Player &p)
     }
 }
 
-void Monster::receiveBombDamage()
+void Monster::receiveBombDamage(int degat)
 {
-    hp -= 50;
+    hp -= 50 * degat;
     if (hp <= 0)
     {
         destroyed = true;

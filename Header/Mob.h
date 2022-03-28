@@ -24,7 +24,7 @@ public:
     virtual void setMobI(int _i);
     virtual void setMobJ(int _j);
     void displayObject();
-    void receiveBombDamage();
+    void receiveBombDamage(int degat);
     // void echanger(Map &carte, int *i2, int *j2);
     // bool verificationMouvement( Map &carte);
     // bool verification_Obstacle(Map &carte, int i2, int j2);

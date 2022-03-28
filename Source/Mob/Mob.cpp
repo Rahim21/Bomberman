@@ -46,6 +46,7 @@ int Mob::followPlayer(int pI, int pJ, int mI, int mJ)
             return moveOrNote(3);
         }
     }
+    return -1;
 }
 
 int Mob::getMobI()
@@ -87,7 +88,7 @@ void Mob::displayObject()
     }
 }
 
-void Mob::receiveBombDamage()
+void Mob::receiveBombDamage(int degat)
 {
     hp -= 100;
     if (hp <= 0)

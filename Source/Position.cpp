@@ -45,7 +45,7 @@ void Position::displayObject()
     symbole = tmp;
 }
 
-void Position::receiveBombDamage()
+void Position::receiveBombDamage(int degat)
 {
     /* Nothing there : is redefined in child class */
 }

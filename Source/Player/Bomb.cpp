@@ -10,13 +10,13 @@ Bomb::Bomb(const int i, const int j, std::string symbole) : Position{i, j, symbo
     this->j = j;
 }
 
-void Bomb::infligerDegat(Position &obj)
+void Bomb::infligerDegat(Position &obj, int degat)
 {
     /* Inflige des dégâts aux Players, Mobs, Dirt, Bomb? qui explose à son tour*/
     std::string key = obj.symbole;
     if (key == "W" || key == "w" || key == "M" || key == "G" || key == "B" || key == "P" || key == "PO" || key == "O")
     {
-        obj.receiveBombDamage();
+        obj.receiveBombDamage(degat);
     }
 }
 

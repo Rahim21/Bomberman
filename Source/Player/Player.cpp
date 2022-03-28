@@ -44,9 +44,9 @@ void Player::displayObject()
     }
 }
 
-void Player::receiveBombDamage()
+void Player::receiveBombDamage(int degat)
 {
-    heart -= 2;
+    heart -= degat;
     if (heart <= 0)
     {
         destroyed = true;

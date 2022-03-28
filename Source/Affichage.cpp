@@ -28,6 +28,7 @@ std::string arrow_right(1, char(282));
 std::string arrow_up(1, char(280));
 
 static int porteeMax = 1;
+static int degatBomb = 1;
 
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 COORD CursorPosition;
@@ -145,40 +146,54 @@ void play()
 		getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
 		getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
 		refreshGame(carte);
-		char clavier = getche();
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
-		if (nextKeyPressed(clavier, carte))
+		for (int speedPlayer = 0; speedPlayer < carte.joueur[selectPlayer]->speed; speedPlayer++)
 		{
-			// Nouveau tour
-			tour += 1;
-			selectPlayer = (multijoueur) ? tour % 2 : 0;
-
-			// redéfinition de la position exacte du Player après s'être déplacé !
 			getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
 			getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
-			// les mobs jouent après le tour des joueurs
 
-			if (!carte.arrow.empty())
+			// Si au bout de 2 essaies le joueur ne saisie pas la bonne touche : il passe son tour
+			bool turnPlayer = false;
+			int countTurn = 0;
+			do
 			{
-
-				getArrowPosI = carte.arrow[0]->getArrowI();
-				getArrowPosJ = carte.arrow[0]->getArrowJ();
-				std::string sens = carte.arrow[0]->symbole;
-				arrow_mouvment(carte, getArrowPosI, getArrowPosJ, sens);
-			}
-
-			for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
-			{
-				if (carte.mob[selectMob]->symbole == "B")
-				{
-					if (Bowman_detecting_Player(carte) && carte.arrow.size() == 0)
-					{
-						throw_arrow(carte);
-					}
-				}
-				verificationMouvementMob(carte);
-			}
+				char clavier = getche();
+				turnPlayer = nextKeyPressed(clavier, carte);
+				countTurn += 1;
+			} while (turnPlayer != true && countTurn < 2);
+			refreshGame(carte);
 		}
+
+		// Nouveau tour
+		tour += 1;
+		selectPlayer = (multijoueur) ? tour % 2 : 0;
+
+		// redéfinition de la position exacte du Player après s'être déplacé !
+		getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
+		getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
+		// les mobs jouent après le tour des joueurs
+
+		if (!carte.arrow.empty())
+		{
+
+			getArrowPosI = carte.arrow[0]->getArrowI();
+			getArrowPosJ = carte.arrow[0]->getArrowJ();
+			std::string sens = carte.arrow[0]->symbole;
+			arrow_mouvment(carte, getArrowPosI, getArrowPosJ, sens);
+		}
+
+		for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
+		{
+			if (carte.mob[selectMob]->symbole == "B")
+			{
+				if (Bowman_detecting_Player(carte) && carte.arrow.size() == 0)
+				{
+					throw_arrow(carte);
+				}
+			}
+			verificationMouvementMob(carte);
+		}
+
 	} while (1);
 }
 
@@ -486,7 +501,9 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	{
 		// ajouter la puissance à la bombe du player
 		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(carte.joueur[selectPlayer]->playerBomb[selectBomb]); // si initialisation de playerBomb non dynamic
-		static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(*carte.joueur[selectPlayer]->playerBomb[selectBomb]);
+		
+		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(*carte.joueur[selectPlayer]->playerBomb[selectBomb]);
+		degatBomb += 1;
 	}
 	else if (dynamic_cast<ScaleUp *>(carte.positionObject[*i2][*j2]) != nullptr)
 	{
@@ -793,6 +810,6 @@ bool bombExplodedAround(Map &carte, int i, int j)
 		return false;
 	}
 	carte.positionObject[i][j]->exploded = true;
-	static_cast<Bomb *>(carte.positionObject[getBombI][getBombJ])->infligerDegat(*carte.positionObject[i][j]);
+	static_cast<Bomb *>(carte.positionObject[getBombI][getBombJ])->infligerDegat(*carte.positionObject[i][j], degatBomb);
 	return true;
 }

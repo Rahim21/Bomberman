@@ -19,7 +19,7 @@ public:
 public:
     // Bomb();
     Bomb(const int i, const int j, const std::string symbole = "O");
-    void infligerDegat(Position &obj);
+    void infligerDegat(Position &obj, int degat);
     void afficherExplosion();
     void displayObject();
     // void setBombIJ(int i, int j);

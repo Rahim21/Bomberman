@@ -12,7 +12,7 @@ class Dirt : public Tile
 public:
     Dirt(const int i, const int j, const std::string symbole = "W");
     void displayObject();
-    void receiveBombDamage();
+    void receiveBombDamage(int degat);
 };
 
 #endif

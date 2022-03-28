@@ -31,9 +31,9 @@ void Dirt::displayObject()
     std::cout << "  " + symbole + "  ";
 }
 
-void Dirt::receiveBombDamage()
+void Dirt::receiveBombDamage(int degat)
 {
-    tileHP -= 1;
+    tileHP -= 1 * degat;
     if (tileHP <= 0)
     {
         destroyed = true;
