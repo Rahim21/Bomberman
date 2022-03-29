@@ -26,9 +26,10 @@ void Objectif::displayObject()
         else if (tileHP == 1)
         {
             symbole = "w";
-        }else if ( tileHP < 1)
+        }
+        else if (tileHP < 1)
         {
-            symbole="X";
+            symbole = "X";
         }
     }
     std::cout << "  " + symbole + "  ";

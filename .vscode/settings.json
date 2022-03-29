@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "*.cpp": "cpp",
+    "*.rmd": "markdown",
     "array": "cpp",
     "atomic": "cpp",
     "bit": "cpp",
@@ -52,6 +53,7 @@
     "ratio": "cpp",
     "semaphore": "cpp",
     "stop_token": "cpp",
-    "thread": "cpp"
+    "thread": "cpp",
+    "sstream": "cpp"
   }
 }

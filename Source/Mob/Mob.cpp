@@ -76,7 +76,7 @@ void Mob::displayObject()
     {
         symbole = char(283);
         exploded = false;
-        std::cout << "  " + symbole + "  ";
+        std::cout << symbole + "  ";
         symbole = tmp_symbole;
     }
     else

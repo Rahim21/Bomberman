@@ -50,6 +50,7 @@ public:
     void detectDestroyedObject();
     void newLevel();
     void loadMap(const int level);
+    int colorSymbole(std::string symbole) const;
 };
 
 #endif

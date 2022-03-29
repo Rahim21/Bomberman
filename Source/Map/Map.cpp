@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
+#include <windows.h>
 
 // Méthodes de notre classe Map
 void Map::createMap(Map &m)
@@ -48,6 +49,7 @@ void Map::deleteMap(Map &m)
 
 std::ostream &operator<<(std::ostream &os, const Map &m)
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     /* Mauvaise méthode d'affichage : pas optimal pour la suite */
     os << "+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+" << std::endl;
     for (int i = 0; i < m.mapLigne; i++)
@@ -59,7 +61,10 @@ std::ostream &operator<<(std::ostream &os, const Map &m)
                 if (tailleJ == 1)
                 {
                     os << "|";
+                    // utiliser la methode colorSymbole(std::string symbole)
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), m.colorSymbole(m.positionObject[i][j]->symbole));
                     m.positionObject[i][j]->displayObject();
+                    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15); // white
                 }
                 else
                 {
@@ -256,4 +261,20 @@ void Map::loadMap(const int level)
         std::cerr << "Impossible d'ouvrir le fichier - '" << filename << "'" << std::endl;
         exit(1);
     }
+}
+
+int Map::colorSymbole(std::string symbole) const
+{
+    if (symbole == "P" || symbole == "PO")
+        return 9;
+    if (symbole == "X")
+        return 6;
+    if (symbole == "M" || symbole == "G" || symbole == "B")
+        return 4;
+    if (symbole == "W" || symbole == "w" || symbole == "I" || symbole == " ")
+        return 15; // 8
+    if (symbole == "#" || symbole == "!" || symbole == "U" || symbole == "L" || symbole == "Z")
+        return 10;
+
+    return 15;
 }

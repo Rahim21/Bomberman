@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Player.h" // linked with makefile
+#include <windows.h>
+#include <sstream>
 
 // Méthodes de notre classe Player
 Player::Player(int i, int j, std::string pseudo, std::string symbole) : Position{i, j, symbole}
@@ -61,7 +63,15 @@ void Player::infoPlayer()
 
 std::string Player::toString()
 {
-    return pseudo + " | " + std::to_string(heart) + " Heart | " + std::to_string(nbrBomb) + " Bomb | Position (" + std::to_string(j) + ";" + std::to_string(i) + ")";
+    std::string StringHeart;
+    std::stringstream tmp;
+    for (int nbrHeart = 0; nbrHeart < heart; nbrHeart++)
+    {
+        StringHeart = char(3);
+        tmp << StringHeart + " ";
+    }
+    StringHeart = tmp.str();
+    return pseudo + " | " + StringHeart + " Heart | " + std::to_string(nbrBomb) + " Bomb | Position (" + std::to_string(j) + ";" + std::to_string(i) + ")";
 }
 
 int Player::getPlayerI()

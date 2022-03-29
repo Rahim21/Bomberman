@@ -2,7 +2,7 @@
 #include <chrono>
 #include <thread>
 
-Map carte;
+static Map carte;
 
 static bool multijoueur = false;
 static int tour{0};
@@ -78,6 +78,20 @@ void titre()
 	gotoxy(0, 8);
 }
 
+void titreMenu()
+{
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+	gotoxy(40, 3);
+	std::cout << "---------------------------------------------" << std::endl;
+	gotoxy(40, 4);
+	std::cout << "|               - BOMBERMAN -               |" << std::endl;
+	gotoxy(40, 5);
+	std::cout << "|             | HAYAT & MTARFI |            |" << std::endl;
+	gotoxy(40, 6);
+	std::cout << "---------------------------------------------" << std::endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+}
+
 void afficherTour(const Map &carte)
 {
 	(selectPlayer == 0) ? gotoxy(38, 3) : gotoxy(38, 5);
@@ -95,35 +109,154 @@ void menu()
 {
 	do
 	{
+		int choixOption = 2;
+		char c = ' ';
 		system("cls");
-		titre();
-		gotoxy(10, 9);
-		std::cout << "1. Start Game";
-		gotoxy(10, 10);
-		std::cout << "2. Instructions";
-		gotoxy(10, 11);
-		std::cout << "3. Quit";
-		gotoxy(10, 13);
-		std::cout << "Selectionnez une option: ";
-		char clavier = getche();
+		titreMenu();
 
-		if (clavier == '1')
+		// FLECHE MENU
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+		gotoxy(50, 14);
+		std::cout << char(24);
+		gotoxy(50, 15);
+		std::cout << "Z";
+
+		gotoxy(50, 28);
+		std::cout << char(25);
+		gotoxy(50, 27);
+		std::cout << "S";
+
+		while (c != char(13))
+		{
+			// MENU OPTION
+			optionMenu(choixOption);
+
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+			gotoxy(49, 19 + choixOption);
+			std::cout << "->";
+			gotoxy(0, 0);
+			c = getch();
+			gotoxy(49, 19 + choixOption);
+			std::cout << "  ";
+			gotoxy(40, 19 + choixOption);
+			std::cout << "  ";
+			if (c == 's' || c == 'S')
+			{
+				if (choixOption < 4)
+				{
+					choixOption += 2;
+				}
+			}
+			if (c == 'z' || c == 'Z')
+			{
+				if (choixOption > 0)
+				{
+					choixOption -= 2;
+				}
+			}
+		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		if (choixOption == 0)
 		{
 			system("cls");
 			play();
 		}
-		else if (clavier == '2')
+		if (choixOption == 2)
 		{
 			system("cls");
 			instructions();
 		}
-		else if (clavier == '3')
+		if (choixOption == 4)
 		{
 			system("cls");
+			gotoxy(50, 10);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+			std::cout << "GOOD BYE !";
+			gotoxy(47, 21);
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			exit(0);
 		}
-
 	} while (1);
+}
+
+void optionMenu(int &choixOption)
+{
+	if (choixOption == 0)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+	}
+	else
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+	}
+	gotoxy(52, 19);
+	std::cout << "\tStart Game ";
+
+	if (choixOption == 2)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	}
+	else
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+	}
+	gotoxy(52, 21);
+	std::cout << "\tInstructions ";
+
+	if (choixOption == 4)
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+	}
+	else
+	{
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+	}
+	gotoxy(52, 23);
+	std::cout << "\tQuit ";
+}
+
+void manuel()
+{
+	gotoxy(92, 8);
+	std::cout << "--- MANUEL DU JEU ---" << std::endl;
+	gotoxy(92, 10);
+	std::cout << "P : Le joueur." << std::endl;
+	gotoxy(92, 11);
+	std::cout << "X : L'objectif. " << std::endl;
+	gotoxy(92, 12);
+	std::cout << " PO : Le joueur pose une bombe " << std::endl;
+	gotoxy(92, 13);
+	std::cout << "O : Une bombe active." << std::endl;
+	gotoxy(92, 14);
+	std::cout << " @ : Un bombe qui explose avec les différentes cases touchées : " << char(178) << std::endl;
+
+	gotoxy(92, 16);
+	std::cout << "' ' : Grass" << std::endl;
+	gotoxy(92, 17);
+	std::cout << "W : Dirt, un mur intact." << std::endl;
+	gotoxy(92, 18);
+	std::cout << "w : Dirt, un mur fissuré." << std::endl;
+	gotoxy(92, 19);
+	std::cout << "I : Wall, un mur invincible." << std::endl;
+
+	gotoxy(92, 21);
+	std::cout << "M : Un monstre de base." << std::endl;
+	gotoxy(92, 22);
+	std::cout << "G : Un monstre de type Ghost." << std::endl;
+	gotoxy(92, 23);
+	std::cout << "B : Un monstre de type Bowman." << std::endl;
+	gotoxy(92, 24);
+	std::cout << char(24) << ", " << char(17) << ", " << char(25) << ", " << char(26) << " : Une fleche du Bowman " << std::endl;
+	gotoxy(92, 26);
+	std::cout << "L : Un Item MoreLife." << std::endl;
+	gotoxy(92, 27);
+	std::cout << "U : Un Item PowerUp." << std::endl;
+	gotoxy(92, 28);
+	std::cout << "! : Un Item MoreBomb." << std::endl;
+	gotoxy(92, 29);
+	std::cout << "Z : Un Item SpeedUp." << std::endl;
+	gotoxy(92, 30);
+	std::cout << "# : Un Item ScaleUp." << std::endl;
 }
 
 void play()
@@ -202,9 +335,8 @@ void afficheCommande()
 {
 	gotoxy(5, 35);
 	std::cout << R"(
-                    Z                        ^
-     Joueur 1 :   Q S D       Joueur 2 :   <   >            QUITTER : Tapez 3
-                                             v
+		    		 Z
+	Deplacement Joueur :   Q S D		Poser Bombe : X			QUITTER : Tapez 3
 )";
 	gotoxy(5, 6);
 	std::cout << "Saisir Deplacement :" << std::endl;
@@ -214,9 +346,11 @@ void afficheCommande()
 void refreshGame(Map &m)
 {
 	system("cls");
+	gotoxy(4, 2);
 	titre();
 	std::cout << m;
 	afficherTour(m);
+	// manuel(); // mauvaise idée détruit l'affichage de la map
 	afficheCommande();
 }
 
@@ -253,9 +387,10 @@ bool nextKeyPressed(const char &clavier, Map &carte)
 			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer();
 			*/
 		}
+		refreshGame(carte);
 		if (explosionDetected)
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			std::this_thread::sleep_for(std::chrono::milliseconds(650));
 			explosionDetected = false;
 			endGame(carte, getPlayerI, getPlayerJ);
 			carte.detectDestroyedObject();
@@ -721,36 +856,37 @@ bool Bowman_detecting_Player(Map &carte)
 	return false;
 }
 
-void gameover()
+void gameover(Map &carte)
 {
 	system("cls");
-	std::cout << std::endl;
-	std::cout << R"(
-	--------------------------
-	-------- Game Over -------
-	---- Death on level )"
-			  << carte.level << R"( ----
-	--------------------------
-
-	Appuyez sur n'importe quelle touche pour revenir au menu.
-	)" << std::endl;
+	gotoxy(55, 20);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+	std::cout << "GAME OVER";
+	gotoxy(47, 21);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 3);
+	std::cout << "---- Death on level " << carte.level << " ----";
+	gotoxy(44, 23);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	std::cout << "Press any key to go back to menu." << std::endl;
+	carte.deleteAllObject();
+	carte.level = 1;
 	getch();
 }
 
 void win_level()
 {
 	system("cls");
-	std::cout << std::endl;
-	std::cout << R"(
-	----------------------------
-	----- Level )"
-			  << carte.level << R"( completed ----
-	----------------------------
-
-	Click any key to pass to next level 
-	)" << std::endl;
+	gotoxy(50, 20);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6);
+	std::cout << "LEVEL " << carte.level << " COMPLETED";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+	std::cout << " !!!";
+	gotoxy(44, 23);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	std::cout << "Press any key to go back to menu." << std::endl;
 	getch();
 }
+
 void next_level(Map &carte)
 {
 	win_level();
@@ -761,12 +897,13 @@ void next_level(Map &carte)
 	carte.newLevel();
 	play();
 }
+
 void clearGame(Map &carte)
 {
 	tour = 0;
 	carte.joueur.clear();
 	carte.mob.clear();
-	gameover();
+	gameover(carte);
 	menu();
 }
 
