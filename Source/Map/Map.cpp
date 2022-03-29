@@ -98,7 +98,7 @@ void Map::convertObjectByID(const char id, const int i, const int j)
         positionObject[i][j] = new Player(i, j);
         joueur.push_back(static_cast<Player *>(positionObject[i][j]));
         break;
-     case 'X':
+    case 'X':
         positionObject[i][j] = new Objectif(i, j);
         break;
     case ',':
@@ -178,5 +178,82 @@ void Map::detectDestroyedObject()
         {
             mob.erase(mob.begin() + mobtab);
         }
+    }
+}
+
+void Map::newLevel()
+{
+    level += 1;
+    deleteAllObject();
+    loadMap(level);
+}
+
+// methode loadMap
+void Map::loadMap(const int level)
+{
+    char caractere;
+    static int tmp = 0;
+    // parcour des levels déjà passé
+    std::string filename("Source/Map/map.txt");
+    std::ifstream fichier(filename, std::ios::in);
+    if (fichier)
+    {
+        for (int nrbNiveau = 0; nrbNiveau < level - 1; nrbNiveau++)
+        {
+            for (int i = 0; i < mapLigne; i++)
+            {
+                for (int j = 0; j < mapColonne; j++)
+                {
+                    if (tmp >= 1 && i == 0 && j == 0)
+                    {
+                        // Nothing
+                    }
+                    else
+                    {
+                        fichier.get(caractere);
+                        if (caractere == '\n')
+                        {
+                            fichier.get(caractere);
+                        }
+                    }
+                }
+            }
+            tmp += 1;
+            if (level > 2)
+            {
+                fichier.get(caractere);
+            }
+            do
+            {
+                fichier.get(caractere);
+            } while (caractere == '\n' || caractere == ' ');
+        }
+
+        // parcour de la nouvelle map
+        for (int i = 0; i < mapLigne; i++)
+        {
+            for (int j = 0; j < mapColonne; j++)
+            {
+                if (tmp >= 1 && i == 0 && j == 0)
+                {
+                    // Nothing
+                }
+                else
+                {
+                    fichier.get(caractere);
+                    if (caractere == '\n')
+                    {
+                        fichier.get(caractere);
+                    }
+                }
+                map[i][j] = verificationID(caractere, i, j);
+            }
+        }
+        fichier.close();
+    }
+    else
+    {
+        std::cerr << "Impossible d'ouvrir le fichier - '" << filename << "'" << std::endl;
+        exit(1);
     }
 }

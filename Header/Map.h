@@ -32,7 +32,8 @@ class Map
 public:
     static constexpr int mapColonne{14};
     static constexpr int mapLigne{6};
-    // objectif ?
+    int level{1};
+
     char map[mapLigne][mapColonne];
     Position *positionObject[mapLigne][mapColonne];
     std::vector<Player *> joueur;
@@ -47,6 +48,8 @@ public:
     void deleteAllObject();
     void deleteMap(Map &m);
     void detectDestroyedObject();
+    void newLevel();
+    void loadMap(const int level);
 };
 
 #endif

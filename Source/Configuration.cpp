@@ -128,7 +128,10 @@ void menu()
 
 void play()
 {
-	carte.createMap(carte);
+	if (carte.level == 1)
+	{
+		carte.createMap(carte);
+	}
 	porteeMax = 1;
 	degatBomb = 1;
 	if (carte.joueur.size() == 2)
@@ -143,8 +146,6 @@ void play()
 
 	do
 	{
-		getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
-		getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
 		refreshGame(carte);
 		// remplacer par les mouvements du Player [ZQSD et ^<v>]
 		for (int speedPlayer = 0; speedPlayer < carte.joueur[selectPlayer]->speed; speedPlayer++)
@@ -161,7 +162,7 @@ void play()
 				turnPlayer = nextKeyPressed(clavier, carte);
 				countTurn += 1;
 			} while (turnPlayer != true && countTurn < 2);
-			refreshGame(carte);
+			// refreshGame(carte); // refresh inutile car il est fait à la fin de la méthode nextKeyPressed
 		}
 
 		// Nouveau tour
@@ -181,10 +182,9 @@ void play()
 			std::string sens = carte.arrow[0]->symbole;
 			arrow_mouvment(carte, getArrowPosI, getArrowPosJ, sens);
 		}
-		gotoxy(5, 44);
-			std::cout<<"Nbr Mob:"<<carte.mob.size();
+
 		for (selectMob = 0; selectMob < (int)carte.mob.size(); selectMob += 1)
-		{	
+		{
 			if (carte.mob[selectMob]->symbole == "B")
 			{
 				if (Bowman_detecting_Player(carte) && carte.arrow.size() == 0)
@@ -194,7 +194,6 @@ void play()
 			}
 			verificationMouvementMob(carte);
 		}
-		
 
 	} while (1);
 }
@@ -234,24 +233,22 @@ bool nextKeyPressed(const char &clavier, Map &carte)
 
 			getPlayerI = carte.joueur[selectPlayer]->getPlayerI();
 			getPlayerJ = carte.joueur[selectPlayer]->getPlayerJ();
-		if (carte.joueur[selectPlayer]->playerBomb.size()!=0)
-		{	
-				
-					if (carte.joueur[selectPlayer]->playerBomb[0]->symbole == "@")
-					{
-						getBombI = carte.joueur[selectPlayer]->playerBomb[0]->i;
-						getBombJ = carte.joueur[selectPlayer]->playerBomb[0]->j;
-						if (bombExploded(carte, getBombI, getBombJ))
-						{
-							carte.joueur[selectPlayer]->playerBomb.erase(carte.joueur[selectPlayer]->playerBomb.begin());
-							carte.positionObject[getBombI][getBombJ] = new Grass(getBombI, getBombJ);
-							explosionDetected = true;
-						}
-					}
+			if (carte.joueur[selectPlayer]->playerBomb.size() != 0)
+			{
 
-		}
-		
-			
+				if (carte.joueur[selectPlayer]->playerBomb[0]->symbole == "@")
+				{
+					getBombI = carte.joueur[selectPlayer]->playerBomb[0]->i;
+					getBombJ = carte.joueur[selectPlayer]->playerBomb[0]->j;
+					if (bombExploded(carte, getBombI, getBombJ))
+					{
+						carte.joueur[selectPlayer]->playerBomb.erase(carte.joueur[selectPlayer]->playerBomb.begin());
+						carte.positionObject[getBombI][getBombJ] = new Grass(getBombI, getBombJ);
+						explosionDetected = true;
+					}
+				}
+			}
+
 			/*
 			static_cast<Player *>(positionObject[getPlayerI()][getPlayerJ()])->infoPlayer();
 			*/
@@ -305,8 +302,8 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 			// faire ceci dans la méthode poserBombe | error: 'Map' has not been declared
 			carte.positionObject[i2][j2] = carte.positionObject[getPlayerI][getPlayerJ];
 			carte.joueur[selectPlayer]->playerBomb.push_back(new Bomb(getPlayerI, getPlayerJ));
-			carte.joueur[selectPlayer]->playerBomb[carte.joueur[selectPlayer]->playerBomb.size()-1]->activation = true;
-			carte.positionObject[getPlayerI][getPlayerJ] = carte.joueur[selectPlayer]->playerBomb[carte.joueur[selectPlayer]->playerBomb.size()-1];
+			carte.joueur[selectPlayer]->playerBomb[carte.joueur[selectPlayer]->playerBomb.size() - 1]->activation = true;
+			carte.positionObject[getPlayerI][getPlayerJ] = carte.joueur[selectPlayer]->playerBomb[carte.joueur[selectPlayer]->playerBomb.size() - 1];
 			carte.joueur[selectPlayer]->setPlayerI(i2);
 			carte.joueur[selectPlayer]->setPlayerJ(j2);
 			nextBomb += 1;
@@ -328,15 +325,17 @@ bool verification_Obstacle(Map &carte, int i2, int j2)
 		getdamaged(carte, &i2, &j2);
 		endGame(carte, getPlayerI, getPlayerJ);
 		return true;
-	}else if (key=="X")
+	}
+	else if (key == "X")
 	{
-		if(carte.mob.size()==0){
+		if (carte.mob.size() == 0)
+		{
 			next_level(carte);
 			return true;
 		}
 		return false;
 	}
-	else	
+	else
 	{
 		return false;
 	}
@@ -392,7 +391,7 @@ bool verificationMouvement(const char &clavier, Map &carte)
 	case 'x':
 		// placer bombe
 		if (carte.joueur[selectPlayer]->nbrBomb > carte.joueur[selectPlayer]->playerBomb.size())
-		{ 
+		{
 			carte.joueur[selectPlayer]->bombPlaced = true;
 		}
 		return true;
@@ -512,7 +511,7 @@ void upgradePlayer(Map carte, int *i2, int *j2)
 	{
 		// ajouter la puissance à la bombe du player
 		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(carte.joueur[selectPlayer]->playerBomb[selectBomb]); // si initialisation de playerBomb non dynamic
-		
+
 		// static_cast<PowerUp *>(carte.positionObject[*i2][*j2])->addPower(*carte.joueur[selectPlayer]->playerBomb[selectBomb]);
 		degatBomb += 1;
 	}
@@ -729,6 +728,8 @@ void gameover()
 	std::cout << R"(
 	--------------------------
 	-------- Game Over -------
+	---- Death on level )"
+			  << carte.level << R"( ----
 	--------------------------
 
 	Appuyez sur n'importe quelle touche pour revenir au menu.
@@ -738,24 +739,27 @@ void gameover()
 
 void win_level()
 {
-		system("cls");
+	system("cls");
 	std::cout << std::endl;
 	std::cout << R"(
-	--------------------------
-	----- Level completed ----
-	--------------------------
+	----------------------------
+	----- Level )"
+			  << carte.level << R"( completed ----
+	----------------------------
 
 	Click any key to pass to next level 
-	)"<< std::endl;
+	)" << std::endl;
 	getch();
 }
-void next_level(Map &carte){
+void next_level(Map &carte)
+{
 	win_level();
 	tour = 0;
 	carte.joueur.clear();
 	carte.mob.clear();
-	//passer au niveau suivant
-	menu();
+	// passer au niveau suivant
+	carte.newLevel();
+	play();
 }
 void clearGame(Map &carte)
 {
