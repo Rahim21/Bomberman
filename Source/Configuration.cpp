@@ -325,7 +325,8 @@ void play()
 					throw_arrow(carte);
 				}
 			}
-			verificationMouvementMob(carte);
+			verificationMouvementMob(carte); // if verificationMouvementMob == true alors le le mob ne bouge plus pendant 3 tours
+											 // MobWait();
 		}
 
 	} while (1);
@@ -603,15 +604,83 @@ bool verificationMouvementMob(Map &carte)
 
 bool verification_ObstacleMob(Map &carte, int i2, int j2)
 {
-	if (carte.positionObject[i2][j2]->symbole == " ")
+	bool grassTaken = false;
+
+	std::string key = carte.positionObject[i2][j2]->symbole;
+	if (carte.mob[selectMob]->symbole == "G")
+	{
+		if (key == " ")
+		{
+			grassTaken = true;
+		}
+		if (key != "P" && key != "PO" && key != "O" && key != "@" && key != "X")
+		{
+			// flyOver(getMobPosI, getMobPosJ, i2, j2);
+			// if (static_cast<Ghost *>(carte.mob[selectMob])->inventory.empty())
+			// {
+			// 	system("cls");
+			// 	std::cout << "DEBUG";
+			// 	exit(0);
+			// 	// // stocker item
+			// 	static_cast<Ghost *>(carte.mob[selectMob])->inventory.push_back(carte.positionObject[i2][j2]);
+			// 	// // prendre sa place
+			// 	carte.positionObject[i2][j2] = carte.mob[selectMob];
+			// 	// // mettre du Grass à l'ancienne place du Ghost
+			// 	carte.positionObject[getMobPosI][getMobPosJ] = new Grass(getMobPosI, getMobPosJ);
+			// }
+			// // inventaire.size() == 1
+			// else if (static_cast<Ghost *>(carte.mob[selectMob])->inventory.size() == 1)
+			// {
+			// 	// stocker item
+			// 	static_cast<Ghost *>(carte.mob[selectMob])->inventory.push_back(carte.positionObject[i2][j2]);
+			// 	// prendre sa place
+			// 	carte.positionObject[i2][j2] = carte.mob[selectMob];
+			// 	// mettre du Grass à l'ancienne place du Ghost
+			// 	carte.positionObject[getMobPosI][getMobPosJ] = static_cast<Ghost *>(carte.mob[selectMob])->inventory[0];
+			// 	// supprimer l'objet qui était survolé precedemment par le Ghost, car il à été replacé
+			// 	static_cast<Ghost *>(carte.mob[selectMob])->inventory.erase(static_cast<Ghost *>(carte.mob[selectMob])->inventory.begin());
+			// }
+
+			// V2
+			if (static_cast<Ghost *>(carte.mob[selectMob])->inventory[0] == nullptr)
+			{
+				// // stocker item
+				static_cast<Ghost *>(carte.mob[selectMob])->inventory[0] = carte.positionObject[i2][j2];
+				// // prendre sa place
+				carte.positionObject[i2][j2] = carte.mob[selectMob];
+				// // mettre du Grass à l'ancienne place du Ghost
+				carte.positionObject[getMobPosI][getMobPosJ] = new Grass(getMobPosI, getMobPosJ);
+				carte.mob[selectMob]->setMobI(i2);
+				carte.mob[selectMob]->setMobJ(j2);
+			}
+			// inventaire.size() == 1
+			else if (static_cast<Ghost *>(carte.mob[selectMob])->inventory[0] != nullptr)
+			{
+				// stocker item
+				static_cast<Ghost *>(carte.mob[selectMob])->inventory[1] = carte.positionObject[i2][j2];
+				// prendre sa place
+				carte.positionObject[i2][j2] = carte.mob[selectMob];
+				// carte.positionObject[i2][j2] = carte.positionObject[getMobPosI][getMobPosJ];
+				// mettre du Grass à l'ancienne place du Ghost
+				carte.positionObject[getMobPosI][getMobPosJ] = static_cast<Ghost *>(carte.mob[selectMob])->inventory[0];
+				// supprimer l'objet qui était survolé precedemment par le Ghost, car il à été replacé
+				static_cast<Ghost *>(carte.mob[selectMob])->inventory[0] = static_cast<Ghost *>(carte.mob[selectMob])->inventory[1];
+				static_cast<Ghost *>(carte.mob[selectMob])->inventory[1] = nullptr;
+				carte.mob[selectMob]->setMobI(i2);
+				carte.mob[selectMob]->setMobJ(j2);
+			}
+		}
+	}
+
+	if (key == " " && grassTaken == false)
 	{
 		echangerMob(carte, &i2, &j2);
-		return true;
 	}
-	else if (carte.positionObject[i2][j2]->symbole == "P")
+	else if (key == "P")
 	{
 		Mob_damaged_Player(carte, &i2, &j2);
 		endGame(carte, i2, j2);
+		return true;
 	}
 
 	return false;
@@ -903,6 +972,7 @@ void clearGame(Map &carte)
 	tour = 0;
 	carte.joueur.clear();
 	carte.mob.clear();
+	carte.deleteAllObject();
 	gameover(carte);
 	menu();
 }

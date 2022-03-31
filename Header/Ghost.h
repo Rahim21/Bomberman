@@ -9,8 +9,9 @@
  */
 class Ghost : public Mob
 {
-protected:
 public:
+    // std::vector<Position *> inventory;
+    Position *inventory[2] = {nullptr, nullptr};
     Ghost(const int i, const int j, const std::string symbole = "G");
     // void displayObject();
     int getMobI();

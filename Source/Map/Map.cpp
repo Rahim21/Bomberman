@@ -154,6 +154,17 @@ void Map::convertObjectByID(const char id, const int i, const int j)
 // methode pour supprimer tout les objets et vectors de joueur et de mob
 void Map::deleteAllObject()
 {
+    joueur.clear();
+    mob.clear();
+    arrow.clear();
+    for (int j = 0; j < mob.size(); j++)
+    {
+        if (mob[j]->symbole == "G")
+        {
+            dynamic_cast<Ghost *>(mob[j])->inventory[0] = nullptr;
+            dynamic_cast<Ghost *>(mob[j])->inventory[1] = nullptr;
+        }
+    }
     for (int i = 0; i < mapLigne; i++)
     {
         for (int j = 0; j < mapColonne; j++)
@@ -161,8 +172,6 @@ void Map::deleteAllObject()
             delete positionObject[i][j];
         }
     }
-    joueur.clear();
-    mob.clear();
 }
 
 void Map::detectDestroyedObject()
