@@ -12,13 +12,27 @@ class Monster : public Mob
 {
 protected:
 public:
+    /**
+     * @brief Construct a new Monster object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Monster(const int i, const int j, const std::string symbole = "M");
-    // void displayObject();
-    int getMobI();
-    int getMobJ();
-    void setMobI(int _i);
-    void setMobJ(int _j);
+
+    /**
+     * @brief the monster damage the player
+     *
+     * @param p
+     */
     void damager(Player &p);
+
+    /**
+     * @brief the monster receive damage from the bomb
+     *
+     * @param degat
+     */
     void receiveBombDamage(int degat);
 };
 

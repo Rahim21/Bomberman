@@ -11,13 +11,27 @@ class Ghost : public Mob
 {
 public:
     // std::vector<Position *> inventory;
+
+    /**
+     * @brief the ghost has inventory with 2 slots
+     *
+     */
     Position *inventory[2] = {nullptr, nullptr};
+
+    /**
+     * @brief Construct a new Ghost object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Ghost(const int i, const int j, const std::string symbole = "G");
-    // void displayObject();
-    int getMobI();
-    int getMobJ();
-    void setMobI(int _i);
-    void setMobJ(int _j);
+
+    /**
+     * @brief the ghost damage the player
+     *
+     * @param p
+     */
     void damager(Player &p);
 };
 

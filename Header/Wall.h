@@ -11,6 +11,13 @@ class Wall : public Tile
 {
 protected:
 public:
+    /**
+     * @brief Construct a new Wall object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Wall(const int i, const int j, const std::string symbole = "I");
 };
 

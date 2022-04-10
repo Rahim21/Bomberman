@@ -11,12 +11,20 @@ class Bowman : public Mob
 {
 protected:
 public:
+    /**
+     * @brief Construct a new Bowman object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Bowman(const int i, const int j, const std::string symbole = "B");
-    // void displayObject();
-    int getMobI();
-    int getMobJ();
-    void setMobI(int _i);
-    void setMobJ(int _j);
+
+    /**
+     * @brief damege the player
+     *
+     * @param p
+     */
     void damager(Player &p);
 };
 

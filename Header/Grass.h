@@ -11,6 +11,13 @@ class Grass : public Tile
 {
 protected:
 public:
+    /**
+     * @brief Construct a new Grass object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Grass(const int i, const int j, const std::string symbole = " ");
 };
 

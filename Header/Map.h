@@ -41,15 +41,79 @@ public:
     std::vector<Arrow *> arrow;
 
 public:
+    /**
+     * @brief display all the symbole
+     *
+     * @param os
+     * @param m
+     * @return std::ostream&
+     */
     friend std::ostream &operator<<(std::ostream &os, const Map &m);
+
+    /**
+     * @brief Create a Map object
+     *
+     * @param m
+     */
     void createMap(Map &m);
+
+    /**
+     * @brief checks if the character is in the list
+     *
+     * @param id
+     * @param i
+     * @param j
+     * @return char
+     */
     char verificationID(const char id, const int i, const int j);
+
+    /**
+     * @brief convert the char to object
+     *
+     * @param id
+     * @param i
+     * @param j
+     */
     void convertObjectByID(const char id, const int i, const int j);
+
+    /**
+     * @brief delete all the object
+     *
+     */
     void deleteAllObject();
+
+    /**
+     * @brief delete the map
+     *
+     * @param m
+     */
     void deleteMap(Map &m);
+
+    /**
+     * @brief if the object is destroyed in-game it destroy the object
+     *
+     */
     void detectDestroyedObject();
+
+    /**
+     * @brief pass to the next level -> indentation
+     *
+     */
     void newLevel();
+
+    /**
+     * @brief load the new level map
+     *
+     * @param level
+     */
     void loadMap(const int level);
+
+    /**
+     * @brief color the symbole of each object
+     *
+     * @param symbole
+     * @return int
+     */
     int colorSymbole(std::string symbole) const;
 };
 

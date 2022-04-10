@@ -12,6 +12,13 @@
 class Item : public Position
 {
 public:
+    /**
+     * @brief Construct a new Item object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Item(const int i, const int j, std::string symbole);
 };
 

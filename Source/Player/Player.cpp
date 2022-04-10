@@ -19,19 +19,6 @@ Player::Player(int i, int j, std::string pseudo, std::string symbole) : Position
     this->symbole = symbole;
 }
 
-void Player::playerAction()
-{
-}
-
-// void Player::poserBombe(Map &carte, int &getPlayerI, int &getPlayerJ, int &i2, int &j2)
-// {
-// carte.positionObject[i2][j2] = carte.positionObject[getPlayerI][getPlayerJ];
-// carte.positionObject[getPlayerI][getPlayerJ] = new Bomb(getPlayerI, getPlayerJ);
-
-// carte.joueur[selectPlayer]->setPlayerI(i2);
-// carte.joueur[selectPlayer]->setPlayerJ(j2);
-// }
-
 void Player::displayObject()
 {
     if (bombPlaced)

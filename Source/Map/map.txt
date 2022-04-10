@@ -1,27 +1,27 @@
 P,,,,,,,,,,,,U
-WWW,WWWWWWWWW,
+WWW,WWW,WWWWW,
 M,,,,,,,W,WL,,
 WIWWWWWWX,,,,#
 I,,,L,,,,,,,,,
 G,,WI,,,,,,,!Z
 
 
-P,,,,,,,,,,,,M
+,,,,,,,,,,,,,M
 WWW,WWWWWWWWWX
 M,,,,,,,W,WL,,
 WWW,WWWWWWWWWW
 I,,,L,,,,,,,,,
-G,,WI,,,,,,,!Z
+G,,WI,,,P,,,!Z
 
 
 
 
    
-P,,,,,,,,,,LLU
-WWWWX,,,,,W,,,
+,,P,,,,,,,,LLU
+W,WWX,,,,,W,,,
 ,,,,,,,,,,,,,,
 ,,,,,,U,,,,,M,
-L,,,,B,,,,,,,,
+L,,,,,,,B,,,,,
 ,M,,,,,,,,,,,W
 
 W,,,L,L,Z,,M,,

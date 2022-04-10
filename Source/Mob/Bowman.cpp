@@ -9,31 +9,6 @@ Bowman::Bowman(const int i, const int j, std::string symbole) : Mob{i, j, symbol
     this->symbole = symbole;
 }
 
-// void Bowman::displayObject()
-// {
-//     std::cout << "  B  ";
-// }
-
-int Bowman::getMobI()
-{
-    return i;
-}
-
-int Bowman::getMobJ()
-{
-    return j;
-}
-
-void Bowman::setMobI(int _i)
-{
-    this->i = _i;
-}
-
-void Bowman::setMobJ(int _j)
-{
-    this->j = _j;
-}
-
 void Bowman::damager(Player &p)
 {
     if (p.heart < 5 && p.heart > 0)

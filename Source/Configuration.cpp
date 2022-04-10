@@ -604,9 +604,10 @@ bool verificationMouvementMob(Map &carte)
 
 bool verification_ObstacleMob(Map &carte, int i2, int j2)
 {
-	bool grassTaken = false;
+	// bool grassTaken = false;
 
 	std::string key = carte.positionObject[i2][j2]->symbole;
+	/*
 	if (carte.mob[selectMob]->symbole == "G")
 	{
 		if (key == " ")
@@ -616,32 +617,8 @@ bool verification_ObstacleMob(Map &carte, int i2, int j2)
 		if (key != "P" && key != "PO" && key != "O" && key != "@" && key != "X")
 		{
 			// flyOver(getMobPosI, getMobPosJ, i2, j2);
-			// if (static_cast<Ghost *>(carte.mob[selectMob])->inventory.empty())
-			// {
-			// 	system("cls");
-			// 	std::cout << "DEBUG";
-			// 	exit(0);
-			// 	// // stocker item
-			// 	static_cast<Ghost *>(carte.mob[selectMob])->inventory.push_back(carte.positionObject[i2][j2]);
-			// 	// // prendre sa place
-			// 	carte.positionObject[i2][j2] = carte.mob[selectMob];
-			// 	// // mettre du Grass à l'ancienne place du Ghost
-			// 	carte.positionObject[getMobPosI][getMobPosJ] = new Grass(getMobPosI, getMobPosJ);
-			// }
-			// // inventaire.size() == 1
-			// else if (static_cast<Ghost *>(carte.mob[selectMob])->inventory.size() == 1)
-			// {
-			// 	// stocker item
-			// 	static_cast<Ghost *>(carte.mob[selectMob])->inventory.push_back(carte.positionObject[i2][j2]);
-			// 	// prendre sa place
-			// 	carte.positionObject[i2][j2] = carte.mob[selectMob];
-			// 	// mettre du Grass à l'ancienne place du Ghost
-			// 	carte.positionObject[getMobPosI][getMobPosJ] = static_cast<Ghost *>(carte.mob[selectMob])->inventory[0];
-			// 	// supprimer l'objet qui était survolé precedemment par le Ghost, car il à été replacé
-			// 	static_cast<Ghost *>(carte.mob[selectMob])->inventory.erase(static_cast<Ghost *>(carte.mob[selectMob])->inventory.begin());
-			// }
 
-			// V2
+			// V2 DEMI-FONCTIONNEL: CRASH EN FIN DE PARTIE
 			if (static_cast<Ghost *>(carte.mob[selectMob])->inventory[0] == nullptr)
 			{
 				// // stocker item
@@ -671,8 +648,9 @@ bool verification_ObstacleMob(Map &carte, int i2, int j2)
 			}
 		}
 	}
+	*/
 
-	if (key == " " && grassTaken == false)
+	if (key == " " /*&& grassTaken == false*/)
 	{
 		echangerMob(carte, &i2, &j2);
 	}
@@ -937,7 +915,6 @@ void gameover(Map &carte)
 	gotoxy(44, 23);
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 	std::cout << "Press any key to go back to menu." << std::endl;
-	carte.deleteAllObject();
 	carte.level = 1;
 	getch();
 }
@@ -972,7 +949,7 @@ void clearGame(Map &carte)
 	tour = 0;
 	carte.joueur.clear();
 	carte.mob.clear();
-	carte.deleteAllObject();
+	// carte.deleteAllObject();
 	gameover(carte);
 	menu();
 }

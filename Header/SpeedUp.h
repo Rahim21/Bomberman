@@ -11,7 +11,20 @@ class SpeedUp : public Item
 {
 protected:
 public:
+    /**
+     * @brief Construct a new Speed Up object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     SpeedUp(const int i, const int j, const std::string symbole = "Z");
+
+    /**
+     * @brief add more speed for the player
+     *
+     * @param p
+     */
     void addSpeed(Player &p);
 };
 

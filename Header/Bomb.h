@@ -17,12 +17,28 @@ public:
     bool activation{false};
 
 public:
-    // Bomb();
+    /**
+     * @brief Construct a new Bomb object
+     *
+     * @param i
+     * @param j
+     * @param symbole
+     */
     Bomb(const int i, const int j, const std::string symbole = "O");
+
+    /**
+     * @brief
+     *
+     * @param obj
+     * @param degat
+     */
     void infligerDegat(Position &obj, int degat);
-    void afficherExplosion();
+
+    /**
+     * @brief display the bomb
+     *
+     */
     void displayObject();
-    // void setBombIJ(int i, int j);
 };
 
 #endif
